@@ -5,7 +5,7 @@ project(zooperator LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(zooperator src/main.cpp src/animal.cpp src/penguin.cpp src/rabbit.cpp)
+add_executable(zooperator src/main.cpp src/animal.cpp src/bear.cpp src/penguin.cpp src/rabbit.cpp)
 
 target_include_directories(zooperator PRIVATE include src)
 
