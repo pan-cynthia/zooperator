@@ -7,7 +7,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-set(TEST_SOURCES test_animal.cpp test_penguin.cpp test_bear.cpp)
+set(TEST_SOURCES test_animal.cpp test_penguin.cpp test_bear.cpp test_rabbit.cpp)
 
 add_executable(zooperator_tests ${TEST_SOURCES})
 
