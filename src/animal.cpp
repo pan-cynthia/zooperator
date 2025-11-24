@@ -106,12 +106,22 @@ void Animal::updateEnergy(int delta) {
 }
 
 void Animal::eat(int amount) {
+  if (amount <= 0) {
+    std::cout << getName() << " needs a positive amount of food!\n";
+    return;
+  }
+
   updateHunger(-amount);
   updateHappiness(5);
   std::cout << getName() << " the " << getSpecies() << " is eating.\n";
 }
 
 void Animal::sleep(int hours) {
+  if (hours <= 0) {
+    std::cout << getName() << " needs positive hours of sleep!\n";
+    return;
+  }
+
   updateEnergy(hours * 10);
   updateHealth(hours);
   updateHunger(hours * 2);
