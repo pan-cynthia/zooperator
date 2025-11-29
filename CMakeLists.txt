@@ -5,7 +5,7 @@ project(zooperator LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(zooperator_lib src/animal.cpp src/bear.cpp src/penguin.cpp src/rabbit.cpp src/exhibit.cpp)
+add_library(zooperator_lib src/animal.cpp src/bear.cpp src/penguin.cpp src/rabbit.cpp src/exhibit.cpp src/zoo.cpp)
 
 target_include_directories(zooperator_lib PUBLIC include)
 
