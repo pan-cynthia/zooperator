@@ -185,6 +185,21 @@ TEST(ZooTest, CannotPurchaseExhibitWithInsufficientFunds) {
   EXPECT_EQ(zoo.getBalance(), 100.0);
 }
 
+TEST(ZooTest, SellExhibit) {
+  Zoo zoo("San Diego Zoo");
+
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  Exhibit* exhibit_ptr = exhibit.get();
+  double exhibit_cost = exhibit->getPurchaseCost();
+  zoo.purchaseExhibit(std::move(exhibit));
+
+  double balance_after_purchase = zoo.getBalance();
+
+  zoo.sellExhibit(exhibit_ptr);
+  EXPECT_EQ(zoo.getExhibitCount(), 0);
+  EXPECT_EQ(zoo.getBalance(), balance_after_purchase + (exhibit_cost / 2.0));
+}
+
 TEST(ZooTest, GetExhibit) {
   Zoo zoo("San Diego Zoo");
   auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
