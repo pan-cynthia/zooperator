@@ -45,7 +45,6 @@ class Zoo {
   double balance_;
   std::vector<std::unique_ptr<Animal>> animals_;
   std::vector<std::unique_ptr<Exhibit>> exhibits_;
-  std::map<Animal*, Exhibit*> animal_locations_;
 };
 
 #endif  // ZOO_H

@@ -50,7 +50,7 @@ bool Zoo::sellAnimal(Animal* animal) {
   // remove animal from exhibit before selling
   Exhibit* exhibit = findAnimalLocation(animal);
   if (exhibit) {
-    removeAnimalFromExhibit(animal, exhibit);
+    exhibit->removeAnimal(animal);
   }
 
   double sell_price = (*it)->getPurchaseCost() / 2.0;
@@ -128,27 +128,63 @@ size_t Zoo::getExhibitCount() const {
 }
 
 Exhibit* Zoo::findAnimalLocation(Animal* animal) {
-  auto it = animal_locations_.find(animal);
-  if (it == animal_locations_.end()) {
+  if (!animal) {
     return nullptr;
   }
-  return it->second;
+
+  for (const auto& ptr : exhibits_) {
+    if (ptr->containsAnimal(animal)) {
+      return ptr.get();
+    }
+  }
+  return nullptr;
 }
 
 bool Zoo::addAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
-  if (exhibit->addAnimal(animal)) {
-    animal_locations_[animal] = exhibit;
-    return true;
+  if (!animal || !exhibit) {
+    return false;
   }
-  return false;
+
+  auto it =
+      std::find_if(animals_.begin(), animals_.end(),
+                   [animal](const std::unique_ptr<Animal>& ptr) { return ptr.get() == animal; });
+  if (it == animals_.end()) {
+    std::cout << "Animal not found in zoo.\n";
+    return false;
+  }
+
+  if (exhibit->containsAnimal(animal)) {
+    std::cout << "Animal is already in this exhibit.\n";
+    return false;
+  }
+
+  // remove animal from current exhibit if needed
+  Exhibit* current_exhibit = findAnimalLocation(animal);
+  if (current_exhibit) {
+    current_exhibit->removeAnimal(animal);
+  }
+
+  if (!exhibit->addAnimal(animal)) {
+    std::cout << "Failed to add animal to exhibit.\n";
+    return false;
+  }
+
+  std::cout << "Added" << animal->getName() << " to " << exhibit->getName() << ".\n";
+  return true;
 }
 
 bool Zoo::removeAnimalFromExhibit(Animal* animal, Exhibit* exhibit) {
-  if (exhibit->removeAnimal(animal)) {
-    animal_locations_.erase(animal);
-    return true;
+  if (!animal || !exhibit) {
+    return false;
   }
-  return false;
+
+  // check if animal exists in exhibit first
+  if (!exhibit->containsAnimal(animal)) {
+    return false;
+  }
+
+  std::cout << "Removed " << animal->getName() << " from " << exhibit->getName() << ".\n";
+  return exhibit->removeAnimal(animal);
 }
 
 bool Zoo::moveAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
@@ -170,17 +206,19 @@ bool Zoo::moveAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
   }
 
   // remove animal from old exhibit
-  if (!removeAnimalFromExhibit(animal, old_exhibit)) {
+  if (!old_exhibit->removeAnimal(animal)) {
     std::cout << "Failed to remove animal from its current exhibit!\n";
     return false;
   }
 
   // add animal to new exhibit
-  if (!addAnimalToExhibit(animal, exhibit)) {
+  if (!exhibit->addAnimal(animal)) {
     std::cout << "Failed to add animal to new exhibit!\n";
     // add animal back to old exhibit
-    addAnimalToExhibit(animal, old_exhibit);
+    old_exhibit->addAnimal(animal);
     return false;
   }
+
+  std::cout << "Moved " << animal->getName() << " to " << exhibit->getName() << ".\n";
   return true;
 }
