@@ -215,6 +215,13 @@ TEST(ZooTest, GetExhibitOutOfBounds) {
   EXPECT_EQ(zoo.getExhibit(1), nullptr);
 }
 
+TEST(ZooTest, GetAllExhibits) {
+  Zoo zoo("San Diego Zoo");
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0));
+  EXPECT_EQ(zoo.getAllExhibits().size(), 2);
+}
+
 TEST(ZooTest, GetExhibitsNeedingCleaning) {
   Zoo zoo("San Diego Zoo");
 
