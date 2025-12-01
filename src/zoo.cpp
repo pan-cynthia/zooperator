@@ -136,6 +136,14 @@ Exhibit* Zoo::getExhibit(size_t index) {
   return exhibits_[index].get();
 }
 
+std::vector<Exhibit*> Zoo::getAllExhibits() {
+  std::vector<Exhibit*> exhibits;
+  for (const auto& ptr : exhibits_) {
+    exhibits.push_back(ptr.get());
+  }
+  return exhibits;
+}
+
 std::vector<Exhibit*> Zoo::getExhibitsNeedingCleaning() {
   std::vector<Exhibit*> exhibits;
   for (const auto& ptr : exhibits_) {

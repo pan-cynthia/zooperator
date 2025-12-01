@@ -31,6 +31,7 @@ class Zoo {
   bool purchaseExhibit(std::unique_ptr<Exhibit> exhibit);
   bool sellExhibit(Exhibit* exhibit);
   Exhibit* getExhibit(size_t index);
+  std::vector<Exhibit*> getAllExhibits();
   std::vector<Exhibit*> getExhibitsNeedingCleaning();
   size_t getExhibitCount() const;
 
