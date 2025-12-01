@@ -55,6 +55,10 @@ bool Exhibit::removeAnimal(Animal* animal) {
   return true;
 }
 
+void Exhibit::removeAllAnimalsFromExhibit() {
+  animals_.clear();
+}
+
 bool Exhibit::containsAnimal(Animal* animal) const {
   if (!animal) {
     return false;

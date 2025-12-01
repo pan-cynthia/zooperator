@@ -15,6 +15,7 @@ class Exhibit {
   bool canAddAnimal() const;
   bool addAnimal(Animal* animal);
   bool removeAnimal(Animal* animal);
+  void removeAllAnimalsFromExhibit();
   bool containsAnimal(Animal* animal) const;
   Animal* getAnimal(size_t index);
 
