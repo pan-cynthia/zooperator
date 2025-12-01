@@ -27,7 +27,7 @@ bool Zoo::purchaseAnimal(std::unique_ptr<Animal> animal) {
     return false;
   }
 
-  std::cout << "Purchased " << animal->getName() << " the " << animal->getSpecies() << "for $"
+  std::cout << "Purchased " << animal->getName() << " the " << animal->getSpecies() << " for $"
             << cost << ".\n";
   balance_ -= cost;
   animals_.push_back(std::move(animal));
@@ -100,7 +100,7 @@ bool Zoo::purchaseExhibit(std::unique_ptr<Exhibit> exhibit) {
     return false;
   }
 
-  std::cout << "Purchased Exhibit" << exhibit->getName() << "for $" << cost << ".\n";
+  std::cout << "Purchased Exhibit " << exhibit->getName() << " for $" << cost << ".\n";
   balance_ -= cost;
   exhibits_.push_back(std::move(exhibit));
   return true;
