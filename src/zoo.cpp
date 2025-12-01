@@ -106,6 +106,29 @@ bool Zoo::purchaseExhibit(std::unique_ptr<Exhibit> exhibit) {
   return true;
 }
 
+bool Zoo::sellExhibit(Exhibit* exhibit) {
+  if (!exhibit) {
+    return false;
+  }
+
+  auto it =
+      std::find_if(exhibits_.begin(), exhibits_.end(),
+                   [exhibit](const std::unique_ptr<Exhibit>& ptr) { return ptr.get() == exhibit; });
+  if (it == exhibits_.end()) {
+    std::cout << "Exhibit not found in zoo.\n";
+    return false;
+  }
+
+  (*it)->removeAllAnimalsFromExhibit();
+
+  double sell_price = (*it)->getPurchaseCost() / 2.0;
+  std::cout << "Sold " << (*it)->getName() << " for $" << sell_price << "!\n";
+  balance_ += sell_price;
+
+  exhibits_.erase(it);
+  return true;
+}
+
 Exhibit* Zoo::getExhibit(size_t index) {
   if (index >= exhibits_.size()) {
     return nullptr;
