@@ -26,6 +26,7 @@ class Zoo {
   std::vector<Animal*> getAllAnimals();
   std::vector<Animal*> getAnimalsNeedingAttention();
   size_t getAnimalCount() const;
+  void removeDeadAnimals();
 
   // exhibit management
   bool purchaseExhibit(std::unique_ptr<Exhibit> exhibit);

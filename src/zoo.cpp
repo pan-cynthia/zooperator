@@ -253,3 +253,27 @@ bool Zoo::moveAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
   std::cout << "Moved " << animal->getName() << " to " << exhibit->getName() << ".\n";
   return true;
 }
+
+void Zoo::removeDeadAnimals() {
+  std::vector<std::string> dead_animals;
+  for (const auto& animal : animals_) {
+    if (!animal->isAlive()) {
+      dead_animals.push_back(animal->getName() + " the " + animal->getSpecies());
+
+      // remove animal from exhibit if in one
+      Exhibit* exhibit = findAnimalLocation(animal.get());
+      if (exhibit) {
+        exhibit->removeAnimal(animal.get());
+      }
+    }
+  }
+
+  animals_.erase(
+      std::remove_if(animals_.begin(), animals_.end(),
+                     [](const std::unique_ptr<Animal>& animal) { return !animal->isAlive(); }),
+      animals_.end());
+
+  for (const auto& name : dead_animals) {
+    std::cout << name << "has died and has been removed from the zoo.\n";
+  }
+}
