@@ -159,6 +159,21 @@ TEST(ZooTest, NoAnimalsNeedAttention) {
   EXPECT_EQ(zoo.getAnimalsNeedingAttention().size(), 0);
 }
 
+TEST(ZooTest, RemoveDeadAnimals) {
+  Zoo zoo("Oakland Zoo");
+
+  auto rabbit = std::make_unique<Rabbit>("Miffy", 7);
+  Animal* rabbit_ptr = rabbit.get();
+  zoo.purchaseAnimal(std::move(rabbit));
+  EXPECT_EQ(zoo.getAnimalCount(), 1);
+
+  rabbit_ptr->updateHealth(-100);
+  EXPECT_FALSE(rabbit_ptr->isAlive());
+
+  zoo.removeDeadAnimals();
+  EXPECT_EQ(zoo.getAnimalCount(), 0);
+}
+
 TEST(ZooTest, PurchaseExhibit) {
   Zoo zoo("San Diego Zoo");
 
