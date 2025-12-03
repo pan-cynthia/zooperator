@@ -31,6 +31,7 @@ class Game {
   Animal* chooseAnimal();
   void displayAllAnimals();
   void displayAnimalsNeedingAttention();
+  void renameAnimal();
   void purchaseAnimal();
   void sellAnimal();
   void feedAnimal();

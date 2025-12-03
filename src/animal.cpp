@@ -93,6 +93,10 @@ void Animal::updateStatsEndOfDay() {
   updateEnergy(-5);
 }
 
+void Animal::setName(const std::string& name) {
+  name_ = name;
+}
+
 void Animal::eat(int amount) {
   if (amount <= 0) {
     std::cout << getName() << " needs a positive amount of food!\n";

@@ -40,6 +40,7 @@ class Animal {
   void updateHappiness(int delta);
   void updateEnergy(int delta);
   void updateStatsEndOfDay();
+  void setName(const std::string& name);
 
  protected:
   // basic info

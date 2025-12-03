@@ -91,19 +91,20 @@ void Game::manageAnimals() {
     std::cout << "\n========== ANIMAL MANAGEMENT ==========\n";
     std::cout << "1. Display All Animals\n";
     std::cout << "2. Display Animals Needing Attention\n";
-    std::cout << "3. Purchase Animal\n";
-    std::cout << "4. Sell Animal\n";
-    std::cout << "5. Feed Animal\n";
-    std::cout << "6. Play With Animal\n";
-    std::cout << "7. Exercise Animal\n";
-    std::cout << "8. Treat Animal\n";
-    std::cout << "9. Add Animal to Exhibit\n";
-    std::cout << "10. Remove Animal from Exhibit\n";
-    std::cout << "11. Move Animal to Exhibit\n";
-    std::cout << "12. Back to Main Menu\n";
+    std::cout << "3. Rename Animal\n";
+    std::cout << "4. Purchase Animal\n";
+    std::cout << "5. Sell Animal\n";
+    std::cout << "6. Feed Animal\n";
+    std::cout << "7. Play With Animal\n";
+    std::cout << "8. Exercise Animal\n";
+    std::cout << "9. Treat Animal\n";
+    std::cout << "10. Add Animal to Exhibit\n";
+    std::cout << "11. Remove Animal from Exhibit\n";
+    std::cout << "12. Move Animal to Exhibit\n";
+    std::cout << "13. Back to Main Menu\n";
     std::cout << "=======================================\n";
 
-    int choice = getPlayerInput(1, 12);
+    int choice = getPlayerInput(1, 13);
     switch (choice) {
       case 1:
         displayAllAnimals();
@@ -112,33 +113,36 @@ void Game::manageAnimals() {
         displayAnimalsNeedingAttention();
         break;
       case 3:
-        purchaseAnimal();
+        renameAnimal();
         break;
       case 4:
-        sellAnimal();
+        purchaseAnimal();
         break;
       case 5:
-        feedAnimal();
+        sellAnimal();
         break;
       case 6:
-        playWithAnimal();
+        feedAnimal();
         break;
       case 7:
-        exerciseAnimal();
+        playWithAnimal();
         break;
       case 8:
-        treatAnimal();
+        exerciseAnimal();
         break;
       case 9:
-        addAnimalToExhibit();
+        treatAnimal();
         break;
       case 10:
-        removeAnimalFromExhibit();
+        addAnimalToExhibit();
         break;
       case 11:
-        moveAnimalToExhibit();
+        removeAnimalFromExhibit();
         break;
       case 12:
+        moveAnimalToExhibit();
+        break;
+      case 13:
         return;
     }
   }
@@ -206,6 +210,29 @@ void Game::displayAnimalsNeedingAttention() {
     std::cout << "   Hunger:    " << animal->getHungerLevel() << "\n";
     std::cout << "   Happiness:    " << animal->getHappinessLevel() << "\n";
     std::cout << "   Energy:    " << animal->getEnergyLevel() << "\n";
+  }
+}
+
+void Game::renameAnimal() {
+  Animal* animal = chooseAnimal();
+  if (!animal) {
+    return;
+  }
+
+  std::string old_name = animal->getName();
+  std::cout << "Enter new name: ";
+  std::string name;
+  std::getline(std::cin, name);
+
+  std::cout << "Rename " << old_name << " the " << animal->getSpecies() << " to " << name << " the "
+            << animal->getSpecies() << "? (1 - Yes, 2 - No): ";
+
+  int choice = getPlayerInput(1, 2);
+
+  if (choice == 1) {
+    animal->setName(name);
+    std::cout << "Renamed " << old_name << " the " << animal->getSpecies() << " to " << name
+              << " the " << animal->getSpecies() << "!\n";
   }
 }
 
