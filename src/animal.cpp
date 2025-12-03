@@ -105,6 +105,12 @@ void Animal::updateEnergy(int delta) {
   }
 }
 
+void Animal::updateStatsEndOfDay() {
+  updateHunger(5);
+  updateHappiness(-1);
+  updateEnergy(-5);
+}
+
 void Animal::eat(int amount) {
   if (amount <= 0) {
     std::cout << getName() << " needs a positive amount of food!\n";

@@ -39,6 +39,7 @@ class Animal {
   void updateHunger(int delta);
   void updateHappiness(int delta);
   void updateEnergy(int delta);
+  void updateStatsEndOfDay();
 
  protected:
   // basic info
