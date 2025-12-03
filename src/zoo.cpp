@@ -226,7 +226,8 @@ bool Zoo::moveAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
   // remove animal from its current exhibit
   Exhibit* old_exhibit = findAnimalLocation(animal);
   if (!old_exhibit) {
-    std::cout << "Animal not found in any exhibit!\n";
+    std::cout
+        << "Animal not found in any exhibit! Need to add animal to an exhibit before moving!\n";
     return false;
   }
 
