@@ -45,6 +45,13 @@ class Zoo {
   // money management
   bool spendMoney(double amount);
 
+  // time and simulation
+  void advanceDay();
+  void updateAnimalStats();
+  int calculateVisitorCount() const;
+  double calculateDailyRevenue(int visitor_count) const;
+  double calculateDailyExpenses() const;
+
  private:
   std::string name_;
   int day_;

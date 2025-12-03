@@ -291,3 +291,76 @@ bool Zoo::spendMoney(double amount) {
   balance_ -= amount;
   return true;
 }
+
+void Zoo::updateAnimalStats() {
+  for (const auto& animal : animals_) {
+    animal->updateStatsEndOfDay();
+  }
+}
+
+int Zoo::calculateVisitorCount() const {
+  int base_visitors = static_cast<int>(animals_.size()) * 10;
+
+  int happiness_bonus = 0;
+  for (const auto& animal : animals_) {
+    if (animal->getHappinessLevel() > 70) {
+      happiness_bonus += static_cast<int>((animal->getHappinessLevel() / 10.0) * 20);
+    }
+  }
+  return base_visitors + happiness_bonus;
+}
+
+double Zoo::calculateDailyRevenue(int visitor_count) const {
+  constexpr double TICKET_PRICE = 15.0;
+  return visitor_count * TICKET_PRICE;
+}
+
+double Zoo::calculateDailyExpenses() const {
+  double total = 0.0;
+
+  // animal maintenance costs
+  for (const auto& animal : animals_) {
+    total += animal->getMaintenanceCost();
+  }
+
+  // exhibit maintenance costs
+  for (const auto& exhibit : exhibits_) {
+    total += exhibit->getMaintenanceCost();
+  }
+
+  return total;
+}
+
+void Zoo::advanceDay() {
+  updateAnimalStats();
+  removeDeadAnimals();
+
+  // degrade cleanliness of exhibits
+  for (const auto& exhibit : exhibits_) {
+    exhibit->updateCleanliness(-5);
+  }
+
+  int visitors = calculateVisitorCount();
+  double revenue = calculateDailyRevenue(visitors);
+  double expenses = calculateDailyExpenses();
+
+  // update balance
+  balance_ += revenue;
+  balance_ -= expenses;
+
+  auto needy_animals = getAnimalsNeedingAttention();
+  auto dirty_exhibits = getExhibitsNeedingCleaning();
+
+  std::cout << "Visitors: " << visitors << "\n";
+  std::cout << "Revenue : $" << revenue << "\n";
+  std::cout << "Expenses: $" << expenses << "\n";
+  std::cout << "Net     : $" << revenue - expenses << "\n";
+  std::cout << "Balance : $" << balance_ << "\n";
+  std::cout << "Animals Needing Attention: " << needy_animals.size() << "\n";
+  std::cout << "Exhibits Needing Cleaning: " << dirty_exhibits.size() << "\n";
+
+  std::cout << "----------------------------------\n";
+
+  day_++;
+  std::cout << "\n Start Day " << day_ << "\n";
+}
