@@ -277,3 +277,12 @@ void Zoo::removeDeadAnimals() {
     std::cout << name << "has died and has been removed from the zoo.\n";
   }
 }
+
+bool Zoo::spendMoney(double amount) {
+  if (balance_ < amount) {
+    return false;
+  }
+
+  balance_ -= amount;
+  return true;
+}

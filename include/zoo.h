@@ -26,7 +26,6 @@ class Zoo {
   std::vector<Animal*> getAllAnimals();
   std::vector<Animal*> getAnimalsNeedingAttention();
   size_t getAnimalCount() const;
-  void removeDeadAnimals();
 
   // exhibit management
   bool purchaseExhibit(std::unique_ptr<Exhibit> exhibit);
@@ -41,6 +40,10 @@ class Zoo {
   bool addAnimalToExhibit(Animal* animal, Exhibit* exhibit);
   bool removeAnimalFromExhibit(Animal* animal, Exhibit* exhibit);
   bool moveAnimalToExhibit(Animal* animal, Exhibit* exhibit);
+  void removeDeadAnimals();
+
+  // money management
+  bool spendMoney(double amount);
 
  private:
   std::string name_;
