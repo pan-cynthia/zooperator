@@ -57,6 +57,13 @@ class Animal {
   double purchase_cost_;
   double feeding_cost_;
   double maintenance_cost_;
+
+  // consts
+  static constexpr int MIN_STAT = 0;
+  static constexpr int MAX_STAT = 100;
+  static constexpr int CRITICAL_THRESHOLD = 20;
+
+  static int clamp(int value, int min_val, int max_val);
 };
 
 #endif  // ANIMAL_H

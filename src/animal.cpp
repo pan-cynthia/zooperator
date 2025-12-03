@@ -1,5 +1,6 @@
 #include "animal.h"
 
+#include <algorithm>
 #include <iostream>
 #include <utility>
 
@@ -49,7 +50,8 @@ bool Animal::isAlive() const {
 }
 
 bool Animal::needsAttention() const {
-  return health_ < 20 || hunger_ > 80 || happiness_ < 20 || energy_ < 20;
+  return health_ < CRITICAL_THRESHOLD || hunger_ > (MAX_STAT - CRITICAL_THRESHOLD) ||
+         happiness_ < CRITICAL_THRESHOLD || energy_ < CRITICAL_THRESHOLD;
 }
 
 double Animal::getPurchaseCost() const {
@@ -64,45 +66,25 @@ double Animal::getMaintenanceCost() const {
   return maintenance_cost_;
 }
 
+int Animal::clamp(int value, int min_val, int max_val) {
+  return std::max(min_val, std::min(value, max_val));
+}
+
 // setters
 void Animal::updateHealth(int delta) {
-  health_ += delta;
-  if (health_ > 100) {
-    health_ = 100;
-  }
-  if (health_ < 0) {
-    health_ = 0;
-  }
+  health_ = clamp(health_ + delta, MIN_STAT, MAX_STAT);
 }
 
 void Animal::updateHunger(int delta) {
-  hunger_ += delta;
-  if (hunger_ > 100) {
-    hunger_ = 100;
-  }
-  if (hunger_ < 0) {
-    hunger_ = 0;
-  }
+  hunger_ = clamp(hunger_ + delta, MIN_STAT, MAX_STAT);
 }
 
 void Animal::updateHappiness(int delta) {
-  happiness_ += delta;
-  if (happiness_ > 100) {
-    happiness_ = 100;
-  }
-  if (happiness_ < 0) {
-    happiness_ = 0;
-  }
+  happiness_ = clamp(happiness_ + delta, MIN_STAT, MAX_STAT);
 }
 
 void Animal::updateEnergy(int delta) {
-  energy_ += delta;
-  if (energy_ > 100) {
-    energy_ = 100;
-  }
-  if (energy_ < 0) {
-    energy_ = 0;
-  }
+  energy_ = clamp(energy_ + delta, MIN_STAT, MAX_STAT);
 }
 
 void Animal::updateStatsEndOfDay() {
