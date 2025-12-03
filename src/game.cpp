@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <limits>
+#include <random>
 #include <utility>
 
 #include "bear.h"
@@ -180,6 +181,7 @@ void Game::displayAllAnimals() {
   for (size_t i = 0; i < animals.size(); ++i) {
     Animal* animal = animals[i];
     std::cout << (i + 1) << ". " << animal->getName() << " the " << animal->getSpecies() << "\n";
+    std::cout << "   Age:        " << animal->getAge() << "\n";
     std::cout << "   Health:     " << animal->getHealthLevel() << "\n";
     std::cout << "   Hunger:     " << animal->getHungerLevel() << "\n";
     std::cout << "   Happiness:  " << animal->getHappinessLevel() << "\n";
@@ -253,17 +255,32 @@ void Game::purchaseAnimal() {
   std::string name;
   std::getline(std::cin, name);
 
+  // random number generator
+  std::random_device seed;
+  std::mt19937 gen(seed());
+
   std::unique_ptr<Animal> animal;
+  int age;
+
   switch (choice) {
-    case 1:
-      animal = std::make_unique<Rabbit>(name, 2);
+    case 1: {
+      std::uniform_int_distribution<> distr(1, 8);
+      age = distr(gen);
+      animal = std::make_unique<Rabbit>(name, age);
       break;
-    case 2:
-      animal = std::make_unique<Penguin>(name, 3);
+    }
+    case 2: {
+      std::uniform_int_distribution<> distr(5, 20);
+      age = distr(gen);
+      animal = std::make_unique<Penguin>(name, age);
       break;
-    case 3:
-      animal = std::make_unique<Bear>(name, 5);
+    }
+    case 3: {
+      std::uniform_int_distribution<> distr(3, 25);
+      age = distr(gen);
+      animal = std::make_unique<Bear>(name, age);
       break;
+    }
   }
 
   std::cout << "Purchase " << animal->getName() << " the " << animal->getSpecies() << " for $"
@@ -458,9 +475,9 @@ void Game::displayExhibitsNeedingCleaning() {
 
 void Game::purchaseExhibit() {
   std::cout << "\n========== PURCHASE EXHIBIT ==========\n";
-  std::cout << "1. Grassland (2 Capacity) - $500\n";
-  std::cout << "2. Forest (3 Capacity) - $1500\n";
-  std::cout << "3. Arctic (5 Capacity)- $2500\n";
+  std::cout << "1. Grassland (2-4 capacity) - $500\n";
+  std::cout << "2. Forest (3-5 capacity) - $1500\n";
+  std::cout << "3. Arctic (4-6 capacity) - $2500\n";
   std::cout << "4. Cancel\n";
   std::cout << "=======================================\n";
 
@@ -473,17 +490,31 @@ void Game::purchaseExhibit() {
   std::string name;
   std::getline(std::cin, name);
 
+  // random number generator
+  std::random_device seed;
+  std::mt19937 gen(seed());
+
+  int capacity;
   std::unique_ptr<Exhibit> exhibit;
   switch (choice) {
-    case 1:
-      exhibit = std::make_unique<Exhibit>(name, "Grassland", 2, 500.0, 10.0);
+    case 1: {
+      std::uniform_int_distribution<> distr(2, 8);
+      capacity = distr(gen);
+      exhibit = std::make_unique<Exhibit>(name, "Grassland", capacity, 500.0, 10.0);
       break;
-    case 2:
-      exhibit = std::make_unique<Exhibit>(name, "Forest", 3, 1500.0, 30.0);
+    }
+    case 2: {
+      std::uniform_int_distribution<> distr(3, 5);
+      capacity = distr(gen);
+      exhibit = std::make_unique<Exhibit>(name, "Forest", capacity, 1500.0, 30.0);
       break;
-    case 3:
-      exhibit = std::make_unique<Exhibit>(name, "Arctic", 5, 2500.0, 50.0);
+    }
+    case 3: {
+      std::uniform_int_distribution<> distr(4, 6);
+      capacity = distr(gen);
+      exhibit = std::make_unique<Exhibit>(name, "Arctic", capacity, 2500.0, 50.0);
       break;
+    }
   }
 
   std::cout << "Purchase " << exhibit->getName() << " for $" << exhibit->getPurchaseCost()
