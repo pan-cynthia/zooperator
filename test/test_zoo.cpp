@@ -475,3 +475,53 @@ TEST(ZooTest, SpendMoney) {
 
   EXPECT_EQ(zoo.getBalance(), 10000.0 - purchase_cost - feeding_cost);
 }
+
+TEST(ZooTest, UpdateAnimalStats) {
+  Zoo zoo("SF Zoo");
+
+  auto bear = std::make_unique<Bear>("Winnie", 8);
+  Animal* bear_ptr = bear.get();
+  zoo.purchaseAnimal(std::move(bear));
+
+  zoo.updateAnimalStats();
+  EXPECT_EQ(bear_ptr->getHungerLevel(), 5);
+  EXPECT_EQ(bear_ptr->getHappinessLevel(), 99);
+  EXPECT_EQ(bear_ptr->getEnergyLevel(), 95);
+}
+
+TEST(ZooTest, CalculateVisitorCount) {
+  Zoo zoo("SF Zoo");
+  auto bear = std::make_unique<Bear>("Winnie", 8);
+  Animal* bear_ptr = bear.get();
+  zoo.purchaseAnimal(std::move(bear));
+  EXPECT_EQ(zoo.calculateVisitorCount(), 210);
+}
+
+TEST(ZooTest, CalculateDailyRevenue) {
+  Zoo zoo("SF Zoo");
+  auto bear = std::make_unique<Bear>("Winnie", 8);
+  Animal* bear_ptr = bear.get();
+  zoo.purchaseAnimal(std::move(bear));
+  int visitor_count = zoo.calculateVisitorCount();
+  EXPECT_EQ(zoo.calculateDailyRevenue(visitor_count), 3150.0);
+}
+
+TEST(ZooTest, CalculateDailyExpenses) {
+  Zoo zoo("SF Zoo");
+  auto bear = std::make_unique<Bear>("Winnie", 8);
+  Animal* bear_ptr = bear.get();
+  zoo.purchaseAnimal(std::move(bear));
+  double maintenance_cost = bear_ptr->getMaintenanceCost();
+  EXPECT_EQ(zoo.calculateDailyExpenses(), 50.0);
+}
+
+TEST(ZooTest, AdvanceDay) {
+  Zoo zoo("SF Zoo");
+  auto bear = std::make_unique<Bear>("Winnie", 8);
+  Animal* bear_ptr = bear.get();
+  zoo.purchaseAnimal(std::move(bear));
+
+  double old_balance = zoo.getBalance();
+  zoo.advanceDay();
+  EXPECT_EQ(zoo.getDay(), 1);
+}
