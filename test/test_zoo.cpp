@@ -445,3 +445,18 @@ TEST(ZooTest, FindAnimalLocationNotInAnyExhibit) {
 
   EXPECT_EQ(zoo.findAnimalLocation(rabbit_ptr), nullptr);
 }
+
+TEST(ZooTest, SpendMoney) {
+  Zoo zoo("SF Zoo");
+
+  auto bear = std::make_unique<Bear>("Winnie", 8);
+  Animal* bear_ptr = bear.get();
+  zoo.purchaseAnimal(std::move(bear));
+
+  double purchase_cost = bear_ptr->getPurchaseCost();
+  double feeding_cost = bear_ptr->getFeedingCost();
+  bear_ptr->eat(20);
+  zoo.spendMoney(feeding_cost);
+
+  EXPECT_EQ(zoo.getBalance(), 10000.0 - purchase_cost - feeding_cost);
+}
