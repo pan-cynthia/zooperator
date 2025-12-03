@@ -200,7 +200,6 @@ bool Zoo::addAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
     return false;
   }
 
-  std::cout << "Added " << animal->getName() << " to " << exhibit->getName() << ".\n";
   return true;
 }
 
@@ -214,7 +213,6 @@ bool Zoo::removeAnimalFromExhibit(Animal* animal, Exhibit* exhibit) {
     return false;
   }
 
-  std::cout << "Removed " << animal->getName() << " from " << exhibit->getName() << ".\n";
   return exhibit->removeAnimal(animal);
 }
 
