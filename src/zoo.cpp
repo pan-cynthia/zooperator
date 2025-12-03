@@ -229,6 +229,12 @@ bool Zoo::moveAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
     return false;
   }
 
+  // check if animal is already in the exhibit
+  if (old_exhibit == exhibit) {
+    std::cout << animal->getName() << " is already in Exhibit " << exhibit->getName() << ".\n";
+    return false;
+  }
+
   // see if animal can be added to new exhibit
   if (!exhibit->canAddAnimal()) {
     std::cout << "Exhibit is full!\n";
