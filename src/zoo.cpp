@@ -200,7 +200,7 @@ bool Zoo::addAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
     return false;
   }
 
-  std::cout << "Added" << animal->getName() << " to " << exhibit->getName() << ".\n";
+  std::cout << "Added " << animal->getName() << " to " << exhibit->getName() << ".\n";
   return true;
 }
 
@@ -275,7 +275,7 @@ void Zoo::removeDeadAnimals() {
       animals_.end());
 
   for (const auto& name : dead_animals) {
-    std::cout << name << "has died and has been removed from the zoo.\n";
+    std::cout << name << " has died and has been removed from the zoo.\n";
   }
 }
 
