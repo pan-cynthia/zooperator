@@ -355,6 +355,21 @@ TEST(ZooTest, MoveAnimalToExhibit) {
   EXPECT_EQ(zoo.findAnimalLocation(bear_ptr), exhibit2_ptr);
 }
 
+TEST(ZooTest, CannotMoveAnimalToExistingExhibit) {
+  Zoo zoo("SF Zoo");
+
+  auto exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0);
+  Exhibit* exhibit_ptr = exhibit.get();
+  zoo.purchaseExhibit(std::move(exhibit));
+
+  auto bear = std::make_unique<Bear>("Winnie", 8);
+  Animal* bear_ptr = bear.get();
+  zoo.purchaseAnimal(std::move(bear));
+  EXPECT_TRUE(zoo.addAnimalToExhibit(bear_ptr, exhibit_ptr));
+
+  EXPECT_FALSE(zoo.moveAnimalToExhibit(bear_ptr, exhibit_ptr));
+}
+
 TEST(ZooTest, CannotMoveAnimalNotInExhibit) {
   Zoo zoo("SF Zoo");
 
