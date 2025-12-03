@@ -14,6 +14,11 @@ bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
     return false;
   }
 
+  if (!animal->isAlive()) {
+    std::cout << "Animal is not alive.\n";
+    return false;
+  }
+
   if (zoo.getBalance() < animal->getFeedingCost()) {
     std::cout << "Not enough money to feed " << animal->getName() << ".\n";
     return false;
@@ -28,6 +33,11 @@ bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
 bool Player::playWithAnimal(Animal* animal) {
   if (!animal) {
     std::cout << "Animal does not exist!\n";
+    return false;
+  }
+
+  if (!animal->isAlive()) {
+    std::cout << "Animal is not alive.\n";
     return false;
   }
 
@@ -49,6 +59,11 @@ bool Player::exerciseAnimal(Animal* animal) {
     return false;
   }
 
+  if (!animal->isAlive()) {
+    std::cout << "Animal is not alive.\n";
+    return false;
+  }
+
   // check if animal has enough energy
   if (animal->getEnergyLevel() < 30) {
     std::cout << animal->getName() << " is too tired to exercise.\n";
@@ -66,6 +81,11 @@ bool Player::exerciseAnimal(Animal* animal) {
 bool Player::treatAnimal(Zoo& zoo, Animal* animal) {
   if (!animal) {
     std::cout << "Animal does not exist!\n";
+    return false;
+  }
+
+  if (!animal->isAlive()) {
+    std::cout << "Animal is not alive.\n";
     return false;
   }
 
