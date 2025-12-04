@@ -20,11 +20,12 @@ bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
   }
 
   if (zoo.getBalance() < animal->getFeedingCost()) {
-    std::cout << "Not enough money to feed " << animal->getName() << ".\n";
+    std::cout << "Not enough money to feed " << animal->getName() << " the " << animal->getSpecies()
+              << ".\n";
     return false;
   }
 
-  std::cout << name_ << " fed " << animal->getName() << "\n";
+  std::cout << name_ << " fed " << animal->getName() << " the " << animal->getSpecies() << ".\n ";
   zoo.spendMoney(animal->getFeedingCost());
   animal->eat(20);
   return true;
@@ -42,11 +43,12 @@ bool Player::playWithAnimal(Animal* animal) {
   }
 
   if (animal->getEnergyLevel() < 20) {
-    std::cout << animal->getName() << " is too tired to play.\n";
+    std::cout << animal->getName() << " the " << animal->getSpecies() << " is too tired to play.\n";
     return false;
   }
 
-  std::cout << name_ << " played with " << animal->getName() << "\n";
+  std::cout << name_ << " played with " << animal->getName() << " the " << animal->getSpecies()
+            << ".\n";
   animal->updateEnergy(-10);
   animal->updateHappiness(15);
   animal->updateHunger(5);
@@ -66,11 +68,13 @@ bool Player::exerciseAnimal(Animal* animal) {
 
   // check if animal has enough energy
   if (animal->getEnergyLevel() < 30) {
-    std::cout << animal->getName() << " is too tired to exercise.\n";
+    std::cout << animal->getName() << " the " << animal->getSpecies()
+              << " is too tired to exercise.\n";
     return false;
   }
 
-  std::cout << name_ << " exercised " << animal->getName() << ".\n";
+  std::cout << name_ << " exercised " << animal->getName() << " the " << animal->getSpecies()
+            << ".\n";
   animal->updateEnergy(-20);
   animal->updateHealth(10);
   animal->updateHappiness(10);
@@ -90,12 +94,14 @@ bool Player::treatAnimal(Zoo& zoo, Animal* animal) {
   }
 
   if (zoo.getBalance() < 50.0) {
-    std::cout << "Not enough money to treat " << animal->getName() << "!\n";
+    std::cout << "Not enough money to treat " << animal->getName() << " the "
+              << animal->getSpecies() << "!\n";
     return false;
   }
 
   zoo.spendMoney(50.0);
-  std::cout << name_ << " gave medical care to " << animal->getName() << ".\n";
+  std::cout << name_ << " gave medical care to " << animal->getName() << " the "
+            << animal->getSpecies() << ".\n";
   animal->updateHealth(30);
   return true;
 }
