@@ -27,6 +27,7 @@ class Exhibit {
   int getCleanliness() const;
   double getPurchaseCost() const;
   double getMaintenanceCost() const;
+  bool needsCleaning();
 
   // setters
   void updateCleanliness(int delta);

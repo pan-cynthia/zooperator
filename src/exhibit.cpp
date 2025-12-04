@@ -102,6 +102,10 @@ double Exhibit::getMaintenanceCost() const {
   return maintenance_cost_;
 }
 
+bool Exhibit::needsCleaning() {
+  return cleanliness_ < 50;
+}
+
 void Exhibit::updateCleanliness(int delta) {
   cleanliness_ += delta;
   if (cleanliness_ > 100) {

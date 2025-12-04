@@ -147,7 +147,7 @@ std::vector<Exhibit*> Zoo::getAllExhibits() {
 std::vector<Exhibit*> Zoo::getExhibitsNeedingCleaning() {
   std::vector<Exhibit*> exhibits;
   for (const auto& ptr : exhibits_) {
-    if (ptr->getCleanliness() < 50) {
+    if (ptr->needsCleaning()) {
       exhibits.push_back(ptr.get());
     }
   }
