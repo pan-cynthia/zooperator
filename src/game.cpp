@@ -37,7 +37,7 @@ void Game::start() {
         manageExhibits();
         break;
       case 3:
-        manageFinances();
+        manageZoo();
         break;
       case 4:
         endDay();
@@ -85,7 +85,7 @@ void Game::displayMainMenu() {
   std::cout << "\n============== MAIN MENU ==============\n";
   std::cout << "1. Manage Animals\n";
   std::cout << "2. Manage Exhibits\n";
-  std::cout << "3. Manage Finances\n";
+  std::cout << "3. Manage Zoo\n";
   std::cout << "4. End Day\n";
   std::cout << "5. Exit Game\n";
   std::cout << "=======================================\n";
@@ -583,20 +583,24 @@ void Game::cleanExhibit() {
   player_.cleanExhibit(exhibit);
 }
 
-void Game::manageFinances() {
+void Game::manageZoo() {
   while (true) {
-    std::cout << "\n========== FINANCIAL MANAGEMENT ==========\n";
+    std::cout << "\n========== ZOO MANAGEMENT ==========\n";
     std::cout << "1. Check Balance\n";
-    std::cout << "2. Back to Main Menu\n";
+    std::cout << "2. View Zoo Rating\n";
+    std::cout << "3. Back to Main Menu\n";
     std::cout << "==========================================\n";
 
-    int choice = getPlayerInput(1, 2);
+    int choice = getPlayerInput(1, 3);
 
     switch (choice) {
       case 1:
         checkBalance();
         break;
       case 2:
+        viewZooRating();
+        break;
+      case 3:
         return;
     }
   }
@@ -604,6 +608,11 @@ void Game::manageFinances() {
 
 void Game::checkBalance() {
   std::cout << "\nCurrent Balance: $" << zoo_.getBalance() << "\n";
+}
+
+void Game::viewZooRating() {
+  double rating = zoo_.calculateZooRating();
+  std::cout << "Zoo Rating: " << rating << "/5.0\n";
 }
 
 bool Game::useActionPoint(const std::string action_description) {

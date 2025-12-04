@@ -26,7 +26,7 @@ class Game {
   void displayMainMenu();
   void manageAnimals();
   void manageExhibits();
-  void manageFinances();
+  void manageZoo();
 
   void clearInput();
   int getPlayerInput(int min, int max);
@@ -54,8 +54,9 @@ class Game {
   void sellExhibit();
   void cleanExhibit();
 
-  // finance actions
+  // zoo actions
   void checkBalance();
+  void viewZooRating();
 
   // action tracking
   bool useActionPoint(const std::string action_description);
