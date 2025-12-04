@@ -348,19 +348,44 @@ void Zoo::advanceDay() {
   balance_ += revenue;
   balance_ -= expenses;
 
-  auto needy_animals = getAnimalsNeedingAttention();
-  auto dirty_exhibits = getExhibitsNeedingCleaning();
+  int dirty_exhibits = 0;
+  int sick_animals = 0;
+  int unhappy_animals = 0;
+  int needy_animals = 0;
 
+  for (const auto& animal : animals_) {
+    if (animal->getHealthLevel() < 50) {
+      sick_animals++;
+    }
+
+    if (animal->getHappinessLevel() < 50) {
+      unhappy_animals++;
+    }
+
+    if (animal->needsAttention()) {
+      needy_animals++;
+    }
+  }
+
+  for (const auto& exhibit : exhibits_) {
+    if (exhibit->needsCleaning()) {
+      dirty_exhibits++;
+    }
+  }
+
+  std::cout << "Animals:\n";
+  std::cout << "  Total: " << getAnimalCount() << "\n";
+  std::cout << "  Sick: " << sick_animals << "\n";
+  std::cout << "  Unhappy: " << unhappy_animals << "\n";
+  std::cout << "  Need Attention: " << needy_animals << "\n";
+  std::cout << "Exhibits Needing Cleaning: " << dirty_exhibits << "\n";
   std::cout << "Visitors: " << visitors << "\n";
   std::cout << "Revenue : $" << revenue << "\n";
   std::cout << "Expenses: $" << expenses << "\n";
   std::cout << "Net     : $" << revenue - expenses << "\n";
   std::cout << "Balance : $" << balance_ << "\n";
-  std::cout << "Animals Needing Attention: " << needy_animals.size() << "\n";
-  std::cout << "Exhibits Needing Cleaning: " << dirty_exhibits.size() << "\n";
-
   std::cout << "----------------------------------\n";
 
   day_++;
-  std::cout << "\n Start Day " << day_ << "\n";
+  std::cout << "\nStart Day " << day_ << "\n";
 }
