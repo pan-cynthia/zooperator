@@ -10,7 +10,11 @@
 #include "rabbit.h"
 
 Game::Game(const Player& player, std::string zoo_name)
-    : player_(player), zoo_(zoo_name, 10000.00), running_(true) {}
+    : player_(player),
+      zoo_(zoo_name, 10000.00),
+      running_(true),
+      action_points_(10),
+      max_action_points_(10) {}
 
 void Game::start() {
   std::cout << "\n==============================================================\n";
@@ -316,6 +320,11 @@ void Game::feedAnimal() {
   if (!animal) {
     return;
   }
+
+  if (!useActionPoint("Fed " + animal->getName())) {
+    return;
+  }
+
   player_.feedAnimal(zoo_, animal);
 }
 
@@ -324,6 +333,11 @@ void Game::playWithAnimal() {
   if (!animal) {
     return;
   }
+
+  if (!useActionPoint("Played with " + animal->getName())) {
+    return;
+  }
+
   player_.playWithAnimal(animal);
 }
 
@@ -332,6 +346,11 @@ void Game::exerciseAnimal() {
   if (!animal) {
     return;
   }
+
+  if (!useActionPoint("Exercised " + animal->getName())) {
+    return;
+  }
+
   player_.exerciseAnimal(animal);
 }
 
@@ -340,6 +359,11 @@ void Game::treatAnimal() {
   if (!animal) {
     return;
   }
+
+  if (!useActionPoint("Treated " + animal->getName())) {
+    return;
+  }
+
   player_.treatAnimal(zoo_, animal);
 }
 
@@ -552,6 +576,10 @@ void Game::cleanExhibit() {
     return;
   }
 
+  if (!useActionPoint("Clean " + exhibit->getName())) {
+    return;
+  }
+
   player_.cleanExhibit(exhibit);
 }
 
@@ -578,8 +606,43 @@ void Game::checkBalance() {
   std::cout << "\nCurrent Balance: $" << zoo_.getBalance() << "\n";
 }
 
+bool Game::useActionPoint(const std::string action_description) {
+  if (action_points_ <= 0) {
+    std::cout << "No more action points remaining today!\n";
+    return false;
+  }
+
+  action_points_--;
+  actions_.push_back(action_description);
+  return true;
+}
+
+void Game::resetActionPoints() {
+  action_points_ = max_action_points_;
+  actions_.clear();
+}
+
+int Game::getActionPoints() const {
+  return action_points_;
+}
+
+int Game::getMaxActionPoints() const {
+  return max_action_points_;
+}
+
 void Game::endDay() {
   std::cout << "\n---------- End of Day " << zoo_.getDay() << " ----------\n";
+
+  // action summary
+  std::cout << "Actions used today: " << (max_action_points_ - action_points_) << "/"
+            << max_action_points_ << "\n";
+
+  std::cout << "Actions performed today:\n";
+  for (size_t i = 0; i < actions_.size(); ++i) {
+    std::cout << "  " << (i + 1) << ". " << actions_[i] << "\n";
+  }
+
+  resetActionPoints();
 
   zoo_.advanceDay();
 

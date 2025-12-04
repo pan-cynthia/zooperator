@@ -16,6 +16,10 @@ class Game {
   Zoo zoo_;
   bool running_;
 
+  int action_points_;
+  int max_action_points_;
+  std::vector<std::string> actions_;
+
   void setupStarterZoo();
 
   // menus
@@ -52,6 +56,12 @@ class Game {
 
   // finance actions
   void checkBalance();
+
+  // action tracking
+  bool useActionPoint(const std::string action_description);
+  void resetActionPoints();
+  int getActionPoints() const;
+  int getMaxActionPoints() const;
 
   void endDay();
   void exitGame();
