@@ -351,16 +351,14 @@ double Zoo::calculateZooRating() const {
   double avg_health = total_health / getAnimalCount();
   double health_score = (avg_health / 100.0) * 1.5;
 
-  double cleanliness_score = 0.0;
-  if (getExhibitCount() == 0) {
+  double cleanliness_score = 0.5;
+  if (getExhibitCount() > 0) {
     double total_cleanliness = 0.0;
     for (const auto& exhibit : exhibits_) {
       total_cleanliness += exhibit->getCleanliness();
     }
     double avg_cleanliness = total_cleanliness / getExhibitCount();
     cleanliness_score = (avg_cleanliness / 100.0) * 1.0;
-  } else {
-    cleanliness_score = 0.5;
   }
 
   double financial_score = 0.0;

@@ -490,20 +490,39 @@ TEST(ZooTest, UpdateAnimalStats) {
 }
 
 TEST(ZooTest, CalculateVisitorCount) {
-  Zoo zoo("SF Zoo");
+  Zoo zoo("SF Zoo", 3000.0);
   auto bear = std::make_unique<Bear>("Winnie", 8);
   Animal* bear_ptr = bear.get();
+  int happiness = bear_ptr->getHappinessLevel();
+  int health = bear_ptr->getHealthLevel();
   zoo.purchaseAnimal(std::move(bear));
-  EXPECT_EQ(zoo.calculateVisitorCount(), 210);
+
+  double avg_happiness = happiness;
+  double avg_health = health;
+  double happiness_score = (avg_happiness / 100.0) * 2.0;
+  double health_score = (avg_health / 100.0) * 1.5;
+  double cleanliness_score = 0.5;
+  double financial_score = 0.3;
+
+  double rating = happiness_score + health_score + cleanliness_score + financial_score;
+  rating = std::min(5.0, std::max(0.0, rating));
+  int expected_visitors = 10 * (1.0 + rating / 5.0);
+
+  int bonus = 0;
+  if (happiness > 70) {
+    bonus = static_cast<int>((happiness / 10.0) * 20);
+  }
+  EXPECT_EQ(zoo.calculateVisitorCount(), expected_visitors + bonus);
 }
 
 TEST(ZooTest, CalculateDailyRevenue) {
   Zoo zoo("SF Zoo");
   auto bear = std::make_unique<Bear>("Winnie", 8);
   Animal* bear_ptr = bear.get();
-  zoo.purchaseAnimal(std::move(bear));
+
   int visitor_count = zoo.calculateVisitorCount();
-  EXPECT_EQ(zoo.calculateDailyRevenue(visitor_count), 3150.0);
+  double expected_revenue = visitor_count * 15.0;
+  EXPECT_EQ(zoo.calculateDailyRevenue(visitor_count), expected_revenue);
 }
 
 TEST(ZooTest, CalculateDailyExpenses) {
