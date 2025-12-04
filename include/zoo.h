@@ -51,6 +51,7 @@ class Zoo {
   int calculateVisitorCount() const;
   double calculateDailyRevenue(int visitor_count) const;
   double calculateDailyExpenses() const;
+  double calculateZooRating() const;
 
  private:
   std::string name_;

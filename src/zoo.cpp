@@ -301,13 +301,16 @@ void Zoo::updateAnimalStats() {
 int Zoo::calculateVisitorCount() const {
   int base_visitors = static_cast<int>(animals_.size()) * 10;
 
+  double rating_multiplier = 1.0 + (calculateZooRating() / 5.0);
+  int visitors = static_cast<int>(base_visitors * rating_multiplier);
+
   int happiness_bonus = 0;
   for (const auto& animal : animals_) {
     if (animal->getHappinessLevel() > 70) {
       happiness_bonus += static_cast<int>((animal->getHappinessLevel() / 10.0) * 20);
     }
   }
-  return base_visitors + happiness_bonus;
+  return visitors + happiness_bonus;
 }
 
 double Zoo::calculateDailyRevenue(int visitor_count) const {
@@ -329,6 +332,56 @@ double Zoo::calculateDailyExpenses() const {
   }
 
   return total;
+}
+
+double Zoo::calculateZooRating() const {
+  if (animals_.empty()) {
+    return 0.0;
+  }
+
+  double total_happiness = 0.0;
+  double total_health = 0.0;
+  for (const auto& animal : animals_) {
+    total_happiness += animal->getHappinessLevel();
+    total_health += animal->getHealthLevel();
+  }
+
+  double avg_happiness = total_happiness / getAnimalCount();
+  double happiness_score = (avg_happiness / 100.0) * 2.0;
+  double avg_health = total_health / getAnimalCount();
+  double health_score = (avg_health / 100.0) * 1.5;
+
+  double cleanliness_score = 0.0;
+  if (getExhibitCount() == 0) {
+    double total_cleanliness = 0.0;
+    for (const auto& exhibit : exhibits_) {
+      total_cleanliness += exhibit->getCleanliness();
+    }
+    double avg_cleanliness = total_cleanliness / getExhibitCount();
+    cleanliness_score = (avg_cleanliness / 100.0) * 1.0;
+  } else {
+    cleanliness_score = 0.5;
+  }
+
+  double financial_score = 0.0;
+  if (balance_ > 5000) {
+    financial_score = 0.5;
+  } else if (balance_ > 2000) {
+    financial_score = 0.3;
+  } else if (balance_ > 500) {
+    financial_score = 0.2;
+  }
+
+  double total_rating = happiness_score + health_score + cleanliness_score + financial_score;
+
+  if (total_rating > 5.0) {
+    total_rating = 5.0;
+  }
+  if (total_rating < 0.0) {
+    total_rating = 0.0;
+  }
+
+  return total_rating;
 }
 
 void Zoo::advanceDay() {
@@ -384,6 +437,7 @@ void Zoo::advanceDay() {
   std::cout << "Expenses: $" << expenses << "\n";
   std::cout << "Net     : $" << revenue - expenses << "\n";
   std::cout << "Balance : $" << balance_ << "\n";
+  std::cout << "Zoo Rating: " << calculateZooRating() << "/5.0\n";
   std::cout << "----------------------------------\n";
 
   day_++;
