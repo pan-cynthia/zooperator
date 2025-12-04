@@ -634,12 +634,16 @@ void Game::endDay() {
   std::cout << "\n---------- End of Day " << zoo_.getDay() << " ----------\n";
 
   // action summary
-  std::cout << "Actions used today: " << (max_action_points_ - action_points_) << "/"
+  std::cout << "Actions Used: " << (max_action_points_ - action_points_) << "/"
             << max_action_points_ << "\n";
 
-  std::cout << "Actions performed today:\n";
-  for (size_t i = 0; i < actions_.size(); ++i) {
-    std::cout << "  " << (i + 1) << ". " << actions_[i] << "\n";
+  if (actions_.empty()) {
+    std::cout << "No actions performed today.\n";
+  } else {
+    std::cout << "Actions Performed:\n";
+    for (size_t i = 0; i < actions_.size(); ++i) {
+      std::cout << "  " << (i + 1) << ". " << actions_[i] << "\n";
+    }
   }
 
   resetActionPoints();
