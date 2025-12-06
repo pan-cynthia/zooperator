@@ -362,6 +362,11 @@ double Zoo::calculateDailyExpenses() const {
     total += exhibit->getMaintenanceCost();
   }
 
+  double staff_wages = 30.0;
+  staff_wages += getAnimalCount() * 8.0;
+  staff_wages += getExhibitCount() * 5.0;
+  total += staff_wages;
+
   return total;
 }
 

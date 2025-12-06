@@ -531,7 +531,7 @@ TEST(ZooTest, CalculateDailyExpenses) {
   Animal* bear_ptr = bear.get();
   zoo.purchaseAnimal(std::move(bear));
   double maintenance_cost = bear_ptr->getMaintenanceCost();
-  EXPECT_EQ(zoo.calculateDailyExpenses(), 60.0);
+  EXPECT_EQ(zoo.calculateDailyExpenses(), 98.0);
 }
 
 TEST(ZooTest, AdvanceDay) {
