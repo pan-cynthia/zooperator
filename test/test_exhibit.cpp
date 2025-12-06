@@ -6,18 +6,18 @@
 #include "rabbit.h"
 
 TEST(ExhibitTest, ConstructorInitialization) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   EXPECT_EQ(exhibit.getName(), "Penguin Point");
   EXPECT_EQ(exhibit.getType(), "Arctic");
   EXPECT_EQ(exhibit.getMaxCapacity(), 5);
   EXPECT_EQ(exhibit.getCapacityUsed(), 0);
   EXPECT_EQ(exhibit.getCleanliness(), 100);
-  EXPECT_EQ(exhibit.getPurchaseCost(), 2500.0);
-  EXPECT_EQ(exhibit.getMaintenanceCost(), 50.0);
+  EXPECT_EQ(exhibit.getPurchaseCost(), 1500.0);
+  EXPECT_EQ(exhibit.getMaintenanceCost(), 60.0);
 }
 
 TEST(ExhibitTest, CanAddAnimal) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   EXPECT_TRUE(exhibit.canAddAnimal());
 
   Penguin penguin1("Ramon", 15);
@@ -43,15 +43,15 @@ TEST(ExhibitTest, CanAddAnimal) {
 }
 
 TEST(ExhibitTest, CannotAddSameAnimalTwice) {
-  Exhibit exhibit("Bear Habitat", "Forest", 3, 1500.0, 30.0);
-  Bear bear("Grizz", 29);
+  Exhibit exhibit("Bear Habitat", "Forest", 3, 800.0, 35.0);
+  Bear bear("Grizz", 25);
 
   EXPECT_TRUE(exhibit.addAnimal(&bear));
   EXPECT_FALSE(exhibit.addAnimal(&bear));
 }
 
 TEST(ExhibitTest, CannotAddAnimalWhenFull) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   EXPECT_TRUE(exhibit.canAddAnimal());
 
   Penguin penguin1("Ramon", 15);
@@ -75,25 +75,25 @@ TEST(ExhibitTest, CannotAddAnimalWhenFull) {
 }
 
 TEST(ExhibitTest, CannotAddNullAnimal) {
-  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   EXPECT_FALSE(exhibit.addAnimal(nullptr));
   EXPECT_EQ(exhibit.getCapacityUsed(), 0);
 }
 
 TEST(ExhibitTest, AddAnimal) {
-  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   EXPECT_EQ(exhibit.getCapacityUsed(), 0);
 
-  Rabbit rabbit("Judy Hopps", 24);
+  Rabbit rabbit("Judy Hopps", 8);
   EXPECT_TRUE(exhibit.addAnimal(&rabbit));
   EXPECT_EQ(exhibit.getCapacityUsed(), 1);
 }
 
 TEST(ExhibitTest, AddMultipleAnimals) {
-  Exhibit exhibit("Bear Habitat", "Forest", 3, 1500.0, 30.0);
-  Bear bear1("Grizz", 29);
-  Bear bear2("Ice Bear", 27);
-  Bear bear3("Panda", 28);
+  Exhibit exhibit("Bear Habitat", "Forest", 3, 800.0, 35.0);
+  Bear bear1("Grizz", 25);
+  Bear bear2("Ice Bear", 23);
+  Bear bear3("Panda", 24);
 
   EXPECT_TRUE(exhibit.addAnimal(&bear1));
   EXPECT_TRUE(exhibit.addAnimal(&bear2));
@@ -103,9 +103,9 @@ TEST(ExhibitTest, AddMultipleAnimals) {
 }
 
 TEST(ExhibitTest, RemoveAnimal) {
-  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
 
-  Rabbit rabbit("Judy Hopps", 24);
+  Rabbit rabbit("Judy Hopps", 8);
   EXPECT_TRUE(exhibit.addAnimal(&rabbit));
   EXPECT_EQ(exhibit.getCapacityUsed(), 1);
 
@@ -114,18 +114,18 @@ TEST(ExhibitTest, RemoveAnimal) {
 }
 
 TEST(ExhibitTest, RemoveNullAnimal) {
-  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   EXPECT_FALSE(exhibit.removeAnimal(nullptr));
 }
 
 TEST(ExhibitTest, RemoveNonexistentAnimal) {
-  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
-  Rabbit rabbit("Judy Hopps", 24);
+  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
+  Rabbit rabbit("Judy Hopps", 8);
   EXPECT_FALSE(exhibit.removeAnimal(&rabbit));
 }
 
 TEST(ExhibitTest, ContainsAnimal) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   Penguin penguin("Mumble", 8);
 
   EXPECT_FALSE(exhibit.containsAnimal(&penguin));
@@ -137,39 +137,39 @@ TEST(ExhibitTest, ContainsAnimal) {
 }
 
 TEST(ExhibitTest, ContainsNullAnimal) {
-  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  Exhibit exhibit("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   EXPECT_FALSE(exhibit.containsAnimal(nullptr));
 }
 
 TEST(ExhibitTest, GetAnimal) {
-  Exhibit exhibit("Bear Habitat", "Forest", 3, 1500.0, 30.0);
+  Exhibit exhibit("Bear Habitat", "Forest", 3, 800.0, 35.0);
 
-  Bear bear("Grizz", 29);
+  Bear bear("Grizz", 25);
   exhibit.addAnimal(&bear);
   Animal* animal = exhibit.getAnimal(0);
   EXPECT_EQ(animal->getName(), "Grizz");
 }
 
 TEST(ExhibitTest, GetAnimalOutOfBounds) {
-  Exhibit exhibit("Bear Habitat", "Forest", 3, 1500.0, 30.0);
-  Bear bear("Grizz", 29);
+  Exhibit exhibit("Bear Habitat", "Forest", 3, 800.0, 35.0);
+  Bear bear("Grizz", 25);
   exhibit.addAnimal(&bear);
   EXPECT_NE(exhibit.getAnimal(0), nullptr);
   EXPECT_EQ(exhibit.getAnimal(1), nullptr);
 }
 
 TEST(ExhibitTest, GetAnimalFromEmptyExhibit) {
-  Exhibit exhibit("Bear Habitat", "Forest", 3, 1500.0, 30.0);
+  Exhibit exhibit("Bear Habitat", "Forest", 3, 800.0, 35.0);
   EXPECT_EQ(exhibit.getAnimal(0), nullptr);
 }
 
 TEST(ExhibitTest, InitialCleanliness) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   EXPECT_EQ(exhibit.getCleanliness(), 100);
 }
 
 TEST(ExhibitTest, UpdateCleanliness) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   exhibit.updateCleanliness(-20);
   EXPECT_EQ(exhibit.getCleanliness(), 80);
   exhibit.updateCleanliness(15);
@@ -179,19 +179,19 @@ TEST(ExhibitTest, UpdateCleanliness) {
 }
 
 TEST(ExhibitTest, CleanlinessClampAt100) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   exhibit.updateCleanliness(10);
   EXPECT_EQ(exhibit.getCleanliness(), 100);
 }
 
 TEST(ExhibitTest, CleanlinessClampAt0) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   exhibit.updateCleanliness(-150);
   EXPECT_EQ(exhibit.getCleanliness(), 0);
 }
 
 TEST(ExhibitTest, CleanExhibit) {
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   exhibit.updateCleanliness(-60);
   exhibit.clean();
   EXPECT_EQ(exhibit.getCleanliness(), 100);

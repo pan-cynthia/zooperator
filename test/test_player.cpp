@@ -84,7 +84,7 @@ TEST(PlayerTest, CannotPlayWithTiredAnimal) {
 
 TEST(PlayerTest, ExerciseAnimal) {
   Player player("Bob");
-  Rabbit rabbit("Buster", 10);
+  Rabbit rabbit("Buster", 8);
 
   rabbit.updateHealth(-50);
   rabbit.updateHappiness(-60);
@@ -108,7 +108,7 @@ TEST(PlayerTest, CannotExerciseNullAnimal) {
 
 TEST(PlayerTest, CannotExerciseDeadAnimal) {
   Player player("Bob");
-  Rabbit rabbit("Buster", 10);
+  Rabbit rabbit("Buster", 8);
 
   rabbit.updateHealth(-100);
   EXPECT_FALSE(player.exerciseAnimal(&rabbit));
@@ -116,7 +116,7 @@ TEST(PlayerTest, CannotExerciseDeadAnimal) {
 
 TEST(PlayerTest, CannotExerciseTiredAnimal) {
   Player player("Bob");
-  Rabbit rabbit("Buster", 10);
+  Rabbit rabbit("Buster", 8);
 
   rabbit.updateEnergy(-75);
   EXPECT_FALSE(player.exerciseAnimal(&rabbit));
@@ -158,7 +158,7 @@ TEST(PlayerTest, LowBalanceCannotTreatAnimal) {
 
 TEST(PlayerTest, CleanExhibit) {
   Player player("Charlie");
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   exhibit.updateCleanliness(-40);
   EXPECT_TRUE(player.cleanExhibit(&exhibit));
   EXPECT_EQ(exhibit.getCleanliness(), 100);
@@ -171,7 +171,7 @@ TEST(PlayerTest, CannotCleanNullExhibit) {
 
 TEST(PlayerTest, CleanAlreadyCleanExhibit) {
   Player player("Charlie");
-  Exhibit exhibit("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   EXPECT_TRUE(player.cleanExhibit(&exhibit));
   EXPECT_EQ(exhibit.getCleanliness(), 100);
 }

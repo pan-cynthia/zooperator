@@ -7,7 +7,7 @@ TEST(PenguinTest, ConstructorInitialization) {
   EXPECT_EQ(penguin.getName(), "Pororo");
   EXPECT_EQ(penguin.getSpecies(), "Penguin");
   EXPECT_EQ(penguin.getAge(), 8);
-  EXPECT_EQ(penguin.getPurchaseCost(), 500.0);
-  EXPECT_EQ(penguin.getFeedingCost(), 15.0);
-  EXPECT_EQ(penguin.getMaintenanceCost(), 25.0);
+  EXPECT_EQ(penguin.getPurchaseCost(), 400.0);
+  EXPECT_EQ(penguin.getFeedingCost(), 20.0);
+  EXPECT_EQ(penguin.getMaintenanceCost(), 30.0);
 }

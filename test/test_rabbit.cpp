@@ -8,6 +8,6 @@ TEST(RabbitTest, ConstructorInitialization) {
   EXPECT_EQ(rabbit.getSpecies(), "Rabbit");
   EXPECT_EQ(rabbit.getAge(), 4);
   EXPECT_EQ(rabbit.getPurchaseCost(), 150.0);
-  EXPECT_EQ(rabbit.getFeedingCost(), 3.0);
-  EXPECT_EQ(rabbit.getMaintenanceCost(), 5.0);
+  EXPECT_EQ(rabbit.getFeedingCost(), 5.0);
+  EXPECT_EQ(rabbit.getMaintenanceCost(), 8.0);
 }

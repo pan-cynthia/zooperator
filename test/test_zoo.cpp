@@ -92,7 +92,7 @@ TEST(ZooTest, SellAnimalRemovesFromExhibit) {
   Animal* bear_ptr = bear.get();
   zoo.purchaseAnimal(std::move(bear));
 
-  auto exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0);
+  auto exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -177,7 +177,7 @@ TEST(ZooTest, RemoveDeadAnimals) {
 TEST(ZooTest, PurchaseExhibit) {
   Zoo zoo("San Diego Zoo");
 
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   double exhibit_cost = exhibit->getPurchaseCost();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -187,15 +187,15 @@ TEST(ZooTest, PurchaseExhibit) {
 
 TEST(ZooTest, PurchaseMultipleExhibits) {
   Zoo zoo("San Diego Zoo");
-  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0));
-  zoo.purchaseExhibit(std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0));
   EXPECT_EQ(zoo.getExhibitCount(), 2);
 }
 
 TEST(ZooTest, CannotPurchaseExhibitWithInsufficientFunds) {
   Zoo zoo("San Diego Zoo", 100.0);
   EXPECT_FALSE(
-      zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0)));
+      zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0)));
   EXPECT_EQ(zoo.getExhibitCount(), 0);
   EXPECT_EQ(zoo.getBalance(), 100.0);
 }
@@ -203,7 +203,7 @@ TEST(ZooTest, CannotPurchaseExhibitWithInsufficientFunds) {
 TEST(ZooTest, SellExhibit) {
   Zoo zoo("San Diego Zoo");
 
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   Exhibit* exhibit_ptr = exhibit.get();
   double exhibit_cost = exhibit->getPurchaseCost();
   zoo.purchaseExhibit(std::move(exhibit));
@@ -217,7 +217,7 @@ TEST(ZooTest, SellExhibit) {
 
 TEST(ZooTest, GetExhibit) {
   Zoo zoo("San Diego Zoo");
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
   EXPECT_EQ(zoo.getExhibit(0), exhibit_ptr);
@@ -225,25 +225,25 @@ TEST(ZooTest, GetExhibit) {
 
 TEST(ZooTest, GetExhibitOutOfBounds) {
   Zoo zoo("San Diego Zoo");
-  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0));
   EXPECT_NE(zoo.getExhibit(0), nullptr);
   EXPECT_EQ(zoo.getExhibit(1), nullptr);
 }
 
 TEST(ZooTest, GetAllExhibits) {
   Zoo zoo("San Diego Zoo");
-  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0));
-  zoo.purchaseExhibit(std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0));
   EXPECT_EQ(zoo.getAllExhibits().size(), 2);
 }
 
 TEST(ZooTest, GetExhibitsNeedingCleaning) {
   Zoo zoo("San Diego Zoo");
 
-  auto clean_exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto clean_exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   zoo.purchaseExhibit(std::move(clean_exhibit));
 
-  auto dirty_exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0);
+  auto dirty_exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0);
   Exhibit* dirty_exhibit_ptr = dirty_exhibit.get();
   zoo.purchaseExhibit(std::move(dirty_exhibit));
 
@@ -255,14 +255,14 @@ TEST(ZooTest, GetExhibitsNeedingCleaning) {
 
 TEST(ZooTest, NoExhibitsNeedCleaning) {
   Zoo zoo("San Diego Zoo");
-  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0));
-  zoo.purchaseExhibit(std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0));
+  zoo.purchaseExhibit(std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0));
   EXPECT_EQ(zoo.getExhibitsNeedingCleaning().size(), 0);
 }
 
 TEST(ZooTest, AddAnimalToExhibit) {
   Zoo zoo("SF Zoo");
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -277,7 +277,7 @@ TEST(ZooTest, AddAnimalToExhibit) {
 
 TEST(ZooTest, CannotAddAnimalToFullExhibit) {
   Zoo zoo("SF Zoo");
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 1, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 1, 300.0, 15.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -297,7 +297,7 @@ TEST(ZooTest, CannotAddAnimalToFullExhibit) {
 TEST(ZooTest, RemoveAnimalFromExhibit) {
   Zoo zoo("SF Zoo");
 
-  auto exhibit = std::make_unique<Exhibit>("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  auto exhibit = std::make_unique<Exhibit>("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -316,7 +316,7 @@ TEST(ZooTest, RemoveAnimalFromExhibit) {
 TEST(ZooTest, CannotRemoveAnimalNotInExhibit) {
   Zoo zoo("SF Zoo");
 
-  auto exhibit = std::make_unique<Exhibit>("Penguin Point", "Arctic", 5, 2500.0, 50.0);
+  auto exhibit = std::make_unique<Exhibit>("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -330,11 +330,11 @@ TEST(ZooTest, CannotRemoveAnimalNotInExhibit) {
 TEST(ZooTest, MoveAnimalToExhibit) {
   Zoo zoo("SF Zoo");
 
-  auto exhibit1 = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 3, 1500.0, 30.0);
+  auto exhibit1 = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit1_ptr = exhibit1.get();
   zoo.purchaseExhibit(std::move(exhibit1));
 
-  auto exhibit2 = std::make_unique<Exhibit>("Bear Habitat 2", "Forest", 3, 1500.0, 30.0);
+  auto exhibit2 = std::make_unique<Exhibit>("Bear Habitat 2", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit2_ptr = exhibit2.get();
   zoo.purchaseExhibit(std::move(exhibit2));
 
@@ -358,7 +358,7 @@ TEST(ZooTest, MoveAnimalToExhibit) {
 TEST(ZooTest, CannotMoveAnimalToExistingExhibit) {
   Zoo zoo("SF Zoo");
 
-  auto exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 1500.0, 30.0);
+  auto exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -373,7 +373,7 @@ TEST(ZooTest, CannotMoveAnimalToExistingExhibit) {
 TEST(ZooTest, CannotMoveAnimalNotInExhibit) {
   Zoo zoo("SF Zoo");
 
-  auto exhibit = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 3, 1500.0, 30.0);
+  auto exhibit = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -387,11 +387,11 @@ TEST(ZooTest, CannotMoveAnimalNotInExhibit) {
 
 TEST(ZooTest, CannotMoveAnimalToFullExhibit) {
   Zoo zoo("SF Zoo");
-  auto exhibit1 = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 1, 1500.0, 30.0);
+  auto exhibit1 = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 1, 800.0, 35.0);
   Exhibit* exhibit1_ptr = exhibit1.get();
   zoo.purchaseExhibit(std::move(exhibit1));
 
-  auto exhibit2 = std::make_unique<Exhibit>("Bear Habitat 2", "Forest", 3, 1500.0, 30.0);
+  auto exhibit2 = std::make_unique<Exhibit>("Bear Habitat 2", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit2_ptr = exhibit2.get();
   zoo.purchaseExhibit(std::move(exhibit2));
 
@@ -413,7 +413,7 @@ TEST(ZooTest, CannotMoveAnimalToFullExhibit) {
 
 TEST(ZooTest, CannotMoveNullAnimal) {
   Zoo zoo("SF Zoo");
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
   EXPECT_FALSE(zoo.moveAnimalToExhibit(nullptr, exhibit_ptr));
@@ -425,7 +425,7 @@ TEST(ZooTest, CannotMoveAnimalToNullExhibit) {
   Animal* rabbit_ptr = rabbit.get();
   zoo.purchaseAnimal(std::move(rabbit));
 
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -440,7 +440,7 @@ TEST(ZooTest, FindAnimalLocation) {
   Animal* rabbit_ptr = rabbit.get();
   zoo.purchaseAnimal(std::move(rabbit));
 
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   Exhibit* exhibit_ptr = exhibit.get();
   zoo.purchaseExhibit(std::move(exhibit));
 
@@ -455,7 +455,7 @@ TEST(ZooTest, FindAnimalLocationNotInAnyExhibit) {
   Animal* rabbit_ptr = rabbit.get();
   zoo.purchaseAnimal(std::move(rabbit));
 
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 500.0, 10.0);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
   zoo.purchaseExhibit(std::move(exhibit));
 
   EXPECT_EQ(zoo.findAnimalLocation(rabbit_ptr), nullptr);
@@ -531,7 +531,7 @@ TEST(ZooTest, CalculateDailyExpenses) {
   Animal* bear_ptr = bear.get();
   zoo.purchaseAnimal(std::move(bear));
   double maintenance_cost = bear_ptr->getMaintenanceCost();
-  EXPECT_EQ(zoo.calculateDailyExpenses(), 50.0);
+  EXPECT_EQ(zoo.calculateDailyExpenses(), 60.0);
 }
 
 TEST(ZooTest, AdvanceDay) {

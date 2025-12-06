@@ -4,9 +4,9 @@
 #include <utility>
 
 Bear::Bear(std::string name, int age) : Animal(std::move(name), "Bear", age) {
-  purchase_cost_ = 2000.0;
-  feeding_cost_ = 30.0;
-  maintenance_cost_ = 50.0;
+  purchase_cost_ = 1500.0;
+  feeding_cost_ = 40.0;
+  maintenance_cost_ = 60.0;
 }
 
 void Bear::makeSound() const {

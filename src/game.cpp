@@ -53,7 +53,7 @@ void Game::setupStarterZoo() {
   std::cout << "Setting up your starter zoo...\n";
   std::cout << "We've added a rabbit exhibit and 1 rabbit to get you started!\n\n";
 
-  zoo_.purchaseExhibit(std::make_unique<Exhibit>("Bunny Burrow", "Grassland", 4, 500.0, 10.0));
+  zoo_.purchaseExhibit(std::make_unique<Exhibit>("Bunny Burrow", "Grassland", 4, 300.0, 15.0));
   auto rabbit = std::make_unique<Rabbit>("Miffy", 7);
   Animal* rabbit_ptr = rabbit.get();
 
@@ -245,8 +245,8 @@ void Game::renameAnimal() {
 void Game::purchaseAnimal() {
   std::cout << "\n========== PURCHASE ANIMAL ==========\n";
   std::cout << "1. Rabbit - $150\n";
-  std::cout << "2. Penguin - $500\n";
-  std::cout << "3. Bear - $2000\n";
+  std::cout << "2. Penguin - $400\n";
+  std::cout << "3. Bear - $1500\n";
   std::cout << "4. Cancel\n";
   std::cout << "=====================================\n";
 
@@ -499,9 +499,9 @@ void Game::displayExhibitsNeedingCleaning() {
 
 void Game::purchaseExhibit() {
   std::cout << "\n========== PURCHASE EXHIBIT ==========\n";
-  std::cout << "1. Grassland (2-4 capacity) - $500\n";
-  std::cout << "2. Forest (3-5 capacity) - $1500\n";
-  std::cout << "3. Arctic (4-6 capacity) - $2500\n";
+  std::cout << "1. Grassland (2-3 capacity) - $300\n";
+  std::cout << "2. Forest (3-4 capacity) - $800\n";
+  std::cout << "3. Arctic (4-5 capacity) - $1500\n";
   std::cout << "4. Cancel\n";
   std::cout << "=======================================\n";
 
@@ -522,21 +522,21 @@ void Game::purchaseExhibit() {
   std::unique_ptr<Exhibit> exhibit;
   switch (choice) {
     case 1: {
-      std::uniform_int_distribution<> distr(2, 8);
+      std::uniform_int_distribution<> distr(2, 3);
       capacity = distr(gen);
-      exhibit = std::make_unique<Exhibit>(name, "Grassland", capacity, 500.0, 10.0);
+      exhibit = std::make_unique<Exhibit>(name, "Grassland", capacity, 300.0, 15.0);
       break;
     }
     case 2: {
-      std::uniform_int_distribution<> distr(3, 5);
+      std::uniform_int_distribution<> distr(3, 4);
       capacity = distr(gen);
-      exhibit = std::make_unique<Exhibit>(name, "Forest", capacity, 1500.0, 30.0);
+      exhibit = std::make_unique<Exhibit>(name, "Forest", capacity, 800.0, 35.0);
       break;
     }
     case 3: {
-      std::uniform_int_distribution<> distr(4, 6);
+      std::uniform_int_distribution<> distr(4, 5);
       capacity = distr(gen);
-      exhibit = std::make_unique<Exhibit>(name, "Arctic", capacity, 2500.0, 50.0);
+      exhibit = std::make_unique<Exhibit>(name, "Arctic", capacity, 1500.0, 60.0);
       break;
     }
   }
