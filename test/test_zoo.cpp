@@ -7,17 +7,17 @@
 #include "zoo.h"
 
 TEST(ZooTest, ConstructorInitialization) {
-  Zoo zoo("SF Zoo", 10000);
+  Zoo zoo("SF Zoo", 1500.0);
   EXPECT_EQ(zoo.getName(), "SF Zoo");
   EXPECT_EQ(zoo.getDay(), 1);
-  EXPECT_EQ(zoo.getBalance(), 10000.0);
+  EXPECT_EQ(zoo.getBalance(), 1500.0);
   EXPECT_EQ(zoo.getAnimalCount(), 0);
   EXPECT_EQ(zoo.getExhibitCount(), 0);
 }
 
 TEST(ZooTest, ConstructorDefaultBalance) {
   Zoo zoo("SF Zoo");
-  EXPECT_EQ(zoo.getBalance(), 10000.0);
+  EXPECT_EQ(zoo.getBalance(), 1500.0);
 }
 
 TEST(ZooTest, PurchaseAnimal) {
@@ -27,11 +27,11 @@ TEST(ZooTest, PurchaseAnimal) {
 
   zoo.purchaseAnimal(std::move(rabbit));
   EXPECT_EQ(zoo.getAnimalCount(), 1);
-  EXPECT_EQ(zoo.getBalance(), 10000.0 - rabbit_cost);
+  EXPECT_EQ(zoo.getBalance(), 1500.0 - rabbit_cost);
 }
 
 TEST(ZooTest, PurchaseMultipleAnimals) {
-  Zoo zoo("Oakland Zoo");
+  Zoo zoo("Oakland Zoo", 2500.0);
   zoo.purchaseAnimal(std::make_unique<Rabbit>("Miffy", 7));
   zoo.purchaseAnimal(std::make_unique<Penguin>("Pororo", 8));
   zoo.purchaseAnimal(std::make_unique<Bear>("Corduroy", 4));
@@ -56,7 +56,7 @@ TEST(ZooTest, CorrectBalance) {
   double penguin_cost = penguin->getPurchaseCost();
   zoo.purchaseAnimal(std::move(penguin));
 
-  EXPECT_EQ(zoo.getBalance(), 10000.0 - rabbit_cost - penguin_cost);
+  EXPECT_EQ(zoo.getBalance(), 1500.0 - rabbit_cost - penguin_cost);
 }
 
 TEST(ZooTest, SellAnimal) {
@@ -82,11 +82,11 @@ TEST(ZooTest, CannotSellNonexistentAnimal) {
   Zoo zoo("Oakland Zoo");
   Bear bear("Corduroy", 4);
   EXPECT_FALSE(zoo.sellAnimal(&bear));
-  EXPECT_EQ(zoo.getBalance(), 10000.0);
+  EXPECT_EQ(zoo.getBalance(), 1500.0);
 }
 
 TEST(ZooTest, SellAnimalRemovesFromExhibit) {
-  Zoo zoo("SF Zoo");
+  Zoo zoo("SF Zoo", 2500.0);
 
   auto bear = std::make_unique<Bear>("Corduroy", 4);
   Animal* bear_ptr = bear.get();
@@ -128,7 +128,7 @@ TEST(ZooTest, GetAnimalFromEmptyZoo) {
 }
 
 TEST(ZooTest, GetAllAnimals) {
-  Zoo zoo("Oakland Zoo");
+  Zoo zoo("Oakland Zoo", 2500.0);
   zoo.purchaseAnimal(std::make_unique<Rabbit>("Miffy", 7));
   zoo.purchaseAnimal(std::make_unique<Penguin>("Pororo", 8));
   zoo.purchaseAnimal(std::make_unique<Bear>("Corduroy", 4));
@@ -182,7 +182,7 @@ TEST(ZooTest, PurchaseExhibit) {
   zoo.purchaseExhibit(std::move(exhibit));
 
   EXPECT_EQ(zoo.getExhibitCount(), 1);
-  EXPECT_EQ(zoo.getBalance(), 10000.0 - exhibit_cost);
+  EXPECT_EQ(zoo.getBalance(), 1500.0 - exhibit_cost);
 }
 
 TEST(ZooTest, PurchaseMultipleExhibits) {
@@ -295,7 +295,7 @@ TEST(ZooTest, CannotAddAnimalToFullExhibit) {
 }
 
 TEST(ZooTest, RemoveAnimalFromExhibit) {
-  Zoo zoo("SF Zoo");
+  Zoo zoo("SF Zoo", 2500.0);
 
   auto exhibit = std::make_unique<Exhibit>("Penguin Point", "Arctic", 5, 1500.0, 60.0);
   Exhibit* exhibit_ptr = exhibit.get();
@@ -328,7 +328,7 @@ TEST(ZooTest, CannotRemoveAnimalNotInExhibit) {
 }
 
 TEST(ZooTest, MoveAnimalToExhibit) {
-  Zoo zoo("SF Zoo");
+  Zoo zoo("SF Zoo", 3500.0);
 
   auto exhibit1 = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit1_ptr = exhibit1.get();
@@ -356,7 +356,7 @@ TEST(ZooTest, MoveAnimalToExhibit) {
 }
 
 TEST(ZooTest, CannotMoveAnimalToExistingExhibit) {
-  Zoo zoo("SF Zoo");
+  Zoo zoo("SF Zoo", 2500.0);
 
   auto exhibit = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0);
   Exhibit* exhibit_ptr = exhibit.get();
@@ -386,7 +386,7 @@ TEST(ZooTest, CannotMoveAnimalNotInExhibit) {
 }
 
 TEST(ZooTest, CannotMoveAnimalToFullExhibit) {
-  Zoo zoo("SF Zoo");
+  Zoo zoo("SF Zoo", 5000.0);
   auto exhibit1 = std::make_unique<Exhibit>("Bear Habitat 1", "Forest", 1, 800.0, 35.0);
   Exhibit* exhibit1_ptr = exhibit1.get();
   zoo.purchaseExhibit(std::move(exhibit1));
@@ -462,7 +462,7 @@ TEST(ZooTest, FindAnimalLocationNotInAnyExhibit) {
 }
 
 TEST(ZooTest, SpendMoney) {
-  Zoo zoo("SF Zoo");
+  Zoo zoo("SF Zoo", 3000.0);
 
   auto bear = std::make_unique<Bear>("Winnie", 8);
   Animal* bear_ptr = bear.get();
@@ -473,7 +473,7 @@ TEST(ZooTest, SpendMoney) {
   bear_ptr->eat(20);
   zoo.spendMoney(feeding_cost);
 
-  EXPECT_EQ(zoo.getBalance(), 10000.0 - purchase_cost - feeding_cost);
+  EXPECT_EQ(zoo.getBalance(), 3000.0 - purchase_cost - feeding_cost);
 }
 
 TEST(ZooTest, UpdateAnimalStats) {

@@ -12,7 +12,7 @@
 
 class Zoo {
  public:
-  Zoo(std::string name, double starting_balance = 10000.0);
+  Zoo(std::string name, double starting_balance = 1500.0);
 
   // getters
   const std::string& getName() const;
