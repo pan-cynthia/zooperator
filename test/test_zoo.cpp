@@ -496,26 +496,7 @@ TEST(ZooTest, CalculateVisitorCount) {
   Animal* bear_ptr = bear.get();
   zoo.purchaseAnimal(std::move(bear));
 
-  int happiness = bear_ptr->getHappinessLevel();
-  double avg_happiness = happiness;
-  double happiness_score = (avg_happiness / 100.0) * 2.5;
-
-  int health = bear_ptr->getHealthLevel();
-  double avg_health = health;
-  double health_score = (avg_health / 100.0) * 1.5;
-
-  double cleanliness_score = 0.5;
-  double financial_score = 0.25;
-
-  double rating = happiness_score + health_score + cleanliness_score + financial_score;
-  rating = std::min(5.0, std::max(0.0, rating));
-  int expected_visitors = 10 * (1.0 + rating / 5.0);
-
-  int bonus = 0;
-  if (happiness > 70) {
-    bonus = static_cast<int>((happiness / 10.0) * 20);
-  }
-  EXPECT_EQ(zoo.calculateVisitorCount(), expected_visitors + bonus);
+  EXPECT_EQ(zoo.calculateVisitorCount(), 12);
 }
 
 TEST(ZooTest, CalculateDailyRevenue) {

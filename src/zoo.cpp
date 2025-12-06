@@ -330,18 +330,49 @@ void Zoo::updateAnimalStats() {
 }
 
 int Zoo::calculateVisitorCount() const {
-  int base_visitors = static_cast<int>(animals_.size()) * 10;
+  int base_visitors = static_cast<int>(getAnimalCount()) * 5;
 
-  double rating_multiplier = 1.0 + (calculateZooRating() / 5.0);
+  double rating = calculateZooRating();
+  double rating_multiplier;
+  if (rating >= 4.0) {  // excellent, 2x visitors
+    rating_multiplier = 2.0;
+  } else if (rating >= 3.5) {  // good, 1.5x visitors
+    rating_multiplier = 1.5;
+  } else if (rating >= 3.0) {  // ok, normal
+    rating_multiplier = 1.0;
+  } else if (rating >= 2.5) {  // poor, -30%
+    rating_multiplier = 0.7;
+  } else if (rating >= 2.0) {  // bad, -60%
+    rating_multiplier = 0.4;
+  } else {  // terrible, -80%
+    rating_multiplier = 0.2;
+  }
+
   int visitors = static_cast<int>(base_visitors * rating_multiplier);
 
   int happiness_bonus = 0;
   for (const auto& animal : animals_) {
-    if (animal->getHappinessLevel() > 70) {
-      happiness_bonus += static_cast<int>((animal->getHappinessLevel() / 10.0) * 20);
+    if (animal->getHappinessLevel() > 80) {
+      happiness_bonus += 2;  // +2 visitors per happy animal
     }
   }
-  return visitors + happiness_bonus;
+
+  int neglect_penalty = 0;
+  for (const auto& animal : animals_) {
+    if (animal->needsAttention()) {
+      neglect_penalty += 3;  // -3 visitors per neglected animal
+    }
+  }
+
+  int cleanliness_penalty = 0;
+  for (const auto& exhibit : exhibits_) {
+    if (exhibit->needsCleaning()) {
+      cleanliness_penalty += 2;  // -2 visitors per dirty exhibit
+    }
+  }
+
+  int final_visitors = visitors + happiness_bonus - neglect_penalty - cleanliness_penalty;
+  return final_visitors < 0 ? 0 : final_visitors;
 }
 
 double Zoo::calculateDailyRevenue(int visitor_count) const {
