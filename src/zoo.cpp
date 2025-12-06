@@ -295,6 +295,37 @@ bool Zoo::spendMoney(double amount) {
 void Zoo::updateAnimalStats() {
   for (const auto& animal : animals_) {
     animal->updateStatsEndOfDay();
+
+    // apply health penalties for animal neglect
+    // decline health due to starvation
+    int hunger = animal->getHungerLevel();
+    if (hunger >= 90) {
+      animal->updateHealth(-25);
+    } else if (hunger >= 75) {
+      animal->updateHealth(-15);
+    } else if (hunger >= 60) {
+      animal->updateHealth(-10);
+    } else if (hunger >= 45) {
+      animal->updateHealth(-5);
+    }
+
+    // decline health due to unhappiness
+    int happiness = animal->getHappinessLevel();
+    if (happiness < 20) {
+      animal->updateHealth(-15);
+    } else if (happiness < 40) {
+      animal->updateHealth(-5);
+    } else if (happiness < 60) {
+      animal->updateHealth(-2);
+    }
+
+    // decline health due to exhaustion
+    int energy = animal->getEnergyLevel();
+    if (energy < 20) {
+      animal->updateHealth(-10);
+    } else if (energy < 40) {
+      animal->updateHealth(-5);
+    }
   }
 }
 

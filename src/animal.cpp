@@ -88,9 +88,9 @@ void Animal::updateEnergy(int delta) {
 }
 
 void Animal::updateStatsEndOfDay() {
-  updateHunger(5);
-  updateHappiness(-1);
-  updateEnergy(-5);
+  updateHunger(15);
+  updateHappiness(-15);
+  updateEnergy(-10);
 }
 
 void Animal::setName(const std::string& name) {
