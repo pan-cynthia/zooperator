@@ -4,7 +4,7 @@
 #include <iostream>
 
 Zoo::Zoo(std::string name, double starting_balance)
-    : name_(std::move(name)), day_(0), balance_(starting_balance) {}
+    : name_(std::move(name)), day_(1), balance_(starting_balance) {}
 
 // getters
 const std::string& Zoo::getName() const {
