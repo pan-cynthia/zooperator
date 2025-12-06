@@ -491,18 +491,21 @@ TEST(ZooTest, UpdateAnimalStats) {
 
 TEST(ZooTest, CalculateVisitorCount) {
   Zoo zoo("SF Zoo", 3000.0);
+
   auto bear = std::make_unique<Bear>("Winnie", 8);
   Animal* bear_ptr = bear.get();
-  int happiness = bear_ptr->getHappinessLevel();
-  int health = bear_ptr->getHealthLevel();
   zoo.purchaseAnimal(std::move(bear));
 
+  int happiness = bear_ptr->getHappinessLevel();
   double avg_happiness = happiness;
+  double happiness_score = (avg_happiness / 100.0) * 2.5;
+
+  int health = bear_ptr->getHealthLevel();
   double avg_health = health;
-  double happiness_score = (avg_happiness / 100.0) * 2.0;
   double health_score = (avg_health / 100.0) * 1.5;
+
   double cleanliness_score = 0.5;
-  double financial_score = 0.3;
+  double financial_score = 0.25;
 
   double rating = happiness_score + health_score + cleanliness_score + financial_score;
   rating = std::min(5.0, std::max(0.0, rating));

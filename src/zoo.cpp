@@ -375,18 +375,23 @@ double Zoo::calculateZooRating() const {
     return 0.0;
   }
 
+  // animal happiness = 50% weight
   double total_happiness = 0.0;
-  double total_health = 0.0;
   for (const auto& animal : animals_) {
     total_happiness += animal->getHappinessLevel();
+  }
+  double avg_happiness = total_happiness / getAnimalCount();
+  double happiness_score = (avg_happiness / 100.0) * 2.5;  // max 2.5 stars
+
+  // animal health = 30% weight
+  double total_health = 0.0;
+  for (const auto& animal : animals_) {
     total_health += animal->getHealthLevel();
   }
-
-  double avg_happiness = total_happiness / getAnimalCount();
-  double happiness_score = (avg_happiness / 100.0) * 2.0;
   double avg_health = total_health / getAnimalCount();
-  double health_score = (avg_health / 100.0) * 1.5;
+  double health_score = (avg_health / 100.0) * 1.5;  // max 1.5 stars
 
+  // exhibit cleanliness = 15% weight
   double cleanliness_score = 0.5;
   if (getExhibitCount() > 0) {
     double total_cleanliness = 0.0;
@@ -394,28 +399,22 @@ double Zoo::calculateZooRating() const {
       total_cleanliness += exhibit->getCleanliness();
     }
     double avg_cleanliness = total_cleanliness / getExhibitCount();
-    cleanliness_score = (avg_cleanliness / 100.0) * 1.0;
+    cleanliness_score = (avg_cleanliness / 100.0) * 0.75;  // max 0.75 stars
   }
 
+  // zoo financial health = 5% weight
   double financial_score = 0.0;
-  if (balance_ > 5000) {
-    financial_score = 0.5;
-  } else if (balance_ > 2000) {
-    financial_score = 0.3;
+  if (balance_ > 3000) {
+    financial_score = 0.25;  // max 0.25 stars
+  } else if (balance_ > 1500) {
+    financial_score = 0.15;
   } else if (balance_ > 500) {
-    financial_score = 0.2;
+    financial_score = 0.05;
   }
 
   double total_rating = happiness_score + health_score + cleanliness_score + financial_score;
 
-  if (total_rating > 5.0) {
-    total_rating = 5.0;
-  }
-  if (total_rating < 0.0) {
-    total_rating = 0.0;
-  }
-
-  return total_rating;
+  return std::max(0.0, std::min(5.0, total_rating));
 }
 
 void Zoo::advanceDay() {
