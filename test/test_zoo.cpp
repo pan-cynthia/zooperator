@@ -9,7 +9,7 @@
 TEST(ZooTest, ConstructorInitialization) {
   Zoo zoo("SF Zoo", 10000);
   EXPECT_EQ(zoo.getName(), "SF Zoo");
-  EXPECT_EQ(zoo.getDay(), 0);
+  EXPECT_EQ(zoo.getDay(), 1);
   EXPECT_EQ(zoo.getBalance(), 10000.0);
   EXPECT_EQ(zoo.getAnimalCount(), 0);
   EXPECT_EQ(zoo.getExhibitCount(), 0);
@@ -542,5 +542,5 @@ TEST(ZooTest, AdvanceDay) {
 
   double old_balance = zoo.getBalance();
   zoo.advanceDay();
-  EXPECT_EQ(zoo.getDay(), 1);
+  EXPECT_EQ(zoo.getDay(), 2);
 }
