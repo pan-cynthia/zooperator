@@ -454,7 +454,7 @@ void Zoo::advanceDay() {
 
   // degrade cleanliness of exhibits
   for (const auto& exhibit : exhibits_) {
-    exhibit->updateCleanliness(-5);
+    exhibit->updateCleanliness(-10);
   }
 
   int visitors = calculateVisitorCount();
