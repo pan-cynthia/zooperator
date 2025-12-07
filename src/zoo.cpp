@@ -185,7 +185,7 @@ bool Zoo::addAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
   }
 
   if (exhibit->containsAnimal(animal)) {
-    std::cout << "Animal is already in this exhibit.\n";
+    std::cout << animal->getName() << " is already in exhibit " << exhibit->getName() << ".\n ";
     return false;
   }
 
@@ -231,7 +231,7 @@ bool Zoo::moveAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
 
   // check if animal is already in the exhibit
   if (old_exhibit == exhibit) {
-    std::cout << animal->getName() << " is already in Exhibit " << exhibit->getName() << ".\n";
+    std::cout << animal->getName() << " is already in exhibit " << exhibit->getName() << ".\n";
     return false;
   }
 
@@ -467,7 +467,9 @@ void Zoo::advanceDay() {
 
   int dirty_exhibits = 0;
   int sick_animals = 0;
+  int hungry_animals = 0;
   int unhappy_animals = 0;
+  int tired_animals = 0;
   int needy_animals = 0;
 
   for (const auto& animal : animals_) {
@@ -475,8 +477,16 @@ void Zoo::advanceDay() {
       sick_animals++;
     }
 
+    if (animal->getHungerLevel() < 50) {
+      hungry_animals++;
+    }
+
     if (animal->getHappinessLevel() < 50) {
       unhappy_animals++;
+    }
+
+    if (animal->getEnergyLevel() < 50) {
+      tired_animals++;
     }
 
     if (animal->needsAttention()) {
@@ -490,20 +500,24 @@ void Zoo::advanceDay() {
     }
   }
 
-  std::cout << "Animals:\n";
+  std::cout << "\nAnimals:\n";
   std::cout << "  Total: " << getAnimalCount() << "\n";
   std::cout << "  Sick: " << sick_animals << "\n";
+  std::cout << "  Hungry: " << hungry_animals << "\n";
   std::cout << "  Unhappy: " << unhappy_animals << "\n";
+  std::cout << "  Tired: " << tired_animals << "\n";
   std::cout << "  Need Attention: " << needy_animals << "\n";
-  std::cout << "Exhibits Needing Cleaning: " << dirty_exhibits << "\n";
-  std::cout << "Visitors: " << visitors << "\n";
-  std::cout << "Revenue : $" << revenue << "\n";
-  std::cout << "Expenses: $" << expenses << "\n";
-  std::cout << "Net     : $" << revenue - expenses << "\n";
-  std::cout << "Balance : $" << balance_ << "\n";
-  std::cout << "Zoo Rating: " << calculateZooRating() << "/5.0\n";
-  std::cout << "----------------------------------\n";
+  std::cout << "\nExhibits:\n";
+  std::cout << "  Total: " << getExhibitCount() << "\n";
+  std::cout << "  Need Cleaning: " << dirty_exhibits << "\n";
+  std::cout << "\nStats:\n";
+  std::cout << "  Visitors: " << visitors << "\n";
+  std::cout << "  Revenue : $" << revenue << "\n";
+  std::cout << "  Expenses: $" << expenses << "\n";
+  std::cout << "  Net     : $" << revenue - expenses << "\n";
+  std::cout << "  Balance : $" << balance_ << "\n";
+  std::cout << "\nZoo Rating: " << calculateZooRating() << "/5.0\n";
+  std::cout << "-----------------------------------------\n";
 
   day_++;
-  std::cout << "\nStart Day " << day_ << "\n";
 }
