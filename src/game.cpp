@@ -294,6 +294,7 @@ void Game::purchaseAnimal() {
 
   if (choice == 1) {
     zoo_.purchaseAnimal(std::move(animal));
+    updateMaxActionPoints();
   }
 }
 
@@ -548,6 +549,7 @@ void Game::purchaseExhibit() {
 
   if (choice == 1) {
     zoo_.purchaseExhibit(std::move(exhibit));
+    updateMaxActionPoints();
   }
 }
 
@@ -637,6 +639,16 @@ int Game::getActionPoints() const {
 
 int Game::getMaxActionPoints() const {
   return max_action_points_;
+}
+
+void Game::updateMaxActionPoints() {
+  // base 6 points, +1 per animal, +1 per 2 exhibits
+  max_action_points_ = 6 + zoo_.getAnimalCount() + (zoo_.getExhibitCount() / 2);
+
+  // cap at 20 points
+  if (max_action_points_ > 20) {
+    max_action_points_ = 20;
+  }
 }
 
 void Game::endDay() {

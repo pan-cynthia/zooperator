@@ -63,6 +63,7 @@ class Game {
   void resetActionPoints();
   int getActionPoints() const;
   int getMaxActionPoints() const;
+  void updateMaxActionPoints();
 
   void endDay();
   void exitGame();
