@@ -13,8 +13,8 @@ Game::Game(const Player& player, std::string zoo_name)
     : player_(player),
       zoo_(zoo_name, 1500.0),
       running_(true),
-      action_points_(10),
-      max_action_points_(10) {}
+      action_points_(6),
+      max_action_points_(6) {}
 
 void Game::start() {
   std::cout << "\n==============================================================\n";
