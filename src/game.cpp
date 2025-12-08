@@ -702,10 +702,65 @@ void Game::endDay() {
     return;
   }
 
+  if (zoo_.getBalance() < 500) {
+    std::cout << "\nLow funds! Your zoo is at risk of bankruptcy!\n";
+  }
+
   if (zoo_.getDay() >= 8) {
     std::cout << "\nGAME COMPLETE!\n";
     std::cout << "Final balance:      $" << zoo_.getBalance() << "\n";
     std::cout << "Final animal count: " << zoo_.getAnimalCount() << "\n";
+
+    // calculate overall score
+    int score = 0;
+
+    // financial health
+    if (zoo_.getBalance() >= 2000) {
+      score += 3;
+    } else if (zoo_.getBalance() >= 1500) {
+      score += 2;
+    } else if (zoo_.getBalance() >= 1000) {
+      score += 1;
+    }
+
+    // zoo rating
+    double rating = zoo_.calculateZooRating();
+    if (rating >= 4.5) {
+      score += 3;
+    } else if (rating >= 4.0) {
+      score += 2;
+    } else if (rating >= 3.5) {
+      score += 1;
+    }
+
+    // animal diversity
+    int animal_count = zoo_.getAnimalCount();
+    if (animal_count >= 6) {
+      score += 2;
+    } else if (animal_count >= 4) {
+      score += 1;
+    }
+
+    // animal welfare
+    auto needy_animals = zoo_.getAnimalsNeedingAttention();
+    if (needy_animals.empty()) {
+      score += 2;
+    } else if (needy_animals.size() < animal_count * 0.5) {
+      score += 1;
+    }
+
+    // victory messages
+    if (score >= 9) {
+      std::cout << "Perfect! You're a master zookeeper!\n";
+    } else if (score >= 7) {
+      std::cout << "Excellent! Your zoo is thriving!\n";
+    } else if (score >= 5) {
+      std::cout << "Good! You successfully managed the zoo!\n";
+    } else if (score >= 3) {
+      std::cout << "You barely made it to day 7!\n";
+    } else {
+      std::cout << "Poor. Your zoo is in terrible condition. The animals deserve better.\n";
+    }
     running_ = false;
     return;
   }
