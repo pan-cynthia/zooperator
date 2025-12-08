@@ -20,6 +20,10 @@ class Animal {
   virtual void makeSound() const = 0;
   virtual void updateStatsEndOfDay();
 
+  void receivePlay();
+  void receiveExercise();
+  void receiveTreatment();
+
   // getters
   const std::string& getName() const;
   const std::string& getSpecies() const;

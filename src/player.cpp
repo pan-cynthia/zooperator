@@ -51,9 +51,7 @@ bool Player::playWithAnimal(Animal* animal) {
 
   std::cout << name_ << " played with " << animal->getName() << " the " << animal->getSpecies()
             << ".\n";
-  animal->updateEnergy(-10);
-  animal->updateHappiness(15);
-  animal->updateHunger(5);
+  animal->receivePlay();
   return true;
 }
 
@@ -71,10 +69,7 @@ bool Player::exerciseAnimal(Animal* animal) {
 
   std::cout << name_ << " exercised " << animal->getName() << " the " << animal->getSpecies()
             << ".\n";
-  animal->updateEnergy(-20);
-  animal->updateHealth(10);
-  animal->updateHappiness(10);
-  animal->updateHunger(10);
+  animal->receiveExercise();
   return true;
 }
 
@@ -92,7 +87,7 @@ bool Player::treatAnimal(Zoo& zoo, Animal* animal) {
   zoo.spendMoney(50.0);
   std::cout << name_ << " gave medical care to " << animal->getName() << " the "
             << animal->getSpecies() << " for $50.\n";
-  animal->updateHealth(30);
+  animal->receiveTreatment();
   return true;
 }
 

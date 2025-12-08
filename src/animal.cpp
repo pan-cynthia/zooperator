@@ -119,3 +119,20 @@ void Animal::sleep(int hours) {
   updateHunger(hours * 2);
   std::cout << getName() << " the " << getSpecies() << " is sleeping.\n";
 }
+
+void Animal::receivePlay() {
+  updateEnergy(-10);
+  updateHappiness(15);
+  updateHunger(5);
+}
+
+void Animal::receiveExercise() {
+  updateEnergy(-20);
+  updateHealth(10);
+  updateHappiness(10);
+  updateHunger(10);
+}
+
+void Animal::receiveTreatment() {
+  updateHealth(30);
+}
