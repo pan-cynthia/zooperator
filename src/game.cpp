@@ -109,10 +109,10 @@ void Game::manageAnimals() {
     std::cout << "3. Rename Animal\n";
     std::cout << "4. Purchase Animal\n";
     std::cout << "5. Sell Animal\n";
-    std::cout << "6. Feed Animal\n";
-    std::cout << "7. Play With Animal\n";
-    std::cout << "8. Exercise Animal\n";
-    std::cout << "9. Treat Animal\n";
+    std::cout << "6. Feed Animal (1 AP)\n";
+    std::cout << "7. Play With Animal (1 AP)\n";
+    std::cout << "8. Exercise Animal (1 AP)\n";
+    std::cout << "9. Treat Animal (1 AP)\n";
     std::cout << "10. Add Animal to Exhibit\n";
     std::cout << "11. Remove Animal from Exhibit\n";
     std::cout << "12. Move Animal to Exhibit\n";
@@ -439,7 +439,7 @@ void Game::manageExhibits() {
     std::cout << "2. Display Exhibits Needing Cleaning\n";
     std::cout << "3. Purchase Exhibit\n";
     std::cout << "4. Sell Exhibit\n";
-    std::cout << "5. Clean Exhibit\n";
+    std::cout << "5. Clean Exhibit (1 AP)\n";
     std::cout << "6. Back to Main Menu\n";
     std::cout << "-----------------------------------------\n\n";
 
