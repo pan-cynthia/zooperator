@@ -27,9 +27,6 @@ void Game::start() {
   setupStarterZoo();
 
   while (running_) {
-    std::cout << "\nDay " << zoo_.getDay() << " | Balance: $" << zoo_.getBalance()
-              << " | Actions: " << action_points_ << "/" << max_action_points_ << "\n";
-
     displayMainMenu();
     int choice = getPlayerInput(1, 5);
 
@@ -89,7 +86,8 @@ int Game::getPlayerInput(int min, int max) {
 }
 
 void Game::displayMainMenu() {
-  std::cout << "\nMAIN MENU\n";
+  std::cout << "\nMAIN MENU | Balance: $" << zoo_.getBalance() << " | Actions: " << action_points_
+            << "/" << max_action_points_ << "\n";
   std::cout << "-----------------------------------------\n";
   std::cout << "1. Manage Animals\n";
   std::cout << "2. Manage Exhibits\n";
@@ -101,7 +99,8 @@ void Game::displayMainMenu() {
 
 void Game::manageAnimals() {
   while (true) {
-    std::cout << "\nANIMAL MANAGEMENT\n";
+    std::cout << "\nANIMAL MANAGEMENT | Actions: " << action_points_ << "/" << max_action_points_
+              << "\n";
     std::cout << "-----------------------------------------\n";
     std::cout << "1. Display All Animals\n";
     std::cout << "2. Display Animals Needing Attention\n";
@@ -254,7 +253,7 @@ void Game::renameAnimal() {
 }
 
 void Game::purchaseAnimal() {
-  std::cout << "\nPURCHASE ANIMAL\n";
+  std::cout << "\nPURCHASE ANIMAL | Balance: $" << zoo_.getBalance() << "\n";
   std::cout << "-----------------------------------------\n";
   std::cout << "1. Rabbit - $150\n";
   std::cout << "2. Penguin - $400\n";
@@ -313,8 +312,6 @@ void Game::purchaseAnimal() {
 void Game::sellAnimal() {
   // int animalIndex = chooseAnimalIndex();
   // Animal* animal = zoo_.getAnimal(animalIndex);
-  std::cout << "\nSELL ANIMAL\n";
-  std::cout << "-----------------------------------------\n";
   Animal* animal = chooseAnimal();
   if (!animal) {
     return;
@@ -424,7 +421,8 @@ void Game::moveAnimalToExhibit() {
 
 void Game::manageExhibits() {
   while (true) {
-    std::cout << "\nEXHIBIT MANAGEMENT\n";
+    std::cout << "\nEXHIBIT MANAGEMENT | Actions: " << action_points_ << "/" << max_action_points_
+              << "\n";
     std::cout << "-----------------------------------------\n";
     std::cout << "1. Display All Exhibits\n";
     std::cout << "2. Display Exhibits Needing Cleaning\n";
@@ -515,7 +513,7 @@ void Game::displayExhibitsNeedingCleaning() {
 }
 
 void Game::purchaseExhibit() {
-  std::cout << "\nPURCHASE EXHIBIT\n";
+  std::cout << "\nPURCHASE EXHIBIT | Balance: $" << zoo_.getBalance() << "\n";
   std::cout << "-----------------------------------------\n";
   std::cout << "1. Grassland (2-3 capacity) - $300\n";
   std::cout << "2. Forest (3-4 capacity) - $800\n";
