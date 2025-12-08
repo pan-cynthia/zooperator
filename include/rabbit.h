@@ -9,6 +9,7 @@ class Rabbit : public Animal {
  public:
   Rabbit(std::string name, int age);
   void makeSound() const override;
+  void updateStatsEndOfDay() override;
 };
 
 #endif  // RABBIT_H

@@ -12,3 +12,9 @@ Bear::Bear(std::string name, int age) : Animal(std::move(name), "Bear", age) {
 void Bear::makeSound() const {
   std::cout << getName() << " the Bear is growling!\n";
 }
+
+void Bear::updateStatsEndOfDay() {
+  updateHunger(10);
+  updateHappiness(-3);
+  updateEnergy(-8);
+}

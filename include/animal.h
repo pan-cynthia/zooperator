@@ -18,6 +18,7 @@ class Animal {
   virtual void eat(int amount);
   virtual void sleep(int hours);
   virtual void makeSound() const = 0;
+  virtual void updateStatsEndOfDay();
 
   // getters
   const std::string& getName() const;
@@ -39,7 +40,6 @@ class Animal {
   void updateHunger(int delta);
   void updateHappiness(int delta);
   void updateEnergy(int delta);
-  void updateStatsEndOfDay();
   void setName(const std::string& name);
 
  protected:

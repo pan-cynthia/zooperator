@@ -6,7 +6,8 @@
 class Bear : public Animal {
  public:
   Bear(std::string name, int age);
-  void makeSound() const;
+  void makeSound() const override;
+  void updateStatsEndOfDay() override;
 };
 
 #endif  // BEAR_H

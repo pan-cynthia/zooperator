@@ -12,3 +12,9 @@ Penguin::Penguin(std::string name, int age) : Animal(std::move(name), "Penguin",
 void Penguin::makeSound() const {
   std::cout << getName() << " the Penguin is squawking!\n";
 }
+
+void Penguin::updateStatsEndOfDay() {
+  updateHunger(15);
+  updateHappiness(-8);
+  updateEnergy(-10);
+}
