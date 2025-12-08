@@ -325,6 +325,7 @@ void Game::sellAnimal() {
 
   if (choice == 1) {
     zoo_.sellAnimal(animal);
+    updateMaxActionPoints();
   }
 }
 
@@ -581,6 +582,7 @@ void Game::sellExhibit() {
 
   if (choice == 1) {
     zoo_.sellExhibit(exhibit);
+    updateMaxActionPoints();
   }
 }
 
