@@ -25,7 +25,8 @@ bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
     return false;
   }
 
-  std::cout << name_ << " fed " << animal->getName() << " the " << animal->getSpecies() << ".\n ";
+  std::cout << name_ << " fed " << animal->getName() << " the " << animal->getSpecies() << " for $"
+            << animal->getFeedingCost() << ".\n";
   zoo.spendMoney(animal->getFeedingCost());
   animal->eat(20);
   return true;
@@ -101,7 +102,7 @@ bool Player::treatAnimal(Zoo& zoo, Animal* animal) {
 
   zoo.spendMoney(50.0);
   std::cout << name_ << " gave medical care to " << animal->getName() << " the "
-            << animal->getSpecies() << ".\n";
+            << animal->getSpecies() << " for $50.\n";
   animal->updateHealth(30);
   return true;
 }
