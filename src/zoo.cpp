@@ -279,7 +279,7 @@ void Zoo::removeDeadAnimals() {
       animals_.end());
 
   for (const auto& name : dead_animals) {
-    std::cout << name << " has died and has been removed from the zoo.\n";
+    std::cout << name << " has died.\n";
   }
 }
 
@@ -448,6 +448,63 @@ double Zoo::calculateZooRating() const {
   return std::max(0.0, std::min(5.0, total_rating));
 }
 
+void Zoo::viewZooRatingBreakdown() {
+  // animal happiness
+  double total_happiness = 0.0;
+  for (const auto& animal : animals_) {
+    total_happiness += animal->getHappinessLevel();
+  }
+  double avg_happiness = total_happiness / getAnimalCount();
+  std::cout << "Animal Happiness: " << avg_happiness << "/100\n";
+
+  // animal health
+  double total_health = 0.0;
+  for (const auto& animal : animals_) {
+    total_health += animal->getHealthLevel();
+  }
+  double avg_health = total_health / getAnimalCount();
+  std::cout << "Animal Health: " << avg_health << "/100\n";
+
+  // exhibit cleanliness
+  if (getExhibitCount() > 0) {
+    double total_cleanliness = 0.0;
+    for (const auto& exhibit : exhibits_) {
+      total_cleanliness += exhibit->getCleanliness();
+    }
+    double avg_cleanliness = total_cleanliness / getExhibitCount();
+    std::cout << "Exhibit Cleanliness: " << avg_cleanliness << "/100\n";
+  }
+
+  std::cout << "Financial Stability: ";
+  if (balance_ > 3000) {
+    std::cout << "Excellent\n";
+  } else if (balance_ > 1500) {
+    std::cout << "Good\n";
+  } else if (balance_ > 500) {
+    std::cout << "Fair\n";
+  } else {
+    std::cout << "Poor\n";
+  }
+}
+
+std::string Zoo::getRatingMessage(double rating) {
+  if (rating >= 4.5) {
+    return "(Outstanding)";
+  } else if (rating >= 4.0) {
+    return "(Excellent)";
+  } else if (rating >= 3.5) {
+    return "(Great)";
+  } else if (rating >= 3.0) {
+    return "(Good)";
+  } else if (rating >= 2.5) {
+    return "(Poor)";
+  } else if (rating >= 2.0) {
+    return "(Bad)";
+  } else {
+    return "(Terrible)";
+  }
+}
+
 void Zoo::advanceDay() {
   updateAnimalStats();
   removeDeadAnimals();
@@ -516,7 +573,9 @@ void Zoo::advanceDay() {
   std::cout << "  Expenses: $" << expenses << "\n";
   std::cout << "  Net     : $" << revenue - expenses << "\n";
   std::cout << "  Balance : $" << balance_ << "\n";
-  std::cout << "\nZoo Rating: " << calculateZooRating() << "/5.0\n";
+
+  double rating = calculateZooRating();
+  std::cout << "\nZoo Rating: " << rating << "/5.0 " << getRatingMessage(rating) << "\n";
   std::cout << "-----------------------------------------\n";
 
   day_++;

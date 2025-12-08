@@ -225,7 +225,7 @@ void Game::displayAnimalsNeedingAttention() {
     std::cout << (i + 1) << ". " << animal->getName() << " the " << animal->getSpecies() << "\n";
     std::cout << "   Health:    " << animal->getHealthLevel() << "\n";
     std::cout << "   Hunger:    " << animal->getHungerLevel() << "\n";
-    std::cout << "   Happiness:    " << animal->getHappinessLevel() << "\n";
+    std::cout << "   Happiness: " << animal->getHappinessLevel() << "\n";
     std::cout << "   Energy:    " << animal->getEnergyLevel() << "\n";
   }
 }
@@ -632,7 +632,9 @@ void Game::checkBalance() {
 
 void Game::viewZooRating() {
   double rating = zoo_.calculateZooRating();
-  std::cout << "\nZoo Rating: " << rating << "/5.0\n";
+  std::cout << "\nZoo Rating: " << rating << "/5.0 ";
+  std::cout << zoo_.getRatingMessage(rating) << "\n";
+  zoo_.viewZooRatingBreakdown();
 }
 
 bool Game::useActionPoint(const std::string action_description) {
