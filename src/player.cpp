@@ -8,7 +8,7 @@ const std::string& Player::getName() const {
   return name_;
 }
 
-bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
+bool Player::validateAnimal(Animal* animal) {
   if (!animal) {
     std::cout << "Animal does not exist!\n";
     return false;
@@ -16,6 +16,13 @@ bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
 
   if (!animal->isAlive()) {
     std::cout << "Animal is not alive.\n";
+    return false;
+  }
+  return true;
+}
+
+bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
+  if (!validateAnimal(animal)) {
     return false;
   }
 
@@ -33,13 +40,7 @@ bool Player::feedAnimal(Zoo& zoo, Animal* animal) {
 }
 
 bool Player::playWithAnimal(Animal* animal) {
-  if (!animal) {
-    std::cout << "Animal does not exist!\n";
-    return false;
-  }
-
-  if (!animal->isAlive()) {
-    std::cout << "Animal is not alive.\n";
+  if (!validateAnimal(animal)) {
     return false;
   }
 
@@ -57,13 +58,7 @@ bool Player::playWithAnimal(Animal* animal) {
 }
 
 bool Player::exerciseAnimal(Animal* animal) {
-  if (!animal) {
-    std::cout << "Animal does not exist!\n";
-    return false;
-  }
-
-  if (!animal->isAlive()) {
-    std::cout << "Animal is not alive.\n";
+  if (!validateAnimal(animal)) {
     return false;
   }
 
@@ -84,13 +79,7 @@ bool Player::exerciseAnimal(Animal* animal) {
 }
 
 bool Player::treatAnimal(Zoo& zoo, Animal* animal) {
-  if (!animal) {
-    std::cout << "Animal does not exist!\n";
-    return false;
-  }
-
-  if (!animal->isAlive()) {
-    std::cout << "Animal is not alive.\n";
+  if (!validateAnimal(animal)) {
     return false;
   }
 

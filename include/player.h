@@ -13,6 +13,8 @@ class Player {
 
   const std::string& getName() const;
 
+  bool validateAnimal(Animal* animal);
+
   bool feedAnimal(Zoo& zoo, Animal* animal);
   bool playWithAnimal(Animal* animal);
   bool exerciseAnimal(Animal* animal);
