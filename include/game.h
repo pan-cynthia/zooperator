@@ -67,6 +67,7 @@ class Game {
 
   void endDay();
   void exitGame();
+  void displayHelp();
 };
 
 #endif  // GAME_H

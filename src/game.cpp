@@ -30,7 +30,7 @@ void Game::start() {
 
   while (running_) {
     displayMainMenu();
-    int choice = getPlayerInput(1, 5);
+    int choice = getPlayerInput(1, 6);
 
     switch (choice) {
       case 1:
@@ -47,6 +47,9 @@ void Game::start() {
         break;
       case 5:
         exitGame();
+        break;
+      case 6:
+        displayHelp();
         break;
     }
   }
@@ -96,6 +99,7 @@ void Game::displayMainMenu() {
   std::cout << "3. Manage Zoo\n";
   std::cout << "4. End Day\n";
   std::cout << "5. Exit Game\n";
+  std::cout << "6. Help\n";
   std::cout << "-----------------------------------------\n\n";
 }
 
@@ -792,4 +796,29 @@ void Game::exitGame() {
     std::cout << "Thanks for playing Zooperator " << player_.getName() << "!\n";
     running_ = false;
   }
+}
+
+void Game::displayHelp() {
+  std::cout << "\nHOW TO PLAY\n";
+  std::cout << "-----------------------------------------\n";
+  std::cout << "Goals:\n";
+  std::cout << " - Keep the zoo running for 7 days.\n";
+  std::cout << " - Keep all animals happy and healthy.\n";
+  std::cout << " - Maintain a zoo rating above 3.0 stars.\n\n";
+  std::cout << "Actions (limited per day):\n";
+  std::cout << "  - Feed: Reduces hunger\n";
+  std::cout << "  - Play: Increases happiness\n";
+  std::cout << "  - Exercise: Increases health\n";
+  std::cout << "  - Treat: Heals sick animals (costs $50)\n";
+  std::cout << "  - Clean: Keeps exhibits attractive\n\n";
+  std::cout << "Warnings:\n";
+  std::cout << "  - Hungry animals lose health and can die\n";
+  std::cout << "  - Unhappy animals reduce your zoo rating\n";
+  std::cout << "  - A low zoo rating = fewer visitors and less revenue\n";
+  std::cout << "  - Dirty exhibits will drive visitors away\n\n";
+  std::cout << "Tips:\n";
+  std::cout << "  - Check animals that need attention daily\n";
+  std::cout << "  - Balance spending vs saving\n";
+  std::cout << "  - Don't expand too fast\n";
+  std::cout << "-----------------------------------------\n\n";
 }
