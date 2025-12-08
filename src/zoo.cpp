@@ -542,7 +542,7 @@ void Zoo::advanceDay() {
       sick_animals++;
     }
 
-    if (animal->getHungerLevel() < 50) {
+    if (animal->getHungerLevel() > 50) {
       hungry_animals++;
     }
 
