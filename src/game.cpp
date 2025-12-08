@@ -306,8 +306,10 @@ void Game::purchaseAnimal() {
   choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
-    zoo_.purchaseAnimal(std::move(animal));
-    updateMaxActionPoints();
+    if (zoo_.purchaseAnimal(std::move(animal))) {
+      updateMaxActionPoints();
+      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+    }
   }
 }
 
@@ -324,8 +326,10 @@ void Game::sellAnimal() {
   int choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
-    zoo_.sellAnimal(animal);
-    updateMaxActionPoints();
+    if (zoo_.sellAnimal(animal)) {
+      updateMaxActionPoints();
+      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+    }
   }
 }
 
@@ -339,7 +343,9 @@ void Game::feedAnimal() {
     return;
   }
 
-  player_.feedAnimal(zoo_, animal);
+  if (player_.feedAnimal(zoo_, animal)) {
+    std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+  }
 }
 
 void Game::playWithAnimal() {
@@ -378,7 +384,9 @@ void Game::treatAnimal() {
     return;
   }
 
-  player_.treatAnimal(zoo_, animal);
+  if (player_.treatAnimal(zoo_, animal)) {
+    std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+  }
 }
 
 void Game::addAnimalToExhibit() {
@@ -566,8 +574,10 @@ void Game::purchaseExhibit() {
   choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
-    zoo_.purchaseExhibit(std::move(exhibit));
-    updateMaxActionPoints();
+    if (zoo_.purchaseExhibit(std::move(exhibit))) {
+      updateMaxActionPoints();
+      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+    }
   }
 }
 
@@ -581,8 +591,10 @@ void Game::sellExhibit() {
   int choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
-    zoo_.sellExhibit(exhibit);
-    updateMaxActionPoints();
+    if (zoo_.sellExhibit(exhibit)) {
+      updateMaxActionPoints();
+      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+    }
   }
 }
 
@@ -601,7 +613,9 @@ void Game::cleanExhibit() {
     return;
   }
 
-  player_.cleanExhibit(exhibit);
+  if (player_.cleanExhibit(exhibit)) {
+    std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+  }
 }
 
 void Game::manageZoo() {
@@ -642,6 +656,7 @@ void Game::viewZooRating() {
 bool Game::useActionPoint(const std::string action_description) {
   if (action_points_ <= 0) {
     std::cout << "No more action points remaining today!\n";
+    std::cout << "End the day to reset your actions.\n";
     return false;
   }
 
