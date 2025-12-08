@@ -16,7 +16,7 @@ class Animal {
 
   // core behaviors
   virtual void eat(int amount);
-  virtual void sleep(int hours);
+  virtual void sleep();
   virtual void makeSound() const = 0;
   virtual void updateStatsEndOfDay();
 

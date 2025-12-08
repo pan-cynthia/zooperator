@@ -109,16 +109,10 @@ void Animal::eat(int amount) {
   std::cout << getName() << " the " << getSpecies() << " is eating.\n";
 }
 
-void Animal::sleep(int hours) {
-  if (hours <= 0) {
-    std::cout << getName() << " needs positive hours of sleep!\n";
-    return;
-  }
-
-  updateEnergy(hours * 10);
-  updateHealth(hours);
-  updateHunger(hours * 2);
-  std::cout << getName() << " the " << getSpecies() << " is sleeping.\n";
+void Animal::sleep() {
+  updateEnergy(15);
+  updateHealth(5);
+  updateHunger(5);
 }
 
 void Animal::receivePlay() {

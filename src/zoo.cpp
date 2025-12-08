@@ -295,7 +295,8 @@ bool Zoo::spendMoney(double amount) {
 
 void Zoo::updateAnimalStats() {
   for (const auto& animal : animals_) {
-    animal->updateStatsEndOfDay();
+    animal->sleep();                // nightly recovery
+    animal->updateStatsEndOfDay();  // daily decay
 
     // apply health penalties for animal neglect
     // decline health due to starvation

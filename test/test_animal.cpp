@@ -136,44 +136,22 @@ TEST(AnimalTest, SleepingRestoresEnergy) {
   Penguin penguin("Pororo", 8);
   penguin.updateEnergy(-70);  // energy = 30
 
-  penguin.sleep(5);
-  EXPECT_EQ(penguin.getEnergyLevel(), 80);
+  penguin.sleep();
+  EXPECT_EQ(penguin.getEnergyLevel(), 45);
 }
 
 TEST(AnimalTest, SleepingRestoresHealth) {
   Penguin penguin("Pororo", 8);
   penguin.updateHealth(-15);  // health = 85
 
-  penguin.sleep(3);
-  EXPECT_EQ(penguin.getHealthLevel(), 88);
+  penguin.sleep();
+  EXPECT_EQ(penguin.getHealthLevel(), 90);
 }
 
 TEST(AnimalTest, SleepingIncreasesHunger) {
   Penguin penguin("Pororo", 8);
   penguin.updateHunger(25);  // hunger = 25
 
-  penguin.sleep(10);
-  EXPECT_EQ(penguin.getHungerLevel(), 45);
-}
-
-TEST(AnimalTest, SleepingZeroHours) {
-  Penguin penguin("Pororo", 8);
-  int initial_energy = penguin.getEnergyLevel();
-  int initial_health = penguin.getHealthLevel();
-  int initial_hunger = penguin.getHungerLevel();
-
-  penguin.sleep(0);
-
-  EXPECT_EQ(penguin.getEnergyLevel(), initial_energy);
-  EXPECT_EQ(penguin.getHealthLevel(), initial_health);
-  EXPECT_EQ(penguin.getHungerLevel(), initial_hunger);
-}
-
-TEST(AnimalTest, SleepingNegativeHours) {
-  Penguin penguin("Pororo", 8);
-  int initial_energy = penguin.getEnergyLevel();
-
-  penguin.sleep(-5);
-
-  EXPECT_EQ(penguin.getEnergyLevel(), initial_energy);
+  penguin.sleep();
+  EXPECT_EQ(penguin.getHungerLevel(), 30);
 }
