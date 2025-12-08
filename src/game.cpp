@@ -243,7 +243,7 @@ void Game::renameAnimal() {
   std::getline(std::cin, name);
 
   std::cout << "Rename " << old_name << " the " << animal->getSpecies() << " to " << name << " the "
-            << animal->getSpecies() << "? (1 - Yes, 2 - No): ";
+            << animal->getSpecies() << "? (1 - Yes, 2 - No)\n";
 
   int choice = getPlayerInput(1, 2);
 
@@ -301,7 +301,7 @@ void Game::purchaseAnimal() {
   }
 
   std::cout << "Purchase " << animal->getName() << " the " << animal->getSpecies() << " for $"
-            << animal->getPurchaseCost() << "? (1 - Yes, 2 - No): ";
+            << animal->getPurchaseCost() << "? (1 - Yes, 2 - No)\n";
 
   choice = getPlayerInput(1, 2);
 
@@ -320,7 +320,7 @@ void Game::sellAnimal() {
   }
 
   std::cout << "Sell " << animal->getName() << " the " << animal->getSpecies() << " for $"
-            << (animal->getPurchaseCost() / 2.0) << "? (1 - Yes, 2 - No): ";
+            << (animal->getPurchaseCost() / 2.0) << "? (1 - Yes, 2 - No)\n";
   int choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
@@ -464,7 +464,7 @@ Exhibit* Game::chooseExhibit() {
     return nullptr;
   }
 
-  std::cout << "Choose an exhibit:\n";
+  std::cout << "\nChoose an exhibit:\n";
   std::cout << "-----------------------------------------\n";
   for (size_t i = 0; i < exhibits.size(); ++i) {
     std::cout << (i + 1) << ". " << exhibits[i]->getName() << "\n";
@@ -560,7 +560,7 @@ void Game::purchaseExhibit() {
   }
 
   std::cout << "Purchase " << exhibit->getName() << " for $" << exhibit->getPurchaseCost()
-            << "? (1 - Yes, 2 - No): ";
+            << "? (1 - Yes, 2 - No)\n";
 
   choice = getPlayerInput(1, 2);
 
@@ -576,7 +576,7 @@ void Game::sellExhibit() {
     return;
   }
   std::cout << "Sell " << exhibit->getName() << " for $" << (exhibit->getPurchaseCost() / 2.0)
-            << "? (1 - Yes, 2 - No): ";
+            << "? (1 - Yes, 2 - No)\n";
   int choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
@@ -769,7 +769,12 @@ void Game::endDay() {
 }
 
 void Game::exitGame() {
-  std::cout << "\nExiting game...\n";
-  std::cout << "Thanks for playing Zooperator " << player_.getName() << "!\n";
-  running_ = false;
+  std::cout << "Exit game? (1 - Yes, 2 - No)\n";
+  int choice = getPlayerInput(1, 2);
+
+  if (choice == 1) {
+    std::cout << "\nExiting game...\n";
+    std::cout << "Thanks for playing Zooperator " << player_.getName() << "!\n";
+    running_ = false;
+  }
 }
