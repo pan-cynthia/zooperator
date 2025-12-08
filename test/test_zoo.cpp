@@ -492,7 +492,7 @@ TEST(ZooTest, UpdateAnimalStats) {
 TEST(ZooTest, CalculateVisitorCountHighRating) {
   Zoo zoo("SF Zoo", 3000.0);
   zoo.purchaseAnimal(std::make_unique<Bear>("Winnie", 8));
-  EXPECT_EQ(zoo.calculateVisitorCount(), 12);
+  EXPECT_EQ(zoo.calculateVisitorCount(), 13);
 }
 
 TEST(ZooTest, CalculateVisitorCountMediumRating) {
@@ -506,7 +506,7 @@ TEST(ZooTest, CalculateVisitorCountMediumRating) {
 
   // 1.75 (happiness), 1.05 (health), 0.5 (cleanliness), 0.05 (financial) = 3.35 zoo rating
   // rating multpier = 1.0, animal count = 1, base visitors = 5 (no happiness bonus or penalties)
-  EXPECT_EQ(zoo.calculateVisitorCount(), 5);
+  EXPECT_EQ(zoo.calculateVisitorCount(), 6);
 }
 
 TEST(ZooTest, CalculateVisitorCountNeglectPenalty) {
@@ -518,9 +518,9 @@ TEST(ZooTest, CalculateVisitorCountNeglectPenalty) {
   bear_ptr->updateHunger(85);
 
   EXPECT_GE(zoo.calculateVisitorCount(), 0);
-  EXPECT_LE(zoo.calculateVisitorCount(), 10);
+  EXPECT_LE(zoo.calculateVisitorCount(), 11);
   // visitors = 10, happiness +2, neglect -3
-  EXPECT_EQ(zoo.calculateVisitorCount(), 9);
+  EXPECT_EQ(zoo.calculateVisitorCount(), 10);
 }
 
 TEST(ZooTest, CalculateVisitorCountDirtyExhibit) {
@@ -532,7 +532,7 @@ TEST(ZooTest, CalculateVisitorCountDirtyExhibit) {
 
   exhibit_ptr->updateCleanliness(-60);
   EXPECT_LT(zoo.calculateVisitorCount(), 12);
-  EXPECT_EQ(zoo.calculateVisitorCount(), 10);
+  EXPECT_EQ(zoo.calculateVisitorCount(), 11);
 }
 
 TEST(ZooTest, CalculateVisitorCountNeverNegative) {

@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <set>
 
 Zoo::Zoo(std::string name, double starting_balance)
     : name_(std::move(name)), day_(1), balance_(starting_balance) {}
@@ -350,6 +351,12 @@ int Zoo::calculateVisitorCount() const {
 
   int visitors = static_cast<int>(base_visitors * rating_multiplier);
 
+  std::set<std::string> species;
+  for (const auto& animal : animals_) {
+    species.insert(animal->getSpecies());
+  }
+  int diversity_bonus = static_cast<int>(species.size());  // +1 visitor per species
+
   int happiness_bonus = 0;
   for (const auto& animal : animals_) {
     if (animal->getHappinessLevel() > 80) {
@@ -371,7 +378,8 @@ int Zoo::calculateVisitorCount() const {
     }
   }
 
-  int final_visitors = visitors + happiness_bonus - neglect_penalty - cleanliness_penalty;
+  int final_visitors =
+      visitors + diversity_bonus + happiness_bonus - neglect_penalty - cleanliness_penalty;
   return final_visitors < 0 ? 0 : final_visitors;
 }
 
