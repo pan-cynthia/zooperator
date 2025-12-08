@@ -26,6 +26,8 @@ void Game::start() {
 
   setupStarterZoo();
 
+  std::cout << "\nDAY " << zoo_.getDay() << "\n";
+
   while (running_) {
     displayMainMenu();
     int choice = getPlayerInput(1, 5);
@@ -762,6 +764,8 @@ void Game::endDay() {
     running_ = false;
     return;
   }
+
+  std::cout << "\nDAY " << zoo_.getDay() << "\n";
 }
 
 void Game::exitGame() {
