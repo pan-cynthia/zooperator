@@ -613,9 +613,7 @@ void Game::cleanExhibit() {
     return;
   }
 
-  if (player_.cleanExhibit(exhibit)) {
-    std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
-  }
+  player_.cleanExhibit(exhibit);
 }
 
 void Game::manageZoo() {
