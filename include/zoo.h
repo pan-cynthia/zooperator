@@ -22,7 +22,6 @@ class Zoo {
   // animal management
   bool purchaseAnimal(std::unique_ptr<Animal> animal);
   bool sellAnimal(Animal* animal);
-  Animal* getAnimal(size_t index);
   std::vector<Animal*> getAllAnimals();
   std::vector<Animal*> getAnimalsNeedingAttention();
   size_t getAnimalCount() const;

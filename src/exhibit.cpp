@@ -67,11 +67,8 @@ bool Exhibit::containsAnimal(Animal* animal) const {
   return std::find(animals_.begin(), animals_.end(), animal) != animals_.end();
 }
 
-Animal* Exhibit::getAnimal(size_t index) {
-  if (index >= animals_.size()) {
-    return nullptr;
-  }
-  return animals_[index];
+std::vector<Animal*> Exhibit::getAllAnimals() {
+  return animals_;
 }
 
 const std::string& Exhibit::getName() const {

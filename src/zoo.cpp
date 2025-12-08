@@ -64,13 +64,6 @@ bool Zoo::sellAnimal(Animal* animal) {
   return true;
 }
 
-Animal* Zoo::getAnimal(size_t index) {
-  if (index >= animals_.size()) {
-    return nullptr;
-  }
-  return animals_[index].get();
-}
-
 std::vector<Animal*> Zoo::getAllAnimals() {
   std::vector<Animal*> animals;
   for (const auto& ptr : animals_) {

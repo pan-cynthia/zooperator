@@ -318,8 +318,6 @@ void Game::purchaseAnimal() {
 }
 
 void Game::sellAnimal() {
-  // int animalIndex = chooseAnimalIndex();
-  // Animal* animal = zoo_.getAnimal(animalIndex);
   Animal* animal = chooseAnimal();
   if (!animal) {
     return;

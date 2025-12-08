@@ -109,22 +109,25 @@ TEST(ZooTest, GetAnimal) {
   auto bear = std::make_unique<Bear>("Corduroy", 4);
   Animal* bear_ptr = bear.get();
   zoo.purchaseAnimal(std::move(bear));
+  auto animals = zoo.getAllAnimals();
 
-  EXPECT_EQ(zoo.getAnimal(0), bear_ptr);
+  EXPECT_EQ(animals[0], bear_ptr);
 }
 
 TEST(ZooTest, GetAnimalOutOfBounds) {
   Zoo zoo("Oakland Zoo");
 
   zoo.purchaseAnimal(std::make_unique<Bear>("Corduroy", 4));
+  auto animals = zoo.getAllAnimals();
 
-  EXPECT_NE(zoo.getAnimal(0), nullptr);
-  EXPECT_EQ(zoo.getAnimal(1), nullptr);
+  EXPECT_NE(animals[0], nullptr);
+  EXPECT_EQ(animals[1], nullptr);
 }
 
 TEST(ZooTest, GetAnimalFromEmptyZoo) {
   Zoo zoo("Oakland Zoo");
-  EXPECT_EQ(zoo.getAnimal(0), nullptr);
+  auto animals = zoo.getAllAnimals();
+  EXPECT_EQ(animals.size(), 0);
 }
 
 TEST(ZooTest, GetAllAnimals) {

@@ -146,21 +146,23 @@ TEST(ExhibitTest, GetAnimal) {
 
   Bear bear("Grizz", 25);
   exhibit.addAnimal(&bear);
-  Animal* animal = exhibit.getAnimal(0);
-  EXPECT_EQ(animal->getName(), "Grizz");
+  auto animals = exhibit.getAllAnimals();
+  EXPECT_EQ(animals[0]->getName(), "Grizz");
 }
 
 TEST(ExhibitTest, GetAnimalOutOfBounds) {
   Exhibit exhibit("Bear Habitat", "Forest", 3, 800.0, 35.0);
   Bear bear("Grizz", 25);
   exhibit.addAnimal(&bear);
-  EXPECT_NE(exhibit.getAnimal(0), nullptr);
-  EXPECT_EQ(exhibit.getAnimal(1), nullptr);
+  auto animals = exhibit.getAllAnimals();
+  EXPECT_NE(animals[0], nullptr);
+  EXPECT_EQ(animals[1], nullptr);
 }
 
 TEST(ExhibitTest, GetAnimalFromEmptyExhibit) {
   Exhibit exhibit("Bear Habitat", "Forest", 3, 800.0, 35.0);
-  EXPECT_EQ(exhibit.getAnimal(0), nullptr);
+  auto animals = exhibit.getAllAnimals();
+  EXPECT_EQ(animals.size(), 0);
 }
 
 TEST(ExhibitTest, InitialCleanliness) {

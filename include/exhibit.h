@@ -17,7 +17,7 @@ class Exhibit {
   bool removeAnimal(Animal* animal);
   void removeAllAnimalsFromExhibit();
   bool containsAnimal(Animal* animal) const;
-  Animal* getAnimal(size_t index);
+  std::vector<Animal*> getAllAnimals();
 
   // getters
   const std::string& getName() const;
