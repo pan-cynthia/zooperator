@@ -105,6 +105,7 @@ void Animal::eat(int amount) {
 
   updateHunger(-amount);
   updateHappiness(5);
+  updateEnergy(5);
   std::cout << getName() << " the " << getSpecies() << " is eating.\n";
 }
 
@@ -135,4 +136,5 @@ void Animal::receiveExercise() {
 
 void Animal::receiveTreatment() {
   updateHealth(30);
+  updateEnergy(10);
 }

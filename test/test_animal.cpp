@@ -107,6 +107,13 @@ TEST(AnimalTest, EatingIncreasesHappiness) {
   EXPECT_EQ(penguin.getHappinessLevel(), 75);  // 70 + 5
 }
 
+TEST(AnimalTest, EatingIncreasesEnergy) {
+  Penguin penguin("Pororo", 8);
+  penguin.updateEnergy(-10);
+  penguin.eat(20);
+  EXPECT_EQ(penguin.getEnergyLevel(), 95);
+}
+
 TEST(AnimalTest, EatingZeroAmount) {
   Penguin penguin("Pororo", 8);
   penguin.updateHunger(50);

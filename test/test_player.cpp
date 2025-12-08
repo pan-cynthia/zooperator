@@ -128,9 +128,11 @@ TEST(PlayerTest, TreatAnimal) {
   Penguin penguin("Pororo", 8);
 
   penguin.updateHealth(-80);
+  penguin.updateEnergy(-30);
   EXPECT_TRUE(player.treatAnimal(zoo, &penguin));
 
   EXPECT_EQ(penguin.getHealthLevel(), 50);
+  EXPECT_EQ(penguin.getEnergyLevel(), 80);
   EXPECT_EQ(zoo.getBalance(), 1500.0 - 50.0);
 }
 
