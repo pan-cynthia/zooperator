@@ -378,7 +378,7 @@ int Zoo::calculateVisitorCount() const {
 }
 
 double Zoo::calculateDailyRevenue(int visitor_count) const {
-  constexpr double TICKET_PRICE = 15.0;
+  constexpr double TICKET_PRICE = 10.0;
   return visitor_count * TICKET_PRICE;
 }
 
