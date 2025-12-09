@@ -6,8 +6,12 @@
 #include <utility>
 
 #include "bear.h"
+#include "elephant.h"
+#include "lion.h"
+#include "monkey.h"
 #include "penguin.h"
 #include "rabbit.h"
+#include "tortoise.h"
 
 Game::Game(const Player& player, std::string zoo_name)
     : player_(player),
@@ -262,13 +266,17 @@ void Game::purchaseAnimal() {
   std::cout << "\nPURCHASE ANIMAL | Balance: $" << zoo_.getBalance() << "\n";
   std::cout << "-----------------------------------------\n";
   std::cout << "1. Rabbit - $150\n";
-  std::cout << "2. Penguin - $400\n";
-  std::cout << "3. Bear - $1500\n";
-  std::cout << "4. Cancel\n";
+  std::cout << "2. Tortoise - $250\n";
+  std::cout << "3. Penguin - $400\n";
+  std::cout << "4. Monkey - $600\n";
+  std::cout << "5. Bear - $1500\n";
+  std::cout << "6. Lion - $1500\n";
+  std::cout << "7. Elephant - $3000\n";
+  std::cout << "8. Cancel\n";
   std::cout << "-----------------------------------------\n\n";
 
-  int choice = getPlayerInput(1, 4);
-  if (choice == 4) {
+  int choice = getPlayerInput(1, 8);
+  if (choice == 8) {
     return;
   }
 
@@ -291,15 +299,39 @@ void Game::purchaseAnimal() {
       break;
     }
     case 2: {
+      std::uniform_int_distribution<> distr(10, 50);
+      age = distr(gen);
+      animal = std::make_unique<Tortoise>(name, age);
+      break;
+    }
+    case 3: {
       std::uniform_int_distribution<> distr(5, 20);
       age = distr(gen);
       animal = std::make_unique<Penguin>(name, age);
       break;
     }
-    case 3: {
+    case 4: {
+      std::uniform_int_distribution<> distr(3, 15);
+      age = distr(gen);
+      animal = std::make_unique<Monkey>(name, age);
+      break;
+    }
+    case 5: {
       std::uniform_int_distribution<> distr(3, 25);
       age = distr(gen);
       animal = std::make_unique<Bear>(name, age);
+      break;
+    }
+    case 6: {
+      std::uniform_int_distribution<> distr(4, 20);
+      age = distr(gen);
+      animal = std::make_unique<Lion>(name, age);
+      break;
+    }
+    case 7: {
+      std::uniform_int_distribution<> distr(10, 60);
+      age = distr(gen);
+      animal = std::make_unique<Elephant>(name, age);
       break;
     }
   }
