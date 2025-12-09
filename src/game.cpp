@@ -565,12 +565,14 @@ void Game::purchaseExhibit() {
   std::cout << "-----------------------------------------\n";
   std::cout << "1. Grassland (2-3 capacity) - $300\n";
   std::cout << "2. Forest (3-4 capacity) - $800\n";
-  std::cout << "3. Arctic (4-5 capacity) - $1500\n";
-  std::cout << "4. Cancel\n";
+  std::cout << "3. Jungle (4-6 capacity) - $1000\n";
+  std::cout << "4. Savannna (3-5 capacity) - $1200\n";
+  std::cout << "5. Arctic (4-5 capacity) - $1500\n";
+  std::cout << "6. Cancel\n";
   std::cout << "-----------------------------------------\n\n";
 
-  int choice = getPlayerInput(1, 4);
-  if (choice == 4) {
+  int choice = getPlayerInput(1, 6);
+  if (choice == 6) {
     return;
   }
 
@@ -598,6 +600,18 @@ void Game::purchaseExhibit() {
       break;
     }
     case 3: {
+      std::uniform_int_distribution<> distr(4, 6);
+      capacity = distr(gen);
+      exhibit = std::make_unique<Exhibit>(name, "Jungle", capacity, 1000.0, 45.0);
+      break;
+    }
+    case 4: {
+      std::uniform_int_distribution<> distr(3, 5);
+      capacity = distr(gen);
+      exhibit = std::make_unique<Exhibit>(name, "Savanna", capacity, 1200.0, 50.0);
+      break;
+    }
+    case 5: {
       std::uniform_int_distribution<> distr(4, 5);
       capacity = distr(gen);
       exhibit = std::make_unique<Exhibit>(name, "Arctic", capacity, 1500.0, 60.0);
@@ -608,7 +622,7 @@ void Game::purchaseExhibit() {
   std::cout << "Purchase " << exhibit->getName() << " for $" << exhibit->getPurchaseCost()
             << "? (1 - Yes, 2 - No)\n";
 
-  choice = getPlayerInput(1, 2);
+  choice = getPlayerInput(1, 6);
 
   if (choice == 1) {
     if (zoo_.purchaseExhibit(std::move(exhibit))) {
