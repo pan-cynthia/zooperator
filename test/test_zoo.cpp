@@ -591,7 +591,7 @@ TEST(ZooTest, CalculateZooRatingWithExhibit) {
 
   // health 100, happiness 100, 1 exhibit, balance 2700 after purchasing bear
   // expected: 2.5 (happiness) + 1.5 (health) + 0.75 (1 exhibit) + 0.15 (financial) = 4.9
-  EXPECT_NEAR(zoo.calculateZooRating(), 4.9, 0.01);
+  EXPECT_NEAR(zoo.calculateZooRating(), 5.0, 0.01);
 }
 
 TEST(ZooTest, CalculateZooRatingNeglectedAnimal) {

@@ -258,9 +258,9 @@ void Game::purchaseAnimal() {
   std::cout << "2. Tortoise - $250   [Grassland]\n";
   std::cout << "3. Penguin  - $400   [Arctic]\n";
   std::cout << "4. Monkey   - $600   [Jungle]\n";
-  std::cout << "5. Bear     - $1500  [Forest]\n";
-  std::cout << "6. Lion     - $2000  [Savanna]\n";
-  std::cout << "7. Elephant - $3000  [Savanna]\n";
+  std::cout << "5. Bear     - $1000  [Forest]\n";
+  std::cout << "6. Lion     - $1200  [Savanna]\n";
+  std::cout << "7. Elephant - $1500  [Savanna]\n";
   std::cout << "8. Cancel\n";
   std::cout << "-----------------------------------------\n\n";
 

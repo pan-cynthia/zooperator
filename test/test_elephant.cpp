@@ -7,7 +7,7 @@ TEST(ElephantTest, ConstructorInitialization) {
   EXPECT_EQ(elephant.getName(), "Dumbo");
   EXPECT_EQ(elephant.getSpecies(), "Elephant");
   EXPECT_EQ(elephant.getAge(), 10);
-  EXPECT_EQ(elephant.getPurchaseCost(), 3000.0);
-  EXPECT_EQ(elephant.getFeedingCost(), 60.0);
-  EXPECT_EQ(elephant.getMaintenanceCost(), 100.0);
+  EXPECT_EQ(elephant.getPurchaseCost(), 1500.0);
+  EXPECT_EQ(elephant.getFeedingCost(), 50.0);
+  EXPECT_EQ(elephant.getMaintenanceCost(), 80.0);
 }
