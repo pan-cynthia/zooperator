@@ -882,22 +882,33 @@ void Game::displayHelp() {
   std::cout << "\nHOW TO PLAY\n";
   std::cout << "-----------------------------------------\n";
   std::cout << "Goals:\n";
-  std::cout << " - Keep the zoo running for 7 days.\n";
-  std::cout << " - Keep all animals happy and healthy.\n";
-  std::cout << " - Maintain a zoo rating above 3.0 stars.\n\n";
-  std::cout << "Actions (limited per day):\n";
-  std::cout << "  - Feed: Reduces hunger\n";
-  std::cout << "  - Play: Increases happiness\n";
-  std::cout << "  - Exercise: Increases health\n";
-  std::cout << "  - Treat: Heals sick animals (costs $50)\n";
-  std::cout << "  - Clean: Keeps exhibits attractive\n\n";
+  std::cout << " - Keep the zoo running for 7 days\n";
+  std::cout << " - Keep all animals happy and healthy\n";
+  std::cout << " - Aim for a zoo rating above 4 stars\n";
+  std::cout << " - Maintain a balance of $2000+\n\n";
+
+  std::cout << "Actions (Limited Per Day):\n";
+  std::cout << " - Each action costs 1 action point (1 AP)\n";
+  std::cout << " - Some actions also cost money\n";
+  std::cout << " - Feed ($): Reduces hunger\n";
+  std::cout << " - Play: Increases happiness\n";
+  std::cout << " - Exercise: Increases health\n";
+  std::cout << " - Treat ($50): Heals sick animals\n";
+  std::cout << " - Clean: Keeps exhibits attractive\n\n";
+
   std::cout << "Warnings:\n";
-  std::cout << "  - Hungry animals lose health and can die\n";
+  std::cout << "  - Neglected animals will die\n";
   std::cout << "  - Unhappy animals reduce your zoo rating\n";
-  std::cout << "  - A low zoo rating = fewer visitors and less revenue\n";
-  std::cout << "  - Dirty exhibits will drive visitors away\n\n";
+  std::cout << "  - Low rating = less visitors = less revenue\n";
+  std::cout << "  - Dirty exhibits drive visitors away\n\n";
+
+  std::cout << "Habitats:\n";
+  std::cout << "  - Animals prefer certain exhibit types\n";
+  std::cout << "  - Correct habitat = happiness bonus\n";
+  std::cout << "  - Wrong habitat = unhappiness penalty\n\n";
+
   std::cout << "Tips:\n";
-  std::cout << "  - Check animals that need attention daily\n";
+  std::cout << "  - Check 'Animals Needing Attention' daily\n";
   std::cout << "  - Balance spending vs saving\n";
   std::cout << "  - Don't expand too fast\n";
   std::cout << "-----------------------------------------\n\n";
