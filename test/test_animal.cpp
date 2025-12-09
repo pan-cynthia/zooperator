@@ -137,7 +137,7 @@ TEST(AnimalTest, SleepingRestoresEnergy) {
   penguin.updateEnergy(-70);  // energy = 30
 
   penguin.sleep();
-  EXPECT_EQ(penguin.getEnergyLevel(), 45);
+  EXPECT_EQ(penguin.getEnergyLevel(), 38);
 }
 
 TEST(AnimalTest, SleepingRestoresHealth) {
@@ -145,7 +145,7 @@ TEST(AnimalTest, SleepingRestoresHealth) {
   penguin.updateHealth(-15);  // health = 85
 
   penguin.sleep();
-  EXPECT_EQ(penguin.getHealthLevel(), 90);
+  EXPECT_EQ(penguin.getHealthLevel(), 86);
 }
 
 TEST(AnimalTest, SleepingIncreasesHunger) {
@@ -153,5 +153,5 @@ TEST(AnimalTest, SleepingIncreasesHunger) {
   penguin.updateHunger(25);  // hunger = 25
 
   penguin.sleep();
-  EXPECT_EQ(penguin.getHungerLevel(), 30);
+  EXPECT_EQ(penguin.getHungerLevel(), 33);
 }

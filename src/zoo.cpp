@@ -295,11 +295,11 @@ void Zoo::updateAnimalStats() {
     // decline health due to starvation
     int hunger = animal->getHungerLevel();
     if (hunger >= 90) {
-      animal->updateHealth(-25);
+      animal->updateHealth(-30);
     } else if (hunger >= 75) {
-      animal->updateHealth(-15);
+      animal->updateHealth(-20);
     } else if (hunger >= 60) {
-      animal->updateHealth(-10);
+      animal->updateHealth(-15);
     } else if (hunger >= 45) {
       animal->updateHealth(-5);
     }
@@ -513,7 +513,7 @@ void Zoo::advanceDay() {
 
   // degrade cleanliness of exhibits
   for (const auto& exhibit : exhibits_) {
-    exhibit->updateCleanliness(-10);
+    exhibit->updateCleanliness(-15);
   }
 
   int visitors = calculateVisitorCount();

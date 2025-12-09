@@ -110,9 +110,9 @@ void Animal::eat(int amount) {
 }
 
 void Animal::sleep() {
-  updateEnergy(15);
-  updateHealth(5);
-  updateHunger(5);
+  updateEnergy(8);
+  updateHealth(1);
+  updateHunger(8);
 }
 
 void Animal::receivePlay() {
