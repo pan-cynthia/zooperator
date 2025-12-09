@@ -338,6 +338,9 @@ void Game::purchaseAnimal() {
 
   std::cout << "Purchase " << animal->getName() << " the " << animal->getSpecies() << " for $"
             << animal->getPurchaseCost() << "? (1 - Yes, 2 - No)\n";
+  std::cout << "Daily Cost: $" << (animal->getFeedingCost() + animal->getMaintenanceCost())
+            << " (Feeding: $" << animal->getFeedingCost() << ", Maintenance: $"
+            << animal->getMaintenanceCost() << ")\n";
 
   choice = getPlayerInput(1, 2);
 
