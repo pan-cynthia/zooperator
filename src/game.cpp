@@ -26,9 +26,7 @@ void Game::start() {
   std::cout << "Goals\n";
   std::cout << " - Keep the zoo running for 7 days.\n";
   std::cout << " - Keep all animals happy and healthy.\n";
-  std::cout << " - Maintain a zoo rating above 3.0 stars.\n\n";
-
-  setupStarterZoo();
+  std::cout << " - Maintain a zoo rating above 3.0 stars.\n";
 
   std::cout << "\nDAY " << zoo_.getDay() << "\n";
 
@@ -57,23 +55,6 @@ void Game::start() {
         break;
     }
   }
-}
-
-void Game::setupStarterZoo() {
-  std::cout << "Setting up your starter zoo...\n";
-  std::cout << " - We've added 1 rabbit and a grassland exhibit to get you started!\n";
-
-  std::cout << " - ";
-  zoo_.purchaseExhibit(std::make_unique<Exhibit>("Bunny Burrow", "Grassland", 3, 300.0, 15.0));
-  auto rabbit = std::make_unique<Rabbit>("Miffy", 7);
-  Animal* rabbit_ptr = rabbit.get();
-
-  std::cout << " - ";
-  zoo_.purchaseAnimal(std::move(rabbit));
-  std::cout << " - ";
-  zoo_.addAnimalToExhibit(rabbit_ptr, zoo_.getExhibit(0));
-
-  std::cout << "\nZoo setup complete!\n";
 }
 
 void Game::clearInput() {
