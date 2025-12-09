@@ -192,7 +192,15 @@ void Game::displayAllAnimals() {
     std::cout << "   Happiness:  " << animal->getHappinessLevel() << "\n";
     std::cout << "   Energy:     " << animal->getEnergyLevel() << "\n";
     Exhibit* exhibit = zoo_.findAnimalLocation(animal);
-    std::cout << "   Location:   " << (exhibit ? exhibit->getName() : "Homeless") << "\n";
+    if (exhibit) {
+      if (exhibit->getType() == animal->getPreferredHabitat()) {
+        std::cout << "   Location:   " << exhibit->getName() << " (Perfect Match!)\n";
+      } else {
+        std::cout << "   Location:   " << exhibit->getName() << " (Wrong Habitat!)\n";
+      }
+    } else {
+      std::cout << "   Location:   Homeless\n";
+    }
 
     if (i < animals.size() - 1) {
       std::cout << "-----------------------------------------\n";
@@ -246,13 +254,13 @@ void Game::renameAnimal() {
 void Game::purchaseAnimal() {
   std::cout << "\nPURCHASE ANIMAL | Balance: $" << zoo_.getBalance() << "\n";
   std::cout << "-----------------------------------------\n";
-  std::cout << "1. Rabbit - $150\n";
-  std::cout << "2. Tortoise - $250\n";
-  std::cout << "3. Penguin - $400\n";
-  std::cout << "4. Monkey - $600\n";
-  std::cout << "5. Bear - $1500\n";
-  std::cout << "6. Lion - $2000\n";
-  std::cout << "7. Elephant - $3000\n";
+  std::cout << "1. Rabbit   - $150   [Grassland]\n";
+  std::cout << "2. Tortoise - $250   [Grassland]\n";
+  std::cout << "3. Penguin  - $400   [Arctic]\n";
+  std::cout << "4. Monkey   - $600   [Jungle]\n";
+  std::cout << "5. Bear     - $1500  [Forest]\n";
+  std::cout << "6. Lion     - $2000  [Savanna]\n";
+  std::cout << "7. Elephant - $3000  [Savanna]\n";
   std::cout << "8. Cancel\n";
   std::cout << "-----------------------------------------\n\n";
 
@@ -261,7 +269,7 @@ void Game::purchaseAnimal() {
     return;
   }
 
-  std::cout << "Name your animal: ";
+  std::cout << "\nName your animal: ";
   std::string name;
   std::getline(std::cin, name);
 
@@ -319,10 +327,10 @@ void Game::purchaseAnimal() {
 
   std::cout << "Purchase " << animal->getName() << " the " << animal->getSpecies() << " for $"
             << animal->getPurchaseCost() << "? (1 - Yes, 2 - No)\n";
-  std::cout << "Daily Cost: $" << (animal->getFeedingCost() + animal->getMaintenanceCost())
+  std::cout << " - Daily Cost: $" << (animal->getFeedingCost() + animal->getMaintenanceCost())
             << " (Feeding: $" << animal->getFeedingCost() << ", Maintenance: $"
             << animal->getMaintenanceCost() << ")\n";
-
+  std::cout << " - Preferred Habitat: " << animal->getPreferredHabitat() << "\n";
   choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
@@ -924,8 +932,16 @@ void Game::displayHelp() {
 
   std::cout << "Habitats:\n";
   std::cout << "  - Animals prefer certain exhibit types\n";
-  std::cout << "  - Correct habitat = happiness bonus\n";
-  std::cout << "  - Wrong habitat = unhappiness penalty\n\n";
+  std::cout << "     - Correct habitat: +3 happiness/day\n";
+  std::cout << "     - Wrong habitat: -2 happiness/day\n";
+  std::cout << "     - No exhibit: -15 happiness/day, -5 health/day\n\n";
+
+  std::cout << "Habitat Guide:\n";
+  std::cout << " Grassland - Rabbit                    \n";
+  std::cout << " Forest    - Bear                      \n";
+  std::cout << " Arctic    - Penguin                   \n";
+  std::cout << " Jungle    - Monkey                    \n";
+  std::cout << " Savanna   - Elephant, Lion            \n\n";
 
   std::cout << "Tips:\n";
   std::cout << "  - Check 'Animals Needing Attention' daily\n";
