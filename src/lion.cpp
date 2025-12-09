@@ -18,3 +18,7 @@ void Lion::updateStatsEndOfDay() {
   updateHappiness(-5);
   updateEnergy(-10);
 }
+
+std::string Lion::getPreferredHabitat() const {
+  return "Savanna";
+}

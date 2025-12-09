@@ -10,6 +10,7 @@ class Tortoise : public Animal {
   Tortoise(std::string name, int age);
   void makeSound() const override;
   void updateStatsEndOfDay() override;
+  std::string getPreferredHabitat() const override;
 };
 
 #endif  // TORTOISE_H

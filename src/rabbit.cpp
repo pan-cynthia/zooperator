@@ -18,3 +18,7 @@ void Rabbit::updateStatsEndOfDay() {
   updateHappiness(-6);
   updateEnergy(-12);
 }
+
+std::string Rabbit::getPreferredHabitat() const {
+  return "Grassland";
+}

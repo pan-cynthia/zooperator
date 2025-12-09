@@ -18,3 +18,7 @@ void Bear::updateStatsEndOfDay() {
   updateHappiness(-3);
   updateEnergy(-8);
 }
+
+std::string Bear::getPreferredHabitat() const {
+  return "Forest";
+}

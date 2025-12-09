@@ -18,3 +18,7 @@ void Monkey::updateStatsEndOfDay() {
   updateHappiness(-10);
   updateEnergy(-15);
 }
+
+std::string Monkey::getPreferredHabitat() const {
+  return "Jungle";
+}

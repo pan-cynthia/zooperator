@@ -18,3 +18,7 @@ void Elephant::updateStatsEndOfDay() {
   updateHappiness(-8);
   updateEnergy(-14);
 }
+
+std::string Elephant::getPreferredHabitat() const {
+  return "Savanna";
+}

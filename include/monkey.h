@@ -10,6 +10,7 @@ class Monkey : public Animal {
   Monkey(std::string name, int age);
   void makeSound() const override;
   void updateStatsEndOfDay() override;
+  std::string getPreferredHabitat() const override;
 };
 
 #endif  // MONKEY_H

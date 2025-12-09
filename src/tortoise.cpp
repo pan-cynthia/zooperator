@@ -18,3 +18,7 @@ void Tortoise::updateStatsEndOfDay() {
   updateHappiness(-2);
   updateEnergy(-6);
 }
+
+std::string Tortoise::getPreferredHabitat() const {
+  return "Grassland";
+}

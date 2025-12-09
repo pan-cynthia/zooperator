@@ -19,7 +19,9 @@ class Animal {
   virtual void sleep();
   virtual void makeSound() const = 0;
   virtual void updateStatsEndOfDay();
-
+  virtual std::string getPreferredHabitat() const {
+    return "Any";
+  }
   void receivePlay();
   void receiveExercise();
   void receiveTreatment();

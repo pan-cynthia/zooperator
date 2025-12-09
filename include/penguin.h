@@ -10,6 +10,7 @@ class Penguin : public Animal {
   Penguin(std::string name, int age);
   void makeSound() const override;
   void updateStatsEndOfDay() override;
+  std::string getPreferredHabitat() const override;
 };
 
 #endif  // PENGUIN_H

@@ -321,6 +321,14 @@ void Zoo::updateAnimalStats() {
     } else if (energy < 40) {
       animal->updateHealth(-5);
     }
+
+    // habitat matching happiness bonus
+    Exhibit* exhibit = findAnimalLocation(animal.get());
+    if (exhibit && exhibit->getType() == animal->getPreferredHabitat()) {
+      animal->updateHappiness(3);
+    } else if (exhibit) {
+      animal->updateHappiness(-2);
+    }
   }
 }
 

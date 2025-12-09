@@ -18,3 +18,7 @@ void Penguin::updateStatsEndOfDay() {
   updateHappiness(-8);
   updateEnergy(-10);
 }
+
+std::string Penguin::getPreferredHabitat() const {
+  return "Arctic";
+}

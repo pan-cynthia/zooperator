@@ -8,6 +8,7 @@ class Elephant : public Animal {
   Elephant(std::string name, int age);
   void makeSound() const override;
   void updateStatsEndOfDay() override;
+  std::string getPreferredHabitat() const override;
 };
 
 #endif  // ELEPHANT_H

@@ -10,6 +10,7 @@ class Lion : public Animal {
   Lion(std::string name, int age);
   void makeSound() const override;
   void updateStatsEndOfDay() override;
+  std::string getPreferredHabitat() const override;
 };
 
 #endif  // LION_H
