@@ -117,3 +117,7 @@ void Exhibit::clean() {
   cleanliness_ = 100;
   std::cout << "Exhibit " << name_ << " has been cleaned!\n";
 }
+
+void Exhibit::setName(const std::string& name) {
+  name_ = name;
+}

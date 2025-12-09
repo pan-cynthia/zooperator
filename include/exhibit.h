@@ -32,6 +32,7 @@ class Exhibit {
   // setters
   void updateCleanliness(int delta);
   void clean();
+  void setName(const std::string& name);
 
  private:
   std::string name_;

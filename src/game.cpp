@@ -474,13 +474,14 @@ void Game::manageExhibits() {
     std::cout << "-----------------------------------------\n";
     std::cout << "1. Display All Exhibits\n";
     std::cout << "2. Display Exhibits Needing Cleaning\n";
-    std::cout << "3. Purchase Exhibit\n";
-    std::cout << "4. Sell Exhibit\n";
-    std::cout << "5. Clean Exhibit (1 AP)\n";
-    std::cout << "6. Back to Main Menu\n";
+    std::cout << "3. Rename Exhibit\n";
+    std::cout << "4. Purchase Exhibit\n";
+    std::cout << "5. Sell Exhibit\n";
+    std::cout << "6. Clean Exhibit (1 AP)\n";
+    std::cout << "7. Back to Main Menu\n";
     std::cout << "-----------------------------------------\n\n";
 
-    int choice = getPlayerInput(1, 6);
+    int choice = getPlayerInput(1, 7);
     switch (choice) {
       case 1:
         displayAllExhibits();
@@ -489,15 +490,18 @@ void Game::manageExhibits() {
         displayExhibitsNeedingCleaning();
         break;
       case 3:
-        purchaseExhibit();
+        renameExhibit();
         break;
       case 4:
-        sellExhibit();
+        purchaseExhibit();
         break;
       case 5:
-        cleanExhibit();
+        sellExhibit();
         break;
       case 6:
+        cleanExhibit();
+        break;
+      case 7:
         return;
     }
   }
@@ -557,6 +561,25 @@ void Game::displayExhibitsNeedingCleaning() {
 
   for (size_t i = 0; i < exhibits.size(); ++i) {
     std::cout << (i + 1) << ". " << exhibits[i]->getName() << "\n";
+  }
+}
+
+void Game::renameExhibit() {
+  Exhibit* exhibit = chooseExhibit();
+  if (!exhibit) {
+    return;
+  }
+
+  std::string old_name = exhibit->getName();
+  std::cout << "Enter new name: ";
+  std::string name;
+  std::getline(std::cin, name);
+
+  std::cout << "Rename Exhibit " << old_name << " to Exhibit " << name << "? (1 - Yes, 2 - No)\n";
+  int choice = getPlayerInput(1, 2);
+  if (choice == 1) {
+    exhibit->setName(name);
+    std::cout << "Renamed Exhibit " << old_name << " to Exhibit " << name << ".\n";
   }
 }
 

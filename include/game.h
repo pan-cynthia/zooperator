@@ -50,6 +50,7 @@ class Game {
   Exhibit* chooseExhibit();
   void displayAllExhibits();
   void displayExhibitsNeedingCleaning();
+  void renameExhibit();
   void purchaseExhibit();
   void sellExhibit();
   void cleanExhibit();
