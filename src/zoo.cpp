@@ -322,12 +322,17 @@ void Zoo::updateAnimalStats() {
       animal->updateHealth(-5);
     }
 
-    // habitat matching happiness bonus
     Exhibit* exhibit = findAnimalLocation(animal.get());
+    // habitat matching happiness bonus
     if (exhibit && exhibit->getType() == animal->getPreferredHabitat()) {
       animal->updateHappiness(3);
     } else if (exhibit) {
       animal->updateHappiness(-2);
+    }
+    // happiness penalty for homeless animals
+    if (!exhibit) {
+      animal->updateHappiness(-15);
+      animal->updateHealth(-5);
     }
   }
 }
@@ -538,6 +543,7 @@ void Zoo::advanceDay() {
   int unhappy_animals = 0;
   int tired_animals = 0;
   int needy_animals = 0;
+  int homeless_animals = 0;
 
   for (const auto& animal : animals_) {
     if (animal->getHealthLevel() < 50) {
@@ -559,6 +565,10 @@ void Zoo::advanceDay() {
     if (animal->needsAttention()) {
       needy_animals++;
     }
+
+    if (!findAnimalLocation(animal.get())) {
+      homeless_animals++;
+    }
   }
 
   for (const auto& exhibit : exhibits_) {
@@ -574,6 +584,7 @@ void Zoo::advanceDay() {
   std::cout << "  Unhappy: " << unhappy_animals << "\n";
   std::cout << "  Tired: " << tired_animals << "\n";
   std::cout << "  Need Attention: " << needy_animals << "\n";
+  std::cout << "  Homeless: " << homeless_animals << "\n";
   std::cout << "\nExhibits:\n";
   std::cout << "  Total: " << getExhibitCount() << "\n";
   std::cout << "  Need Cleaning: " << dirty_exhibits << "\n";

@@ -192,7 +192,7 @@ void Game::displayAllAnimals() {
     std::cout << "   Happiness:  " << animal->getHappinessLevel() << "\n";
     std::cout << "   Energy:     " << animal->getEnergyLevel() << "\n";
     Exhibit* exhibit = zoo_.findAnimalLocation(animal);
-    std::cout << "   Location:   " << (exhibit ? exhibit->getName() : "None") << "\n";
+    std::cout << "   Location:   " << (exhibit ? exhibit->getName() : "Homeless") << "\n";
 
     if (i < animals.size() - 1) {
       std::cout << "-----------------------------------------\n";
@@ -903,6 +903,7 @@ void Game::displayHelp() {
   std::cout << "Warnings:\n";
   std::cout << "  - Neglected animals will die\n";
   std::cout << "  - Unhappy animals reduce your zoo rating\n";
+  std::cout << "  - Homeless animals lose happiness/health daily\n";
   std::cout << "  - Low rating = less visitors = less revenue\n";
   std::cout << "  - Dirty exhibits drive visitors away\n\n";
 
