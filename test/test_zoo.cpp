@@ -7,17 +7,17 @@
 #include "zoo.h"
 
 TEST(ZooTest, ConstructorInitialization) {
-  Zoo zoo("SF Zoo", 1500.0);
+  Zoo zoo("SF Zoo", 2000.0);
   EXPECT_EQ(zoo.getName(), "SF Zoo");
   EXPECT_EQ(zoo.getDay(), 1);
-  EXPECT_EQ(zoo.getBalance(), 1500.0);
+  EXPECT_EQ(zoo.getBalance(), 2000.0);
   EXPECT_EQ(zoo.getAnimalCount(), 0);
   EXPECT_EQ(zoo.getExhibitCount(), 0);
 }
 
 TEST(ZooTest, ConstructorDefaultBalance) {
   Zoo zoo("SF Zoo");
-  EXPECT_EQ(zoo.getBalance(), 1500.0);
+  EXPECT_EQ(zoo.getBalance(), 2000.0);
 }
 
 TEST(ZooTest, PurchaseAnimal) {
@@ -27,7 +27,7 @@ TEST(ZooTest, PurchaseAnimal) {
 
   zoo.purchaseAnimal(std::move(rabbit));
   EXPECT_EQ(zoo.getAnimalCount(), 1);
-  EXPECT_EQ(zoo.getBalance(), 1500.0 - rabbit_cost);
+  EXPECT_EQ(zoo.getBalance(), 2000.0 - rabbit_cost);
 }
 
 TEST(ZooTest, PurchaseMultipleAnimals) {
@@ -56,7 +56,7 @@ TEST(ZooTest, CorrectBalance) {
   double penguin_cost = penguin->getPurchaseCost();
   zoo.purchaseAnimal(std::move(penguin));
 
-  EXPECT_EQ(zoo.getBalance(), 1500.0 - rabbit_cost - penguin_cost);
+  EXPECT_EQ(zoo.getBalance(), 2000.0 - rabbit_cost - penguin_cost);
 }
 
 TEST(ZooTest, SellAnimal) {
@@ -82,7 +82,7 @@ TEST(ZooTest, CannotSellNonexistentAnimal) {
   Zoo zoo("Oakland Zoo");
   Bear bear("Corduroy", 4);
   EXPECT_FALSE(zoo.sellAnimal(&bear));
-  EXPECT_EQ(zoo.getBalance(), 1500.0);
+  EXPECT_EQ(zoo.getBalance(), 2000.0);
 }
 
 TEST(ZooTest, SellAnimalRemovesFromExhibit) {
@@ -185,7 +185,7 @@ TEST(ZooTest, PurchaseExhibit) {
   zoo.purchaseExhibit(std::move(exhibit));
 
   EXPECT_EQ(zoo.getExhibitCount(), 1);
-  EXPECT_EQ(zoo.getBalance(), 1500.0 - exhibit_cost);
+  EXPECT_EQ(zoo.getBalance(), 2000.0 - exhibit_cost);
 }
 
 TEST(ZooTest, PurchaseMultipleExhibits) {

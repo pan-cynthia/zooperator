@@ -20,7 +20,7 @@ TEST(PlayerTest, FeedAnimal) {
   penguin.updateHunger(20);
   EXPECT_TRUE(player.feedAnimal(zoo, &penguin));
   EXPECT_EQ(penguin.getHungerLevel(), 0);
-  EXPECT_EQ(zoo.getBalance(), 1500.0 - penguin.getFeedingCost());
+  EXPECT_EQ(zoo.getBalance(), 2000.0 - penguin.getFeedingCost());
 }
 
 TEST(PlayerTest, CannotFeedNullAnimal) {
@@ -133,7 +133,7 @@ TEST(PlayerTest, TreatAnimal) {
 
   EXPECT_EQ(penguin.getHealthLevel(), 50);
   EXPECT_EQ(penguin.getEnergyLevel(), 80);
-  EXPECT_EQ(zoo.getBalance(), 1500.0 - 50.0);
+  EXPECT_EQ(zoo.getBalance(), 2000.0 - 50.0);
 }
 
 TEST(PlayerTest, CannotTreatNullAnimal) {
