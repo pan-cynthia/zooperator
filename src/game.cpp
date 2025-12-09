@@ -329,6 +329,21 @@ void Game::purchaseAnimal() {
     if (zoo_.purchaseAnimal(std::move(animal))) {
       updateMaxActionPoints();
       std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+
+      std::vector<Animal*> animals = zoo_.getAllAnimals();
+      Animal* new_animal = animals.back();
+
+      std::cout << "\nAssign " << new_animal->getName()
+                << " to an exhibit now? (1 - Now, 2 - Later)\n";
+      std::cout << "(Animals without exhibits lose health/happiness daily!)\n";
+
+      int assign = getPlayerInput(1, 2);
+      if (assign == 1) {
+        Exhibit* exhibit = chooseExhibit();
+        if (exhibit) {
+          zoo_.addAnimalToExhibit(new_animal, exhibit);
+        }
+      }
     }
   }
 }
