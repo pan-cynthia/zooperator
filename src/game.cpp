@@ -270,7 +270,7 @@ void Game::purchaseAnimal() {
   std::cout << "3. Penguin - $400\n";
   std::cout << "4. Monkey - $600\n";
   std::cout << "5. Bear - $1500\n";
-  std::cout << "6. Lion - $1500\n";
+  std::cout << "6. Lion - $2000\n";
   std::cout << "7. Elephant - $3000\n";
   std::cout << "8. Cancel\n";
   std::cout << "-----------------------------------------\n\n";
