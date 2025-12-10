@@ -17,8 +17,8 @@ Game::Game(const Player& player, std::string zoo_name)
     : player_(player),
       zoo_(zoo_name, 2000.0),
       running_(true),
-      action_points_(6),
-      max_action_points_(6) {}
+      action_points_(3),
+      max_action_points_(3) {}
 
 void Game::start() {
   std::cout << "\nWelcome to Zooperator " << player_.getName() << "!\n";
@@ -755,8 +755,8 @@ int Game::getMaxActionPoints() const {
 }
 
 void Game::updateMaxActionPoints() {
-  // base 6 points, +1 per animal, +1 per 2 exhibits
-  max_action_points_ = 6 + zoo_.getAnimalCount() + (zoo_.getExhibitCount() / 2);
+  // base 3 points, +1 per animal, +1 per 2 exhibits
+  max_action_points_ = 3 + zoo_.getAnimalCount() + (zoo_.getExhibitCount() / 2);
 
   // cap at 20 points
   if (max_action_points_ > 20) {
