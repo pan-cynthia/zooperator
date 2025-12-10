@@ -24,7 +24,7 @@ void Game::start() {
   std::cout << "\nWelcome to Zooperator " << player_.getName() << "!\n";
   std::cout << "You'll be working as the zookeeper for: " << zoo_.getName() << ".\n\n";
   std::cout << "Goals\n";
-  std::cout << " - Keep the zoo running for 7 days.\n";
+  std::cout << " - Keep the zoo running for 10 days.\n";
   std::cout << " - Keep all animals happy and healthy.\n";
   std::cout << " - Maintain a zoo rating above 3.0 stars.\n";
 
@@ -800,7 +800,7 @@ void Game::endDay() {
     std::cout << "\nLow funds! Your zoo is at risk of bankruptcy!\n";
   }
 
-  if (zoo_.getDay() >= 8) {
+  if (zoo_.getDay() >= 11) {
     double rating = zoo_.calculateZooRating();
 
     std::cout << "\nGAME COMPLETE!\n";
