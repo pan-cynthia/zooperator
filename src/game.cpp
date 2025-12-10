@@ -547,7 +547,8 @@ void Game::displayAllExhibits() {
   for (size_t i = 0; i < exhibits.size(); ++i) {
     Exhibit* exhibit = exhibits[i];
     std::cout << (i + 1) << ". " << exhibit->getName() << " (" << exhibit->getType() << ")\n";
-    std::cout << "   Capacity:     " << exhibit->getMaxCapacity() << "\n";
+    std::cout << "   Capacity:     " << exhibit->getCapacityUsed() << "/"
+              << exhibit->getMaxCapacity() << "\n";
     std::cout << "   Cleanliness:  " << exhibit->getCleanliness() << "\n";
     if (i < exhibits.size() - 1) {
       std::cout << "--------------------------------------------\n";
