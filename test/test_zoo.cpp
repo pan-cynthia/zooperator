@@ -7,17 +7,17 @@
 #include "zoo.h"
 
 TEST(ZooTest, ConstructorInitialization) {
-  Zoo zoo("SF Zoo", 2000.0);
+  Zoo zoo("SF Zoo", 3500.0);
   EXPECT_EQ(zoo.getName(), "SF Zoo");
   EXPECT_EQ(zoo.getDay(), 1);
-  EXPECT_EQ(zoo.getBalance(), 2000.0);
+  EXPECT_EQ(zoo.getBalance(), 3500.0);
   EXPECT_EQ(zoo.getAnimalCount(), 0);
   EXPECT_EQ(zoo.getExhibitCount(), 0);
 }
 
 TEST(ZooTest, ConstructorDefaultBalance) {
   Zoo zoo("SF Zoo");
-  EXPECT_EQ(zoo.getBalance(), 2000.0);
+  EXPECT_EQ(zoo.getBalance(), 3500.0);
 }
 
 TEST(ZooTest, PurchaseAnimal) {
@@ -27,7 +27,7 @@ TEST(ZooTest, PurchaseAnimal) {
 
   zoo.purchaseAnimal(std::move(rabbit));
   EXPECT_EQ(zoo.getAnimalCount(), 1);
-  EXPECT_EQ(zoo.getBalance(), 2000.0 - rabbit_cost);
+  EXPECT_EQ(zoo.getBalance(), 3500.0 - rabbit_cost);
 }
 
 TEST(ZooTest, PurchaseMultipleAnimals) {
@@ -56,7 +56,7 @@ TEST(ZooTest, CorrectBalance) {
   double penguin_cost = penguin->getPurchaseCost();
   zoo.purchaseAnimal(std::move(penguin));
 
-  EXPECT_EQ(zoo.getBalance(), 2000.0 - rabbit_cost - penguin_cost);
+  EXPECT_EQ(zoo.getBalance(), 3500.0 - rabbit_cost - penguin_cost);
 }
 
 TEST(ZooTest, SellAnimal) {
@@ -82,7 +82,7 @@ TEST(ZooTest, CannotSellNonexistentAnimal) {
   Zoo zoo("Oakland Zoo");
   Bear bear("Corduroy", 4);
   EXPECT_FALSE(zoo.sellAnimal(&bear));
-  EXPECT_EQ(zoo.getBalance(), 2000.0);
+  EXPECT_EQ(zoo.getBalance(), 3500.0);
 }
 
 TEST(ZooTest, SellAnimalRemovesFromExhibit) {
@@ -185,7 +185,7 @@ TEST(ZooTest, PurchaseExhibit) {
   zoo.purchaseExhibit(std::move(exhibit));
 
   EXPECT_EQ(zoo.getExhibitCount(), 1);
-  EXPECT_EQ(zoo.getBalance(), 2000.0 - exhibit_cost);
+  EXPECT_EQ(zoo.getBalance(), 3500.0 - exhibit_cost);
 }
 
 TEST(ZooTest, PurchaseMultipleExhibits) {
@@ -487,9 +487,9 @@ TEST(ZooTest, UpdateAnimalStats) {
   zoo.purchaseAnimal(std::move(bear));
 
   zoo.updateAnimalStats();
-  EXPECT_EQ(bear_ptr->getHungerLevel(), 20);
-  EXPECT_EQ(bear_ptr->getHappinessLevel(), 82);
-  EXPECT_EQ(bear_ptr->getEnergyLevel(), 92);
+  EXPECT_EQ(bear_ptr->getHungerLevel(), 16);
+  EXPECT_EQ(bear_ptr->getHappinessLevel(), 83);
+  EXPECT_EQ(bear_ptr->getEnergyLevel(), 95);
 }
 
 TEST(ZooTest, CalculateVisitorCountHighRating) {
@@ -571,8 +571,7 @@ TEST(ZooTest, CalculateDailyExpenses) {
   auto bear = std::make_unique<Bear>("Winnie", 8);
   Animal* bear_ptr = bear.get();
   zoo.purchaseAnimal(std::move(bear));
-  double maintenance_cost = bear_ptr->getMaintenanceCost();
-  EXPECT_EQ(zoo.calculateDailyExpenses(), 98.0);
+  EXPECT_EQ(zoo.calculateDailyExpenses(), 86.0);
 }
 
 TEST(ZooTest, CalculateZooRatingPerfectConditions) {

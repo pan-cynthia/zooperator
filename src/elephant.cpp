@@ -5,8 +5,8 @@
 
 Elephant::Elephant(std::string name, int age) : Animal(std::move(name), "Elephant", age) {
   purchase_cost_ = 1500.0;
-  feeding_cost_ = 50.0;
-  maintenance_cost_ = 80.0;
+  feeding_cost_ = 40.0;
+  maintenance_cost_ = 64.0;
 }
 
 void Elephant::makeSound() const {
@@ -14,9 +14,9 @@ void Elephant::makeSound() const {
 }
 
 void Elephant::updateStatsEndOfDay() {
-  updateHunger(20);
-  updateHappiness(-8);
-  updateEnergy(-14);
+  updateHunger(14);
+  updateHappiness(-5);
+  updateEnergy(-10);
 }
 
 std::string Elephant::getPreferredHabitat() const {

@@ -5,8 +5,8 @@
 
 Penguin::Penguin(std::string name, int age) : Animal(std::move(name), "Penguin", age) {
   purchase_cost_ = 400.0;
-  feeding_cost_ = 10.0;
-  maintenance_cost_ = 20.0;
+  feeding_cost_ = 8.0;
+  maintenance_cost_ = 16.0;
 }
 
 void Penguin::makeSound() const {
@@ -14,9 +14,9 @@ void Penguin::makeSound() const {
 }
 
 void Penguin::updateStatsEndOfDay() {
-  updateHunger(15);
-  updateHappiness(-8);
-  updateEnergy(-10);
+  updateHunger(10);
+  updateHappiness(-5);
+  updateEnergy(-7);
 }
 
 std::string Penguin::getPreferredHabitat() const {

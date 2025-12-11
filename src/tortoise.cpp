@@ -5,8 +5,8 @@
 
 Tortoise::Tortoise(std::string name, int age) : Animal(std::move(name), "Tortoise", age) {
   purchase_cost_ = 250.0;
-  feeding_cost_ = 6.0;
-  maintenance_cost_ = 12.0;
+  feeding_cost_ = 5.0;
+  maintenance_cost_ = 10.0;
 }
 
 void Tortoise::makeSound() const {
@@ -14,9 +14,9 @@ void Tortoise::makeSound() const {
 }
 
 void Tortoise::updateStatsEndOfDay() {
-  updateHunger(12);
+  updateHunger(8);
   updateHappiness(-2);
-  updateEnergy(-6);
+  updateEnergy(-4);
 }
 
 std::string Tortoise::getPreferredHabitat() const {
