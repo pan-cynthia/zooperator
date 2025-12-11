@@ -619,6 +619,8 @@ TEST(ZooTest, AdvanceDay) {
   zoo.purchaseAnimal(std::move(bear));
 
   double old_balance = zoo.getBalance();
-  zoo.advanceDay();
+  zoo.calculateEndOfDayStats();
+  EXPECT_EQ(zoo.getDay(), 1);
+  zoo.displayEndOfDaySummary();
   EXPECT_EQ(zoo.getDay(), 2);
 }
