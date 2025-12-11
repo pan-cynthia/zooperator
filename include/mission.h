@@ -22,6 +22,7 @@ struct Mission {
 
   bool required;
   bool completed;
+  bool end_of_day;  // flag used to check mission complete status at end of day
 
   // optional parameters
   int int_param = 0;         // X animals, X exhibits
@@ -30,11 +31,12 @@ struct Mission {
   int reward_amount;
 
   Mission(bool required, const std::string& description, MissionType type, int int_param = 0,
-          double float_param = 0.0, double reward_amount = 0.0)
+          double float_param = 0.0, double reward_amount = 0.0, bool end_of_day = false)
       : description(description),
         type(type),
         required(required),
         completed(false),
+        end_of_day(end_of_day),
         int_param(int_param),
         float_param(float_param),
         reward_amount(reward_amount) {}

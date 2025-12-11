@@ -24,7 +24,7 @@ class Game {
   // mission system
   std::vector<Mission> missions_;
   void setupDailyMissions(int day);
-  void checkMissions();
+  void checkMissions(bool end_of_day);
   void displayMissions();
   void completeMission(size_t mission_index);
   bool canAdvanceDay();
