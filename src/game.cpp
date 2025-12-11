@@ -30,9 +30,9 @@ void Game::setupDailyMissions(int day) {
   switch (day) {
     case 1:
       missions_.push_back(
-          Mission(true, "Purchase at least 1 animal", MissionType::PURCHASE_ANIMAL, 1));
+          Mission(true, "Purchase at least 1 animal", MissionType::OWN_X_ANIMALS, 1));
       missions_.push_back(
-          Mission(true, "Purchase at least 1 exhibit", MissionType::PURCHASE_EXHIBIT, 1));
+          Mission(true, "Purchase at least 1 exhibit", MissionType::OWN_X_EXHIBITS, 1));
       missions_.push_back(
           Mission(true, "Add animal to an exhibit", MissionType::ADD_ANIMAL_TO_EXHIBIT));
       break;
@@ -149,14 +149,6 @@ void Game::checkMissions() {
     bool completed = false;
 
     switch (mission.type) {
-      case MissionType::PURCHASE_ANIMAL:
-        completed = zoo_.getAnimalCount() >= 1;
-        break;
-
-      case MissionType::PURCHASE_EXHIBIT:
-        completed = zoo_.getExhibitCount() >= 1;
-        break;
-
       case MissionType::ADD_ANIMAL_TO_EXHIBIT:
         for (Animal* animal : zoo_.getAllAnimals()) {
           if (zoo_.findAnimalLocation(animal)) {

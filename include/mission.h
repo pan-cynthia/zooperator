@@ -1,8 +1,6 @@
 #include <string>
 
 enum class MissionType {
-  PURCHASE_ANIMAL,
-  PURCHASE_EXHIBIT,
   ADD_ANIMAL_TO_EXHIBIT,
   OWN_X_ANIMALS,
   OWN_X_SPECIES,
