@@ -1123,98 +1123,114 @@ void Game::endDay() {
   }
 
   if (zoo_.getDay() >= 11) {
-    double rating = zoo_.calculateZooRating();
-
-    std::cout << "\nGAME COMPLETE!\n";
-    std::cout << "-----------------------------------------\n";
-    std::cout << "Final balance: $" << zoo_.getBalance() << "\n";
-    std::cout << "Animals: " << zoo_.getAnimalCount() << "\n";
-    std::cout << "Zoo rating: " << rating << "/5.0\n";
-    std::cout << "-----------------------------------------\n\n";
-
-    std::cout << "PERFOMANCE REVIEW\n";
-    std::cout << "-----------------------------------------\n";
-
-    // calculate overall score
-    int score = 0;
-
-    // financial health
-    if (zoo_.getBalance() >= 2000) {
-      std::cout << "Excellent finances! (+3 points)\n";
-      score += 3;
-    } else if (zoo_.getBalance() >= 1500) {
-      std::cout << "Strong finances! (+2 points)\n";
-      score += 2;
-    } else if (zoo_.getBalance() >= 1000) {
-      std::cout << "Financially stable! (+1 point)\n";
-      score += 1;
-    } else {
-      std::cout << "Poor finances. (+0 points)\n";
-    }
-
-    if (rating >= 4.5) {
-      std::cout << "Outstanding zoo! (+3 points)\n";
-      score += 3;
-    } else if (rating >= 4.0) {
-      std::cout << "Excellent zoo! (+2 points)\n";
-      score += 2;
-    } else if (rating >= 3.5) {
-      std::cout << "Good zoo! (+1 point)\n";
-      score += 1;
-    } else if (rating >= 3.0) {
-      std::cout << "Acceptable zoo. (+0 points)\n";
-    } else {
-      std::cout << "Poor rating. (+0 points)\n";
-    }
-
-    // animal diversity
-    int animal_count = zoo_.getAnimalCount();
-    if (animal_count >= 6) {
-      std::cout << "Diverse zoo! (+2 points)\n";
-      score += 2;
-    } else if (animal_count >= 4) {
-      std::cout << "Good collection! (+1 point)\n";
-      score += 1;
-    } else {
-      std::cout << "Small collection! (+0 points)\n";
-    }
-
-    // animal welfare
-    auto needy_animals = zoo_.getAnimalsNeedingAttention();
-    if (needy_animals.empty()) {
-      std::cout << "All animals are healthy! (+2 points)\n";
-      score += 2;
-    } else if (needy_animals.size() < animal_count * 0.5) {
-      std::cout << "Most animals are healthy! (+1 point)\n";
-      score += 1;
-    } else {
-      std::cout << "Many animals are being neglected! (+0 points)\n";
-    }
-
-    std::cout << "FINAL SCORE: " << score << "/10\n\n";
-
-    // victory messages
-    if (score >= 9) {
-      std::cout << "Perfect Ending!\n";
-      std::cout << "You're a master zookeeper!\n";
-    } else if (score >= 7) {
-      std::cout << "Excellent Ending!\n";
-      std::cout << "Your zoo is thriving!\n";
-    } else if (score >= 5) {
-      std::cout << "Good Ending!\n";
-      std::cout << "You successfully managed the zoo!\n";
-    } else if (score >= 3) {
-      std::cout << "Survival Ending!\n";
-      std::cout << "You made it but barely!\n";
-    } else {
-      std::cout << "Poor Ending!\n";
-      std::cout << "Your zoo is in terrible condition. The animals deserve better.\n";
-    }
-    running_ = false;
+    handleGameCompletion();
     return;
   }
 
   std::cout << "\nDAY " << zoo_.getDay() << "\n";
+}
+
+void Game::handleGameCompletion() {
+  double rating = zoo_.calculateZooRating();
+
+  std::cout << "\nGAME COMPLETE!\n";
+  std::cout << "-----------------------------------------\n";
+  std::cout << "Final balance: $" << zoo_.getBalance() << "\n";
+  std::cout << "Animals: " << zoo_.getAnimalCount() << "\n";
+  std::cout << "Zoo rating: " << rating << "/5.0\n";
+  std::cout << "-----------------------------------------\n\n";
+
+  std::cout << "PERFOMANCE REVIEW\n";
+  std::cout << "-----------------------------------------\n";
+
+  // calculate overall score
+  int score = 0;
+
+  // financial health
+  if (zoo_.getBalance() >= 2000) {
+    std::cout << "Excellent finances! (+3 points)\n";
+    score += 3;
+  } else if (zoo_.getBalance() >= 1500) {
+    std::cout << "Strong finances! (+2 points)\n";
+    score += 2;
+  } else if (zoo_.getBalance() >= 1000) {
+    std::cout << "Financially stable! (+1 point)\n";
+    score += 1;
+  } else {
+    std::cout << "Poor finances. (+0 points)\n";
+  }
+
+  if (rating >= 4.5) {
+    std::cout << "Outstanding zoo! (+3 points)\n";
+    score += 3;
+  } else if (rating >= 4.0) {
+    std::cout << "Excellent zoo! (+2 points)\n";
+    score += 2;
+  } else if (rating >= 3.5) {
+    std::cout << "Good zoo! (+1 point)\n";
+    score += 1;
+  } else if (rating >= 3.0) {
+    std::cout << "Acceptable zoo. (+0 points)\n";
+  } else {
+    std::cout << "Poor rating. (+0 points)\n";
+  }
+
+  // animal diversity
+  int animal_count = zoo_.getAnimalCount();
+  if (animal_count >= 6) {
+    std::cout << "Diverse zoo! (+2 points)\n";
+    score += 2;
+  } else if (animal_count >= 4) {
+    std::cout << "Good collection! (+1 point)\n";
+    score += 1;
+  } else {
+    std::cout << "Small collection! (+0 points)\n";
+  }
+
+  // animal welfare
+  auto needy_animals = zoo_.getAnimalsNeedingAttention();
+  if (needy_animals.empty()) {
+    std::cout << "All animals are healthy! (+2 points)\n";
+    score += 2;
+  } else if (needy_animals.size() < animal_count * 0.5) {
+    std::cout << "Most animals are healthy! (+1 point)\n";
+    score += 1;
+  } else {
+    std::cout << "Many animals are being neglected! (+0 points)\n";
+  }
+
+  std::cout << "FINAL SCORE: " << score << "/10\n\n";
+
+  // victory messages
+  if (score >= 9) {
+    std::cout << "Perfect Ending!\n";
+    std::cout << "You're a master zookeeper!\n";
+  } else if (score >= 7) {
+    std::cout << "Excellent Ending!\n";
+    std::cout << "Your zoo is thriving!\n";
+  } else if (score >= 5) {
+    std::cout << "Good Ending!\n";
+    std::cout << "You successfully managed the zoo!\n";
+  } else if (score >= 3) {
+    std::cout << "Survival Ending!\n";
+    std::cout << "You made it but barely!\n";
+  } else {
+    std::cout << "Poor Ending!\n";
+    std::cout << "Your zoo is in terrible condition. The animals deserve better.\n";
+  }
+  running_ = false;
+  return;
+}
+
+void Game::exitGame() {
+  std::cout << "Exit game? (1 - Yes, 2 - No)\n";
+  int choice = getPlayerInput(1, 2);
+
+  if (choice == 1) {
+    std::cout << "\nExiting game...\n";
+    std::cout << "Thanks for playing Zooperator " << player_.getName() << "!\n";
+    running_ = false;
+  }
 }
 
 void Game::exitGame() {
