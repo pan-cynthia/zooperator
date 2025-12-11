@@ -524,7 +524,7 @@ std::string Zoo::getRatingMessage(double rating) {
   }
 }
 
-void Zoo::advanceDay() {
+void Zoo::calculateEndOfDayStats() {
   updateAnimalStats();
   removeDeadAnimals();
 
@@ -540,7 +540,9 @@ void Zoo::advanceDay() {
   // update balance
   balance_ += revenue;
   balance_ -= expenses;
+}
 
+void Zoo::displayEndOfDaySummary() {
   int dirty_exhibits = 0;
   int sick_animals = 0;
   int hungry_animals = 0;
@@ -581,6 +583,10 @@ void Zoo::advanceDay() {
     }
   }
 
+  int visitors = calculateVisitorCount();
+  double revenue = calculateDailyRevenue(visitors);
+  double expenses = calculateDailyExpenses();
+
   std::cout << "\nAnimals:\n";
   std::cout << "  Total: " << getAnimalCount() << "\n";
   std::cout << "  Sick: " << sick_animals << "\n";
@@ -589,9 +595,11 @@ void Zoo::advanceDay() {
   std::cout << "  Tired: " << tired_animals << "\n";
   std::cout << "  Need Attention: " << needy_animals << "\n";
   std::cout << "  Homeless: " << homeless_animals << "\n";
+
   std::cout << "\nExhibits:\n";
   std::cout << "  Total: " << getExhibitCount() << "\n";
   std::cout << "  Need Cleaning: " << dirty_exhibits << "\n";
+
   std::cout << "\nStats:\n";
   std::cout << "  Visitors: " << visitors << "\n";
   std::cout << "  Revenue : $" << revenue << "\n";

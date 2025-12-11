@@ -46,7 +46,8 @@ class Zoo {
   void addMoney(double amount);
 
   // time and simulation
-  void advanceDay();
+  void calculateEndOfDayStats();
+  void displayEndOfDaySummary();
   void updateAnimalStats();
   int calculateVisitorCount() const;
   double calculateDailyRevenue(int visitor_count) const;

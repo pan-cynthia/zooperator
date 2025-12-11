@@ -1172,6 +1172,8 @@ void Game::updateMaxActionPoints() {
 }
 
 void Game::endDay() {
+  zoo_.calculateEndOfDayStats();
+
   checkMissions(true);
   displayMissions();
 
@@ -1203,8 +1205,6 @@ void Game::endDay() {
 
   resetActionPoints();
 
-  zoo_.advanceDay();
-
   if (zoo_.getBalance() <= 0) {
     std::cout << "\nGAME OVER: You went bankrupt!\n";
     running_ = false;
@@ -1229,6 +1229,8 @@ void Game::endDay() {
     handleGameCompletion();
     return;
   }
+
+  zoo_.displayEndOfDaySummary();
 
   std::cout << "\nDAY " << zoo_.getDay() << "\n";
 
