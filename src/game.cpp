@@ -323,6 +323,99 @@ bool Game::canAdvanceDay() {
   return true;
 }
 
+bool Game::checkMissionsImpossible() {
+  for (const Mission& mission : missions_) {
+    if (!mission.required || mission.completed) {
+      continue;
+    }
+
+    switch (mission.type) {
+      case MissionType::ADD_ANIMAL_TO_EXHIBIT: {
+        // need at least one animal and one exhibit
+        if (zoo_.getAnimalCount() == 0 || zoo_.getExhibitCount() == 0) {
+          double balance_needed = 0.0;
+          if (zoo_.getAnimalCount() == 0) {
+            balance_needed += 150.0;
+          }
+          if (zoo_.getExhibitCount() == 0) {
+            balance_needed += 300.0;
+          }
+          if (zoo_.getBalance() < balance_needed) {
+            return true;
+          }
+        }
+        break;
+      }
+
+      case MissionType::OWN_X_ANIMALS: {
+        std::set<std::string> species;
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          species.insert(animal->getSpecies());
+        }
+        int animals_needed = mission.int_param - species.size();
+        if (zoo_.getBalance() < (animals_needed * 150.0)) {
+          return true;
+        }
+        break;
+      }
+
+      case MissionType::OWN_X_SPECIES: {
+        std::set<std::string> species;
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          species.insert(animal->getSpecies());
+        }
+        int species_needed = mission.int_param - species.size();
+        if (zoo_.getBalance() < (species_needed * 150.0)) {
+          return true;
+        }
+        break;
+      }
+
+      case MissionType::OWN_X_EXHIBITS: {
+        int exhibits_needed = mission.int_param - zoo_.getExhibitCount();
+        if (zoo_.getBalance() < (exhibits_needed * 300.0)) {
+          return true;
+        }
+        break;
+      }
+
+      case MissionType::NO_ANIMALS_NEED_ATTENTION: {
+        int needy_animals = 0;
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          if (animal->needsAttention()) {
+            needy_animals++;
+          }
+        }
+        // estimated treatment cost: treatment ($50) + feeding ($5-50)
+        double treatment_cost = needy_animals * 100.0;
+        if (zoo_.getBalance() < treatment_cost && action_points_ == 0) {
+          return true;
+        }
+        break;
+      }
+
+      case MissionType::NO_SICK_ANIMALS: {
+        int sick_animals = 0;
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          if (animal->getHealthLevel() < 50) {
+            sick_animals++;
+          }
+        }
+        // estimated treatment cost: treatment ($50) + feeding ($5-50)
+        double treatment_cost = sick_animals * 100.0;
+        if (zoo_.getBalance() < treatment_cost && action_points_ == 0) {
+          return true;
+        }
+        break;
+      }
+
+      default:
+        break;
+    }
+  }
+  return false;
+}
+
 void Game::start() {
   std::cout << "\nWelcome to Zooperator " << player_.getName() << "!\n";
   std::cout << "You'll be working as the zookeeper for: " << zoo_.getName() << ".\n\n";
@@ -1081,6 +1174,12 @@ void Game::updateMaxActionPoints() {
 void Game::endDay() {
   checkMissions(true);
   displayMissions();
+
+  if (checkMissionsImpossible()) {
+    std::cout << "\nGAME OVER: You failed a required mission!\n";
+    running_ = false;
+    return;
+  }
 
   if (!canAdvanceDay()) {
     std::cout << "\nCannot advance to next day!\n";

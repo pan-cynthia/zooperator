@@ -28,6 +28,7 @@ class Game {
   void displayMissions();
   void completeMission(size_t mission_index);
   bool canAdvanceDay();
+  bool checkMissionsImpossible();
 
   // menus
   void displayMainMenu();
