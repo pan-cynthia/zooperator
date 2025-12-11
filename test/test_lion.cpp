@@ -8,6 +8,6 @@ TEST(LionTest, ConstructorInitialization) {
   EXPECT_EQ(lion.getSpecies(), "Lion");
   EXPECT_EQ(lion.getAge(), 12);
   EXPECT_EQ(lion.getPurchaseCost(), 1200.0);
-  EXPECT_EQ(lion.getFeedingCost(), 32.0);
-  EXPECT_EQ(lion.getMaintenanceCost(), 48.0);
+  EXPECT_EQ(lion.getFeedingCost(), 40.0);
+  EXPECT_EQ(lion.getMaintenanceCost(), 60.0);
 }

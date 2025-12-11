@@ -17,10 +17,10 @@
 
 Game::Game(const Player& player, std::string zoo_name)
     : player_(player),
-      zoo_(zoo_name, 3500.0),
+      zoo_(zoo_name, 2000.0),
       running_(true),
-      action_points_(5),
-      max_action_points_(5) {
+      action_points_(3),
+      max_action_points_(3) {
   setupDailyMissions(1);
 }
 
@@ -1065,12 +1065,12 @@ int Game::getMaxActionPoints() const {
 }
 
 void Game::updateMaxActionPoints() {
-  // base 5 points, +2 per animal, +1 per exhibit
-  max_action_points_ = 5 + (zoo_.getAnimalCount() * 2) + zoo_.getExhibitCount();
+  // base 3 points, +1 per animal, +1 per 2 exhibits
+  max_action_points_ = 3 + zoo_.getAnimalCount() + (zoo_.getExhibitCount() / 2);
 
-  // cap at 25 points
-  if (max_action_points_ > 25) {
-    max_action_points_ = 25;
+  // cap at 20 points
+  if (max_action_points_ > 20) {
+    max_action_points_ = 20;
   }
 }
 

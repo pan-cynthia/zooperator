@@ -5,8 +5,8 @@
 
 Rabbit::Rabbit(std::string name, int age) : Animal(std::move(name), "Rabbit", age) {
   purchase_cost_ = 150.0;
-  feeding_cost_ = 4.0;
-  maintenance_cost_ = 6.0;
+  feeding_cost_ = 5.0;
+  maintenance_cost_ = 8.0;
 }
 
 void Rabbit::makeSound() const {
@@ -14,9 +14,9 @@ void Rabbit::makeSound() const {
 }
 
 void Rabbit::updateStatsEndOfDay() {
-  updateHunger(12);
-  updateHappiness(-4);
-  updateEnergy(-8);
+  updateHunger(18);
+  updateHappiness(-6);
+  updateEnergy(-12);
 }
 
 std::string Rabbit::getPreferredHabitat() const {

@@ -395,7 +395,7 @@ int Zoo::calculateVisitorCount() const {
 }
 
 double Zoo::calculateDailyRevenue(int visitor_count) const {
-  constexpr double TICKET_PRICE = 15.0;
+  constexpr double TICKET_PRICE = 10.0;
   return visitor_count * TICKET_PRICE;
 }
 
@@ -530,7 +530,7 @@ void Zoo::advanceDay() {
 
   // degrade cleanliness of exhibits
   for (const auto& exhibit : exhibits_) {
-    exhibit->updateCleanliness(-10);
+    exhibit->updateCleanliness(-15);
   }
 
   int visitors = calculateVisitorCount();

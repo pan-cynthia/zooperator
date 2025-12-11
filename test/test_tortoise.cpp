@@ -8,6 +8,6 @@ TEST(TortoiseTest, ConstructorInitialization) {
   EXPECT_EQ(tortoise.getSpecies(), "Tortoise");
   EXPECT_EQ(tortoise.getAge(), 50);
   EXPECT_EQ(tortoise.getPurchaseCost(), 250.0);
-  EXPECT_EQ(tortoise.getFeedingCost(), 5.0);
-  EXPECT_EQ(tortoise.getMaintenanceCost(), 10.0);
+  EXPECT_EQ(tortoise.getFeedingCost(), 6.0);
+  EXPECT_EQ(tortoise.getMaintenanceCost(), 12.0);
 }
