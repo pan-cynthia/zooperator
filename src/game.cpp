@@ -1233,17 +1233,6 @@ void Game::exitGame() {
   }
 }
 
-void Game::exitGame() {
-  std::cout << "Exit game? (1 - Yes, 2 - No)\n";
-  int choice = getPlayerInput(1, 2);
-
-  if (choice == 1) {
-    std::cout << "\nExiting game...\n";
-    std::cout << "Thanks for playing Zooperator " << player_.getName() << "!\n";
-    running_ = false;
-  }
-}
-
 void Game::displayHelp() {
   std::cout << "\nHOW TO PLAY\n";
   std::cout << "-----------------------------------------\n";
