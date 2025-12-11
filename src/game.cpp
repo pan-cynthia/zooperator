@@ -3,8 +3,10 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include <set>
 #include <utility>
 
+#include "animal.h"
 #include "bear.h"
 #include "elephant.h"
 #include "lion.h"
@@ -18,13 +20,311 @@ Game::Game(const Player& player, std::string zoo_name)
       zoo_(zoo_name, 2000.0),
       running_(true),
       action_points_(3),
-      max_action_points_(3) {}
+      max_action_points_(3) {
+  setupDailyMissions(1);
+}
+
+void Game::setupDailyMissions(int day) {
+  missions_.clear();
+
+  switch (day) {
+    case 1:
+      missions_.push_back(
+          Mission(true, "Purchase at least 1 animal", MissionType::PURCHASE_ANIMAL, 1));
+      missions_.push_back(
+          Mission(true, "Purchase at least 1 exhibit", MissionType::PURCHASE_EXHIBIT, 1));
+      missions_.push_back(
+          Mission(true, "Add animal to an exhibit", MissionType::ADD_ANIMAL_TO_EXHIBIT));
+      break;
+
+    case 2:
+      missions_.push_back(Mission(true, "Have at least 2 animals", MissionType::OWN_X_ANIMALS, 2));
+      missions_.push_back(
+          Mission(true, "Achieve zoo rating above 3.0", MissionType::ZOO_RATING_ABOVE, 0, 3.0));
+      missions_.push_back(Mission(false, "Have at least 2 different species",
+                                  MissionType::OWN_X_SPECIES, 2, 0.0, 200.0));
+      break;
+
+    case 3:
+      missions_.push_back(
+          Mission(true, "No animals need attention", MissionType::NO_ANIMALS_NEED_ATTENTION));
+      missions_.push_back(
+          Mission(true, "Achieve zoo rating above 3.5", MissionType::ZOO_RATING_ABOVE, 0, 3.5));
+      missions_.push_back(Mission(false, "All animals in preferred habitats",
+                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 200.0));
+      missions_.push_back(
+          Mission(false, "Have at least 3 animals", MissionType::OWN_X_ANIMALS, 3, 0.0, 300.0));
+      break;
+
+    case 4:
+      missions_.push_back(Mission(true, "Have at least 3 animals", MissionType::OWN_X_ANIMALS, 3));
+      missions_.push_back(
+          Mission(true, "Have at least 3 different species", MissionType::OWN_X_SPECIES, 3));
+      missions_.push_back(Mission(false, "Achieve a zoo rating above 4.0",
+                                  MissionType::ZOO_RATING_ABOVE, 0, 4.0, 400.0));
+      missions_.push_back(Mission(false, "All exhibits at 80+ cleanliness",
+                                  MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 250.0));
+      break;
+
+    case 5:
+      missions_.push_back(Mission(true, "Have at least 4 animals", MissionType::OWN_X_ANIMALS, 4));
+      missions_.push_back(
+          Mission(true, "No animals need attention", MissionType::NO_ANIMALS_NEED_ATTENTION));
+      missions_.push_back(
+          Mission(true, "Balance above $800", MissionType::BALANCE_AT_LEAST, 0, 800.0));
+      missions_.push_back(
+          Mission(false, "Have at least 2 exhibits", MissionType::OWN_X_EXHIBITS, 2, 0.0, 400.0));
+      break;
+
+    case 6:
+      missions_.push_back(Mission(true, "Have at least 2 exhibits", MissionType::OWN_X_SPECIES, 2));
+      missions_.push_back(Mission(true, "No homeless animals", MissionType::NO_HOMELESS_ANIMALS));
+      missions_.push_back(
+          Mission(true, "Achieve zoo rating above 3.5", MissionType::ZOO_RATING_ABOVE, 0, 3.5));
+      missions_.push_back(
+          Mission(false, "Have at least 5 animals", MissionType::OWN_X_ANIMALS, 5, 0.0, 400.0));
+      missions_.push_back(Mission(false, "Have at least 4 different species",
+                                  MissionType::OWN_X_SPECIES, 4, 0.0, 350.0));
+      break;
+
+    case 7:
+      missions_.push_back(Mission(true, "Have at least 5 animals", MissionType::OWN_X_ANIMALS, 5));
+      missions_.push_back(Mission(true, "No sick animals", MissionType::NO_SICK_ANIMALS));
+      missions_.push_back(
+          Mission(true, "Achieve zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0));
+      missions_.push_back(Mission(false, "All animals are in preferred habitats",
+                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 600.0));
+      missions_.push_back(
+          Mission(false, "Have at least 3 exhibits", MissionType::OWN_X_EXHIBITS, 3, 0.0, 500.0));
+      break;
+
+    case 8:
+      missions_.push_back(Mission(true, "Have at least 6 animals", MissionType::OWN_X_ANIMALS, 6));
+      missions_.push_back(
+          Mission(true, "Have at least 4 different species", MissionType::OWN_X_SPECIES, 4));
+      missions_.push_back(
+          Mission(true, "Achieve zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0));
+      missions_.push_back(Mission(false, "Own a bear, lion, or elephant",
+                                  MissionType::OWN_SPECIAL_ANIMAL, 0, 0.0, 600.0));
+      missions_.push_back(
+          Mission(false, "Balance above $1500", MissionType::BALANCE_AT_LEAST, 0, 1500.0, 500.0));
+      break;
+
+    case 9:
+      missions_.push_back(Mission(true, "Have at least 7 animals", MissionType::OWN_X_ANIMALS, 7));
+      missions_.push_back(
+          Mission(true, "No animals need attention", MissionType::NO_ANIMALS_NEED_ATTENTION));
+      missions_.push_back(
+          Mission(true, "Zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0));
+      missions_.push_back(Mission(false, "Have at least 5 different species",
+                                  MissionType::OWN_X_SPECIES, 5, 0.0, 700.0));
+      missions_.push_back(Mission(false, "All exhibits at 80+ cleanliness",
+                                  MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 400.0));
+      break;
+
+    case 10:
+      missions_.push_back(Mission(true, "No homeless animals", MissionType::NO_HOMELESS_ANIMALS));
+      missions_.push_back(
+          Mission(true, "Zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0));
+      missions_.push_back(Mission(false, "All animals are in preferred habitats",
+                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 800.0));
+      missions_.push_back(
+          Mission(false, "Have at least 8 animals", MissionType::OWN_X_ANIMALS, 8, 0.0, 600.0));
+      missions_.push_back(
+          Mission(false, "Own an elephant", MissionType::OWN_ELEPHANT, 0, 0.0, 500.0));
+      missions_.push_back(Mission(false, "Own at least 6 different species",
+                                  MissionType::OWN_X_SPECIES, 0, 0.0, 1000.0));
+      missions_.push_back(
+          Mission(false, "Balance above $2500", MissionType::BALANCE_AT_LEAST, 0, 2500.0, 500.0));
+      break;
+  }
+}
+
+void Game::checkMissions() {
+  for (size_t i = 0; i < missions_.size(); ++i) {
+    Mission& mission = missions_[i];
+    if (mission.completed)
+      continue;
+
+    bool completed = false;
+
+    switch (mission.type) {
+      case MissionType::PURCHASE_ANIMAL:
+        completed = zoo_.getAnimalCount() >= 1;
+        break;
+
+      case MissionType::PURCHASE_EXHIBIT:
+        completed = zoo_.getExhibitCount() >= 1;
+        break;
+
+      case MissionType::ADD_ANIMAL_TO_EXHIBIT:
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          if (zoo_.findAnimalLocation(animal)) {
+            completed = true;
+            break;
+          }
+        }
+        break;
+
+      case MissionType::OWN_X_ANIMALS:
+        completed = zoo_.getAnimalCount() >= static_cast<size_t>(mission.int_param);
+        break;
+
+      case MissionType::OWN_X_SPECIES: {
+        std::set<std::string> species;
+        for (const Animal* animal : zoo_.getAllAnimals()) {
+          species.insert(animal->getSpecies());
+        }
+        completed = species.size() >= static_cast<size_t>(mission.int_param);
+        break;
+      }
+
+      case MissionType::OWN_X_EXHIBITS:
+        completed = zoo_.getExhibitCount() >= static_cast<size_t>(mission.int_param);
+        break;
+
+      case MissionType::NO_ANIMALS_NEED_ATTENTION:
+        completed = zoo_.getAnimalsNeedingAttention().empty();
+        break;
+
+      case MissionType::NO_SICK_ANIMALS:
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          if (animal->getHealthLevel() < 50) {
+            completed = false;
+            break;
+          }
+        }
+        completed = true;
+        break;
+
+      case MissionType::NO_HOMELESS_ANIMALS:
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          if (zoo_.findAnimalLocation(animal) == nullptr) {
+            completed = false;
+            break;
+          }
+        }
+        completed = true;
+        break;
+
+      case MissionType::PREFERRED_HABITATS:
+        for (Animal* animal : zoo_.getAllAnimals()) {
+          Exhibit* exhibit = zoo_.findAnimalLocation(animal);
+          if (!exhibit || exhibit->getType() != animal->getPreferredHabitat()) {
+            completed = false;
+            break;
+          }
+        }
+        completed = true;
+        break;
+
+      case MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X:
+        for (Exhibit* exhibit : zoo_.getAllExhibits()) {
+          if (exhibit->getCleanliness() < mission.int_param) {
+            completed = false;
+            break;
+          }
+        }
+        completed = true;
+        break;
+
+      case MissionType::BALANCE_AT_LEAST:
+        completed = zoo_.getBalance() >= mission.float_param;
+        break;
+
+      case MissionType::ZOO_RATING_ABOVE:
+        completed = zoo_.calculateZooRating() >= mission.float_param;
+        break;
+
+      case MissionType::OWN_ELEPHANT:
+        for (const Animal* animal : zoo_.getAllAnimals()) {
+          if (animal->getSpecies() == "Elephant") {
+            completed = true;
+            break;
+          }
+        }
+        break;
+
+      case MissionType::OWN_SPECIAL_ANIMAL: {
+        bool owns_bear = false;
+        bool owns_lion = false;
+        bool owns_elephant = false;
+        for (const Animal* animal : zoo_.getAllAnimals()) {
+          if (animal->getSpecies() == "Bear") {
+            owns_bear = true;
+          } else if (animal->getSpecies() == "Lion") {
+            owns_lion = true;
+          } else if (animal->getSpecies() == "Elephant") {
+            owns_elephant = true;
+          }
+        }
+        completed = owns_bear || owns_lion || owns_elephant;
+        break;
+      }
+    }
+    if (completed) {
+      completeMission(i);
+    }
+  }
+}
+
+void Game::completeMission(size_t mission_index) {
+  Mission& mission = missions_[mission_index];
+  mission.completed = true;
+
+  std::cout << "\nMission Complete: " << mission.description << "\n";
+
+  if (mission.reward_amount > 0) {
+    zoo_.addMoney(mission.reward_amount);
+    std::cout << "Reward: $" << mission.reward_amount << "\n";
+  }
+}
+
+void Game::displayMissions() {
+  std::cout << "\nDAY " << zoo_.getDay() << " MISSIONS\n";
+  std::cout << "-----------------------------------------\n";
+
+  std::cout << "Required:\n";
+  for (const Mission& mission : missions_) {
+    if (mission.required) {
+      std::cout << " - " << mission.description << (mission.completed ? " ⎷" : " X") << "\n";
+    }
+  }
+
+  bool has_optional = false;
+
+  for (const Mission& mission : missions_) {
+    if (!mission.required) {
+      has_optional = true;
+      break;
+    }
+  }
+  if (has_optional) {
+    std::cout << "\nOptional:\n";
+    for (const Mission& mission : missions_) {
+      if (!mission.required) {
+        std::cout << " - " << mission.description << (mission.completed ? " ⎷" : " X") << "\n";
+      }
+    }
+  }
+  std::cout << "-----------------------------------------\n";
+}
+
+bool Game::canAdvanceDay() {
+  for (const Mission& mission : missions_) {
+    if (mission.required && !mission.completed) {
+      return false;
+    }
+  }
+  return true;
+}
 
 void Game::start() {
   std::cout << "\nWelcome to Zooperator " << player_.getName() << "!\n";
   std::cout << "You'll be working as the zookeeper for: " << zoo_.getName() << ".\n\n";
   std::cout << "Goals\n";
   std::cout << " - Keep the zoo running for 10 days.\n";
+  std::cout << " - Complete all the required missions each day.\n";
   std::cout << " - Keep all animals happy and healthy.\n";
   std::cout << " - Maintain a zoo rating above 3.0 stars.\n";
 
@@ -32,26 +332,29 @@ void Game::start() {
 
   while (running_) {
     displayMainMenu();
-    int choice = getPlayerInput(1, 6);
+    int choice = getPlayerInput(0, 6);
 
     switch (choice) {
+      case 0:
+        displayHelp();
+        break;
       case 1:
-        manageAnimals();
+        displayMissions();
         break;
       case 2:
-        manageExhibits();
+        manageAnimals();
         break;
       case 3:
-        manageZoo();
+        manageExhibits();
         break;
       case 4:
-        endDay();
+        manageZoo();
         break;
       case 5:
-        exitGame();
+        endDay();
         break;
       case 6:
-        displayHelp();
+        exitGame();
         break;
     }
   }
@@ -79,12 +382,13 @@ void Game::displayMainMenu() {
   std::cout << "\nMAIN MENU | Balance: $" << zoo_.getBalance() << " | Actions: " << action_points_
             << "/" << max_action_points_ << "\n";
   std::cout << "-----------------------------------------\n";
-  std::cout << "1. Manage Animals\n";
-  std::cout << "2. Manage Exhibits\n";
-  std::cout << "3. Manage Zoo\n";
-  std::cout << "4. End Day\n";
-  std::cout << "5. Exit Game\n";
-  std::cout << "6. Help\n";
+  std::cout << "0. Help\n";
+  std::cout << "1. View Missions\n";
+  std::cout << "2. Manage Animals\n";
+  std::cout << "3. Manage Exhibits\n";
+  std::cout << "4. Manage Zoo\n";
+  std::cout << "5. End Day\n";
+  std::cout << "6. Exit Game\n";
   std::cout << "-----------------------------------------\n\n";
 }
 
@@ -351,6 +655,7 @@ void Game::purchaseAnimal() {
         if (exhibit) {
           zoo_.addAnimalToExhibit(new_animal, exhibit);
         }
+        checkMissions();
       }
     }
   }
@@ -441,6 +746,7 @@ void Game::addAnimalToExhibit() {
     return;
   }
   zoo_.addAnimalToExhibit(animal, exhibit);
+  checkMissions();
 }
 
 void Game::removeAnimalFromExhibit() {
@@ -656,6 +962,8 @@ void Game::purchaseExhibit() {
     if (zoo_.purchaseExhibit(std::move(exhibit))) {
       updateMaxActionPoints();
       std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+
+      checkMissions();
     }
   }
 }
@@ -693,6 +1001,7 @@ void Game::cleanExhibit() {
   }
 
   player_.cleanExhibit(exhibit);
+  checkMissions();
 }
 
 void Game::manageZoo() {
@@ -766,6 +1075,15 @@ void Game::updateMaxActionPoints() {
 }
 
 void Game::endDay() {
+  checkMissions();
+  displayMissions();
+
+  if (!canAdvanceDay()) {
+    std::cout << "\nCannot advance to next day!\n";
+    std::cout << "Complete all required missions first.\n";
+    return;
+  }
+
   std::cout << "\nEND OF DAY " << zoo_.getDay() << "\n";
   std::cout << "-----------------------------------------\n";
 
@@ -798,6 +1116,10 @@ void Game::endDay() {
 
   if (zoo_.getBalance() < 500) {
     std::cout << "\nLow funds! Your zoo is at risk of bankruptcy!\n";
+  }
+
+  if (zoo_.getDay() <= 10) {
+    setupDailyMissions(zoo_.getDay());
   }
 
   if (zoo_.getDay() >= 11) {

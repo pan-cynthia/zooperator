@@ -43,6 +43,7 @@ class Zoo {
 
   // money management
   bool spendMoney(double amount);
+  void addMoney(double amount);
 
   // time and simulation
   void advanceDay();

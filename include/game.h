@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "mission.h"
 #include "player.h"
 #include "zoo.h"
 
@@ -20,7 +21,13 @@ class Game {
   int max_action_points_;
   std::vector<std::string> actions_;
 
-  void setupStarterZoo();
+  // mission system
+  std::vector<Mission> missions_;
+  void setupDailyMissions(int day);
+  void checkMissions();
+  void displayMissions();
+  void completeMission(size_t mission_index);
+  bool canAdvanceDay();
 
   // menus
   void displayMainMenu();

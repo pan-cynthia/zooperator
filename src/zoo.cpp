@@ -286,6 +286,10 @@ bool Zoo::spendMoney(double amount) {
   return true;
 }
 
+void Zoo::addMoney(double amount) {
+  balance_ += amount;
+}
+
 void Zoo::updateAnimalStats() {
   for (const auto& animal : animals_) {
     animal->sleep();                // nightly recovery
