@@ -34,7 +34,7 @@ void Game::setupDailyMissions(int day) {
       missions_.push_back(
           Mission(true, "Add animal to an exhibit", MissionType::ADD_ANIMAL_TO_EXHIBIT));
       missions_.push_back(Mission(false, "End the day with a balance of at least $250",
-                                  MissionType::BALANCE_AT_LEAST, 250, 0.0, 100, true));
+                                  MissionType::BALANCE_AT_LEAST, 0, 250.0, 100.0, true));
       missions_.push_back(Mission(false, "Zoo rating above 4.5", MissionType::ZOO_RATING_ABOVE, 0,
                                   4.5, 100.0, true));
       break;
@@ -43,20 +43,19 @@ void Game::setupDailyMissions(int day) {
       missions_.push_back(Mission(true, "Have at least 2 animals", MissionType::OWN_X_ANIMALS, 2));
       missions_.push_back(
           Mission(true, "Own at least 2 different species", MissionType::OWN_X_SPECIES, 2));
-      // feed an animal
       missions_.push_back(Mission(false, "Achieve zoo rating above 3.0",
-                                  MissionType::ZOO_RATING_ABOVE, 0, 3.0, 200, true));
+                                  MissionType::ZOO_RATING_ABOVE, 0, 3.0, 200.0, true));
       break;
 
     case 3:
       missions_.push_back(Mission(true, "No animals need attention",
-                                  MissionType::NO_ANIMALS_NEED_ATTENTION, 0, 0.0, 0, true));
+                                  MissionType::NO_ANIMALS_NEED_ATTENTION, 0, 0.0, 0.0, true));
       missions_.push_back(Mission(true, "Achieve zoo rating above 3.5",
-                                  MissionType::ZOO_RATING_ABOVE, 0, 3.5, 0, true));
+                                  MissionType::ZOO_RATING_ABOVE, 0, 3.5, 0.0, true));
       missions_.push_back(Mission(false, "All animals in preferred habitats",
-                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 200, true));
+                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 200.0, true));
       missions_.push_back(
-          Mission(false, "Have at least 3 animals", MissionType::OWN_X_ANIMALS, 3, 0.0, 300));
+          Mission(false, "Have at least 3 animals", MissionType::OWN_X_ANIMALS, 3, 0.0, 300.0));
       break;
 
     case 4:
@@ -64,20 +63,20 @@ void Game::setupDailyMissions(int day) {
       missions_.push_back(
           Mission(true, "Have at least 3 different species", MissionType::OWN_X_SPECIES, 3));
       missions_.push_back(Mission(false, "Achieve a zoo rating above 4.0",
-                                  MissionType::ZOO_RATING_ABOVE, 0, 4.0, 400, true));
+                                  MissionType::ZOO_RATING_ABOVE, 0, 4.0, 400.0, true));
       missions_.push_back(Mission(false, "All exhibits at 80+ cleanliness",
-                                  MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 250,
+                                  MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 250.0,
                                   true));
       break;
 
     case 5:
       missions_.push_back(Mission(true, "Have at least 4 animals", MissionType::OWN_X_ANIMALS, 4));
       missions_.push_back(Mission(true, "No animals need attention",
-                                  MissionType::NO_ANIMALS_NEED_ATTENTION, 0, 0.0, 0, true));
+                                  MissionType::NO_ANIMALS_NEED_ATTENTION, 0, 0.0, 0.0, true));
       missions_.push_back(
-          Mission(true, "Balance above $800", MissionType::BALANCE_AT_LEAST, 0, 800.0, 0, true));
+          Mission(true, "Balance above $800", MissionType::BALANCE_AT_LEAST, 0, 800.0, 0.0, true));
       missions_.push_back(
-          Mission(false, "Have at least 2 exhibits", MissionType::OWN_X_EXHIBITS, 2, 0.0, 400));
+          Mission(false, "Have at least 2 exhibits", MissionType::OWN_X_EXHIBITS, 2, 0.0, 400.0));
       break;
 
     case 6:
@@ -85,23 +84,23 @@ void Game::setupDailyMissions(int day) {
           Mission(true, "Have at least 2 exhibits", MissionType::OWN_X_EXHIBITS, 2));
       missions_.push_back(Mission(true, "No homeless animals", MissionType::NO_HOMELESS_ANIMALS));
       missions_.push_back(Mission(true, "Achieve zoo rating above 3.5",
-                                  MissionType::ZOO_RATING_ABOVE, 0, 3.5, 0, true));
+                                  MissionType::ZOO_RATING_ABOVE, 0, 3.5, 0.0, true));
       missions_.push_back(
-          Mission(false, "Have at least 5 animals", MissionType::OWN_X_ANIMALS, 5, 0.0, 400));
+          Mission(false, "Have at least 5 animals", MissionType::OWN_X_ANIMALS, 5, 0.0, 400.0));
       missions_.push_back(Mission(false, "Have at least 4 different species",
-                                  MissionType::OWN_X_SPECIES, 4, 0.0, 350));
+                                  MissionType::OWN_X_SPECIES, 4, 0.0, 350.0));
       break;
 
     case 7:
       missions_.push_back(Mission(true, "Have at least 5 animals", MissionType::OWN_X_ANIMALS, 5));
       missions_.push_back(
-          Mission(true, "No sick animals", MissionType::NO_SICK_ANIMALS, 0, 0.0, 0, true));
+          Mission(true, "No sick animals", MissionType::NO_SICK_ANIMALS, 0, 0.0, 0.0, true));
       missions_.push_back(Mission(true, "Achieve zoo rating above 4.0",
-                                  MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0, true));
+                                  MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0.0, true));
       missions_.push_back(Mission(false, "All animals are in preferred habitats",
-                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 600));
+                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 600.0));
       missions_.push_back(
-          Mission(false, "Have at least 3 exhibits", MissionType::OWN_X_EXHIBITS, 3, 0.0, 500));
+          Mission(false, "Have at least 3 exhibits", MissionType::OWN_X_EXHIBITS, 3, 0.0, 500.0));
       break;
 
     case 8:
@@ -109,11 +108,11 @@ void Game::setupDailyMissions(int day) {
       missions_.push_back(
           Mission(true, "Have at least 4 different species", MissionType::OWN_X_SPECIES, 4));
       missions_.push_back(Mission(true, "Achieve zoo rating above 4.0",
-                                  MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0, true));
+                                  MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0.0, true));
       missions_.push_back(Mission(false, "Own a bear, lion, or elephant",
-                                  MissionType::OWN_SPECIAL_ANIMAL, 0, 0.0, 600));
-      missions_.push_back(Mission(false, "Balance above $1500", MissionType::BALANCE_AT_LEAST, 1500,
-                                  0.0, 500, true));
+                                  MissionType::OWN_SPECIAL_ANIMAL, 0, 0.0, 600.0));
+      missions_.push_back(Mission(false, "Balance above $1500", MissionType::BALANCE_AT_LEAST, 0,
+                                  1500.0, 500.0, true));
       break;
 
     case 9:
@@ -121,28 +120,28 @@ void Game::setupDailyMissions(int day) {
       missions_.push_back(
           Mission(true, "No animals need attention", MissionType::NO_ANIMALS_NEED_ATTENTION));
       missions_.push_back(
-          Mission(true, "Zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0, true));
+          Mission(true, "Zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0.0, true));
       missions_.push_back(Mission(false, "Have at least 5 different species",
-                                  MissionType::OWN_X_SPECIES, 5, 0.0, 700));
+                                  MissionType::OWN_X_SPECIES, 5, 0.0, 700.0));
       missions_.push_back(Mission(false, "All exhibits at 80+ cleanliness",
-                                  MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 400,
+                                  MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 400.0,
                                   true));
       break;
 
     case 10:
       missions_.push_back(Mission(true, "No homeless animals", MissionType::NO_HOMELESS_ANIMALS));
       missions_.push_back(
-          Mission(true, "Zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0, true));
+          Mission(true, "Zoo rating above 4.0", MissionType::ZOO_RATING_ABOVE, 0, 4.0, 0.0, true));
       missions_.push_back(Mission(false, "All animals are in preferred habitats",
-                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 800));
+                                  MissionType::PREFERRED_HABITATS, 0, 0.0, 800.0));
       missions_.push_back(
-          Mission(false, "Have at least 8 animals", MissionType::OWN_X_ANIMALS, 8, 0.0, 600));
+          Mission(false, "Have at least 8 animals", MissionType::OWN_X_ANIMALS, 8, 0.0, 600.0));
       missions_.push_back(
-          Mission(false, "Own an elephant", MissionType::OWN_ELEPHANT, 0, 0.0, 500));
+          Mission(false, "Own an elephant", MissionType::OWN_ELEPHANT, 0, 0.0, 500.0));
       missions_.push_back(Mission(false, "Own at least 6 different species",
-                                  MissionType::OWN_X_SPECIES, 0, 0.0, 1000));
-      missions_.push_back(Mission(false, "Balance above $2500", MissionType::BALANCE_AT_LEAST, 2500,
-                                  0.0, 500, true));
+                                  MissionType::OWN_X_SPECIES, 0, 0.0, 1000.0));
+      missions_.push_back(Mission(false, "Balance above $2500", MissionType::BALANCE_AT_LEAST, 0,
+                                  2500.0, 500.0, true));
       break;
   }
 }
