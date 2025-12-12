@@ -1,9 +1,11 @@
 #include "game.h"
 
+#include <iomanip>
 #include <iostream>
 #include <limits>
 #include <random>
 #include <set>
+#include <sstream>
 #include <utility>
 
 #include "animal.h"
@@ -284,30 +286,37 @@ void Game::completeMission(size_t mission_index) {
   }
 }
 
-void Game::displayMissions() {
+void Game::displayMissions(bool show_status) {
   std::cout << "\nDAY " << zoo_.getDay() << " MISSIONS\n";
   std::cout << "-----------------------------------------\n";
 
   std::cout << "Required:\n";
   for (const Mission& mission : missions_) {
     if (mission.required) {
-      std::cout << " - " << mission.description << (mission.completed ? " ⎷" : " X") << "\n";
+      std::cout << " - " << mission.description << getMissionProgress(mission);
+      std::cout << (mission.completed ? " ⎷\n" : " X\n");
     }
   }
 
   bool has_optional = false;
-
   for (const Mission& mission : missions_) {
     if (!mission.required) {
       has_optional = true;
       break;
     }
   }
+
   if (has_optional) {
     std::cout << "\nOptional:\n";
     for (const Mission& mission : missions_) {
       if (!mission.required) {
-        std::cout << " - " << mission.description << (mission.completed ? " ⎷" : " X") << "\n";
+        std::cout << " - " << mission.description << getMissionProgress(mission);
+        if (show_status && mission.completed) {
+          std::cout << " ⎷";
+        } else if (show_status && !mission.completed) {
+          std::cout << " X";
+        }
+        std::cout << "\n";
       }
     }
   }
@@ -416,6 +425,97 @@ bool Game::checkMissionsImpossible() {
   return false;
 }
 
+std::string Game::getMissionProgress(const Mission& mission) {
+  switch (mission.type) {
+    case MissionType::OWN_X_ANIMALS:
+      return " [" + std::to_string(zoo_.getAnimalCount()) + "/" +
+             std::to_string(mission.int_param) + "]";
+
+    case MissionType::OWN_X_EXHIBITS:
+      return " [" + std::to_string(zoo_.getExhibitCount()) + "/" +
+             std::to_string(mission.int_param) + "]";
+
+    case MissionType::OWN_X_SPECIES: {
+      std::set<std::string> species;
+      for (Animal* animal : zoo_.getAllAnimals()) {
+        species.insert(animal->getSpecies());
+      }
+      return " [" + std::to_string(species.size()) + "/" + std::to_string(mission.int_param) + "]";
+    }
+
+    case MissionType::NO_ANIMALS_NEED_ATTENTION:
+      if (zoo_.getAnimalsNeedingAttention().empty()) {
+        return "";
+      }
+      return " [" + std::to_string(zoo_.getAnimalsNeedingAttention().size()) + "]";
+
+    case MissionType::NO_SICK_ANIMALS: {
+      int sick_animals = 0;
+      for (Animal* animal : zoo_.getAllAnimals()) {
+        if (animal->getHealthLevel() < 50) {
+          sick_animals++;
+        }
+      }
+      return " [" + std::to_string(sick_animals) + " sick]";
+    }
+
+    case MissionType::NO_HOMELESS_ANIMALS: {
+      int homeless_animals = 0;
+      for (Animal* animal : zoo_.getAllAnimals()) {
+        if (zoo_.findAnimalLocation(animal) == nullptr) {
+          homeless_animals++;
+        }
+      }
+      return " [" + std::to_string(homeless_animals) + " homeless]";
+    }
+
+    case MissionType::PREFERRED_HABITATS: {
+      int wrong_habitat = 0;
+      for (Animal* animal : zoo_.getAllAnimals()) {
+        Exhibit* exhibit = zoo_.findAnimalLocation(animal);
+        if (exhibit && exhibit->getType() != animal->getPreferredHabitat()) {
+          wrong_habitat++;
+        }
+      }
+      if (wrong_habitat == 0) {
+        return "";
+      }
+      return " [" + std::to_string(wrong_habitat) + " wrong]";
+    }
+
+    case MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X: {
+      int dirty_exhibits = 0;
+      for (Exhibit* exhibits : zoo_.getAllExhibits()) {
+        if (exhibits->getCleanliness() < 50) {
+          dirty_exhibits++;
+        }
+      }
+      if (dirty_exhibits == 0) {
+        return "";
+      }
+      return " [" + std::to_string(dirty_exhibits) + " dirty]";
+    }
+
+    case MissionType::BALANCE_AT_LEAST: {
+      std::ostringstream ss;
+      ss << "$" << std::fixed << std::setprecision(0) << zoo_.getBalance() << "/$"
+         << mission.float_param;
+      return " [" + ss.str() + "]";
+    }
+
+    case MissionType::ZOO_RATING_ABOVE: {
+      std::ostringstream ss;
+      ss << std::fixed << std::setprecision(1) << zoo_.calculateZooRating() << "/"
+         << mission.float_param;
+      return " [" + ss.str() + "]";
+    }
+
+    default:
+      return "";
+  }
+  return "";
+}
+
 void Game::start() {
   std::cout << "\nWelcome to Zooperator " << player_.getName() << "!\n";
   std::cout << "You'll be working as the zookeeper for: " << zoo_.getName() << ".\n\n";
@@ -436,7 +536,7 @@ void Game::start() {
         displayHelp();
         break;
       case 1:
-        displayMissions();
+        displayMissions(false);
         break;
       case 2:
         manageAnimals();
@@ -1176,7 +1276,7 @@ void Game::endDay() {
   zoo_.calculateEndOfDayStats();
 
   checkMissions(true);
-  displayMissions();
+  displayMissions(true);
 
   if (checkMissionsImpossible()) {
     std::cout << "\nGAME OVER: You failed a required mission!\n";
