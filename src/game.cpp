@@ -1206,6 +1206,8 @@ void Game::endDay() {
 
   resetActionPoints();
 
+  zoo_.displayEndOfDaySummary();
+
   if (zoo_.getBalance() <= 0) {
     std::cout << "\nGAME OVER: You went bankrupt!\n";
     running_ = false;
@@ -1222,16 +1224,14 @@ void Game::endDay() {
     std::cout << "\nLow funds! Your zoo is at risk of bankruptcy!\n";
   }
 
+  zoo_.advanceDay();
+
   if (zoo_.getDay() <= 10) {
     setupDailyMissions(zoo_.getDay());
-  }
-
-  if (zoo_.getDay() >= 11) {
+  } else {
     handleGameCompletion();
     return;
   }
-
-  zoo_.displayEndOfDaySummary();
 
   std::cout << "\nDAY " << zoo_.getDay() << "\n";
 

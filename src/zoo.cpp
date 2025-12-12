@@ -542,6 +542,10 @@ void Zoo::calculateEndOfDayStats() {
   balance_ -= expenses;
 }
 
+void Zoo::advanceDay() {
+  day_++;
+}
+
 void Zoo::displayEndOfDaySummary() {
   int dirty_exhibits = 0;
   int sick_animals = 0;
@@ -610,6 +614,4 @@ void Zoo::displayEndOfDaySummary() {
   double rating = calculateZooRating();
   std::cout << "\nZoo Rating: " << rating << "/5.0 " << getRatingMessage(rating) << "\n";
   std::cout << "-----------------------------------------\n";
-
-  day_++;
 }

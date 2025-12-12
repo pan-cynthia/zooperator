@@ -46,6 +46,7 @@ class Zoo {
   void addMoney(double amount);
 
   // time and simulation
+  void advanceDay();
   void calculateEndOfDayStats();
   void displayEndOfDaySummary();
   void updateAnimalStats();

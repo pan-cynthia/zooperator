@@ -622,5 +622,6 @@ TEST(ZooTest, AdvanceDay) {
   zoo.calculateEndOfDayStats();
   EXPECT_EQ(zoo.getDay(), 1);
   zoo.displayEndOfDaySummary();
+  zoo.advanceDay();
   EXPECT_EQ(zoo.getDay(), 2);
 }
