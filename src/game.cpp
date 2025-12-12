@@ -505,8 +505,7 @@ std::string Game::getMissionProgress(const Mission& mission) {
 
     case MissionType::ZOO_RATING_ABOVE: {
       std::ostringstream ss;
-      ss << std::fixed << std::setprecision(1) << zoo_.calculateZooRating() << "/"
-         << mission.float_param;
+      ss << std::fixed << std::setprecision(1) << zoo_.calculateZooRating() << "/5.0";
       return " [" + ss.str() + "]";
     }
 

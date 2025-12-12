@@ -421,25 +421,26 @@ double Zoo::calculateDailyExpenses() const {
 }
 
 double Zoo::calculateZooRating() const {
-  if (animals_.empty()) {
-    return 0.0;
-  }
+  double happiness_score = 0.0;
+  double health_score = 0.0;
 
-  // animal happiness = 50% weight
-  double total_happiness = 0.0;
-  for (const auto& animal : animals_) {
-    total_happiness += animal->getHappinessLevel();
-  }
-  double avg_happiness = total_happiness / getAnimalCount();
-  double happiness_score = (avg_happiness / 100.0) * 2.5;  // max 2.5 stars
+  if (getAnimalCount() > 0) {
+    // animal happiness = 50% weight
+    double total_happiness = 0.0;
+    for (const auto& animal : animals_) {
+      total_happiness += animal->getHappinessLevel();
+    }
+    double avg_happiness = total_happiness / getAnimalCount();
+    happiness_score = (avg_happiness / 100.0) * 2.5;  // max 2.5 stars
 
-  // animal health = 30% weight
-  double total_health = 0.0;
-  for (const auto& animal : animals_) {
-    total_health += animal->getHealthLevel();
+    // animal health = 30% weight
+    double total_health = 0.0;
+    for (const auto& animal : animals_) {
+      total_health += animal->getHealthLevel();
+    }
+    double avg_health = total_health / getAnimalCount();
+    health_score = (avg_health / 100.0) * 1.5;  // max 1.5 stars
   }
-  double avg_health = total_health / getAnimalCount();
-  double health_score = (avg_health / 100.0) * 1.5;  // max 1.5 stars
 
   // exhibit cleanliness = 15% weight
   double cleanliness_score = 0.5;

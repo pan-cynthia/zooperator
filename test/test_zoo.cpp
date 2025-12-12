@@ -609,7 +609,7 @@ TEST(ZooTest, CalculateZooRatingNeglectedAnimal) {
 
 TEST(ZooTest, CalculateZooRatingNoAnimals) {
   Zoo zoo("SF Zoo");
-  EXPECT_EQ(zoo.calculateZooRating(), 0.0);
+  EXPECT_EQ(zoo.calculateZooRating(), 0.65);
 }
 
 TEST(ZooTest, AdvanceDay) {
