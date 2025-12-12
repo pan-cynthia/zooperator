@@ -924,7 +924,8 @@ Exhibit* Game::chooseExhibit() {
   std::cout << "\nChoose an exhibit:\n";
   std::cout << "-----------------------------------------\n";
   for (size_t i = 0; i < exhibits.size(); ++i) {
-    std::cout << (i + 1) << ". " << exhibits[i]->getName() << "\n";
+    std::cout << (i + 1) << ". " << exhibits[i]->getName() << "(" << exhibits[i]->getType()
+              << ")\n";
   }
 
   std::cout << (exhibits.size() + 1) << ". Cancel\n";
