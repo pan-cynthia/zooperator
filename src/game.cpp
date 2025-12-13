@@ -1443,44 +1443,52 @@ void Game::exitGame() {
 void Game::displayHelp() {
   std::cout << "\nHOW TO PLAY\n";
   std::cout << "-----------------------------------------\n";
-  std::cout << "Goals:\n";
-  std::cout << " - Keep the zoo running for 7 days\n";
-  std::cout << " - Keep all animals happy and healthy\n";
-  std::cout << " - Aim for a zoo rating above 4 stars\n";
-  std::cout << " - Maintain a balance of $2000+\n\n";
+  std::cout << "GOAL\n";
+  std::cout << " - Survive 10 days and complete all required missions!\n";
+  std::cout << " - Achieve the highest zoo rating possible!\n";
+  std::cout << "    - Based on animal happiness (50%), health (30%), cleanliness (15%), finances "
+               "(5%)\n\n";
 
-  std::cout << "Actions (Limited Per Day):\n";
+  std::cout << "GAME OVER CONDITIONS\n";
+  std::cout << "- Balance reaches $0\n";
+  std::cout << "- All animals die\n";
+  std::cout << "- Required mission becomes impossible\n\n";
+
+  std::cout << "ACTIONS\n";
   std::cout << " - Each action costs 1 action point (1 AP)\n";
-  std::cout << " - Some actions also cost money\n";
+  std::cout << " - Start with 3/day, gain more with each animal/exhibit purchased\n";
+  std::cout << " - Action points reset daily\n";
   std::cout << " - Feed ($): Reduces hunger\n";
-  std::cout << " - Play: Increases happiness\n";
-  std::cout << " - Exercise: Increases health\n";
+  std::cout << " - Play: Increases happiness, costs energy\n";
+  std::cout << " - Exercise: Increases health, costs energy\n";
   std::cout << " - Treat ($50): Heals sick animals\n";
-  std::cout << " - Clean: Keeps exhibits attractive\n\n";
+  std::cout << " - Clean: Restores exhibit cleanliness to 100%\n\n";
 
-  std::cout << "Warnings:\n";
+  std::cout << "ANIMAL STATS\n";
+  std::cout << "  - Health: Animals die if health becomes 0, treat sick animals\n";
+  std::cout << "  - Hunger: Feed regularly to prevent starvation\n";
+  std::cout << "  - Happiness: Affects zoo rating and health\n";
+  std::cout << "  - Energy: Needed for play/exercise activities\n";
+  std::cout << "  - All stats decline nightly, but sleep restores some energy/health\n\n";
+
+  std::cout << "HABITATS\n";
+  std::cout << "  - Animals prefer certain habitat types\n";
+  std::cout << "    - Grassland: Rabbit, Tortoise\n";
+  std::cout << "    - Forest: Bear\n";
+  std::cout << "    - Arctic: Penguin\n";
+  std::cout << "    - Jungle: Monkey\n";
+  std::cout << "    - Savanna: Lion, Elephant\n";
+  std::cout << "  - Correct habitat: +3 happiness/day\n";
+  std::cout << "  - Wrong habitat: -2 happiness/day\n";
+  std::cout << "  - No habitat: -15 happiness/day, -5 health/day\n\n";
+
+  std::cout << "TIPS:\n";
+  std::cout << "  - Check 'Animals Needing Attention' daily\n";
+  std::cout << "  - Complete optional missions for a bonus reward\n";
   std::cout << "  - Neglected animals will die\n";
   std::cout << "  - Unhappy animals reduce your zoo rating\n";
   std::cout << "  - Homeless animals lose happiness/health daily\n";
   std::cout << "  - Low rating = less visitors = less revenue\n";
-  std::cout << "  - Dirty exhibits drive visitors away\n\n";
-
-  std::cout << "Habitats:\n";
-  std::cout << "  - Animals prefer certain exhibit types\n";
-  std::cout << "     - Correct habitat: +3 happiness/day\n";
-  std::cout << "     - Wrong habitat: -2 happiness/day\n";
-  std::cout << "     - No exhibit: -15 happiness/day, -5 health/day\n\n";
-
-  std::cout << "Habitat Guide:\n";
-  std::cout << " Grassland - Rabbit                    \n";
-  std::cout << " Forest    - Bear                      \n";
-  std::cout << " Arctic    - Penguin                   \n";
-  std::cout << " Jungle    - Monkey                    \n";
-  std::cout << " Savanna   - Elephant, Lion            \n\n";
-
-  std::cout << "Tips:\n";
-  std::cout << "  - Check 'Animals Needing Attention' daily\n";
-  std::cout << "  - Balance spending vs saving\n";
-  std::cout << "  - Don't expand too fast\n";
-  std::cout << "-----------------------------------------\n\n";
+  std::cout << "  - Dirty exhibits drive visitors away\n";
+  std::cout << "-----------------------------------------\n";
 }
