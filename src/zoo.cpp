@@ -368,6 +368,17 @@ int Zoo::calculateVisitorCount() const {
   }
   int diversity_bonus = static_cast<int>(species.size());  // +1 visitor per species
 
+  int rarity_bonus = 0;
+  for (const auto& animal : animals_) {
+    if (animal->getSpecies() == "Elephant") {
+      rarity_bonus += 6;
+    } else if (animal->getSpecies() == "Bear" || animal->getSpecies() == "Lion") {
+      rarity_bonus += 4;
+    } else if (animal->getSpecies() == "Monkey" || animal->getSpecies() == "Penguin") {
+      rarity_bonus += 2;
+    }
+  }
+
   int happiness_bonus = 0;
   for (const auto& animal : animals_) {
     if (animal->getHappinessLevel() > 80) {
@@ -389,8 +400,8 @@ int Zoo::calculateVisitorCount() const {
     }
   }
 
-  int final_visitors =
-      visitors + diversity_bonus + happiness_bonus - neglect_penalty - cleanliness_penalty;
+  int final_visitors = visitors + rarity_bonus + diversity_bonus + happiness_bonus -
+                       neglect_penalty - cleanliness_penalty;
   return final_visitors < 0 ? 0 : final_visitors;
 }
 
