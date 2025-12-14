@@ -487,9 +487,9 @@ TEST(ZooTest, UpdateAnimalStats) {
   zoo.purchaseAnimal(std::move(bear));
 
   zoo.updateAnimalStats();
-  EXPECT_EQ(bear_ptr->getHungerLevel(), 20);
+  EXPECT_EQ(bear_ptr->getHungerLevel(), 17);
   EXPECT_EQ(bear_ptr->getHappinessLevel(), 82);
-  EXPECT_EQ(bear_ptr->getEnergyLevel(), 92);
+  EXPECT_EQ(bear_ptr->getEnergyLevel(), 94);
 }
 
 TEST(ZooTest, CalculateVisitorCountHighRating) {

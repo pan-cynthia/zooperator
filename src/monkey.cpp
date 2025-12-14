@@ -14,9 +14,9 @@ void Monkey::makeSound() const {
 }
 
 void Monkey::updateStatsEndOfDay() {
-  updateHunger(17);
+  updateHunger(13);
   updateHappiness(-10);
-  updateEnergy(-15);
+  updateEnergy(-11);
 }
 
 std::string Monkey::getPreferredHabitat() const {

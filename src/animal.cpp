@@ -88,8 +88,8 @@ void Animal::updateEnergy(int delta) {
 }
 
 void Animal::updateStatsEndOfDay() {
-  updateHunger(15);
-  updateHappiness(-15);
+  updateHunger(10);
+  updateHappiness(-10);
   updateEnergy(-10);
 }
 

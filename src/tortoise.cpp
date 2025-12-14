@@ -14,9 +14,9 @@ void Tortoise::makeSound() const {
 }
 
 void Tortoise::updateStatsEndOfDay() {
-  updateHunger(12);
+  updateHunger(9);
   updateHappiness(-2);
-  updateEnergy(-6);
+  updateEnergy(-5);
 }
 
 std::string Tortoise::getPreferredHabitat() const {

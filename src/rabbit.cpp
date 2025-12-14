@@ -14,9 +14,9 @@ void Rabbit::makeSound() const {
 }
 
 void Rabbit::updateStatsEndOfDay() {
-  updateHunger(18);
+  updateHunger(14);
   updateHappiness(-6);
-  updateEnergy(-12);
+  updateEnergy(-9);
 }
 
 std::string Rabbit::getPreferredHabitat() const {

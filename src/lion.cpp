@@ -4,7 +4,7 @@
 #include <utility>
 
 Lion::Lion(std::string name, int age) : Animal(std::move(name), "Lion", age) {
-  purchase_cost_ = 1200.0;
+  purchase_cost_ = 1000.0;
   feeding_cost_ = 40.0;
   maintenance_cost_ = 60.0;
 }
@@ -14,9 +14,9 @@ void Lion::makeSound() const {
 }
 
 void Lion::updateStatsEndOfDay() {
-  updateHunger(22);
+  updateHunger(17);
   updateHappiness(-5);
-  updateEnergy(-10);
+  updateEnergy(-8);
 }
 
 std::string Lion::getPreferredHabitat() const {

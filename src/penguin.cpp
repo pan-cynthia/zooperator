@@ -14,9 +14,9 @@ void Penguin::makeSound() const {
 }
 
 void Penguin::updateStatsEndOfDay() {
-  updateHunger(15);
+  updateHunger(12);
   updateHappiness(-8);
-  updateEnergy(-10);
+  updateEnergy(-8);
 }
 
 std::string Penguin::getPreferredHabitat() const {
