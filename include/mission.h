@@ -27,6 +27,7 @@ struct Mission {
 
   bool required;
   bool completed;
+  bool condition_met;
   bool end_of_day;  // flag used to check mission complete status at end of day
 
   // optional parameters
@@ -41,6 +42,7 @@ struct Mission {
         type(type),
         required(required),
         completed(false),
+        condition_met(false),
         end_of_day(end_of_day),
         int_param(int_param),
         float_param(float_param),

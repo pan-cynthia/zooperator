@@ -162,20 +162,20 @@ void Game::checkMissions(bool end_of_day) {
       continue;
     }
 
-    bool completed = false;
+    bool condition_met = false;
 
     switch (mission.type) {
       case MissionType::ADD_ANIMAL_TO_EXHIBIT:
         for (Animal* animal : zoo_.getAllAnimals()) {
           if (zoo_.findAnimalLocation(animal)) {
-            completed = true;
+            condition_met = true;
             break;
           }
         }
         break;
 
       case MissionType::OWN_X_ANIMALS:
-        completed = zoo_.getAnimalCount() >= static_cast<size_t>(mission.int_param);
+        condition_met = zoo_.getAnimalCount() >= static_cast<size_t>(mission.int_param);
         break;
 
       case MissionType::OWN_X_SPECIES: {
@@ -183,91 +183,91 @@ void Game::checkMissions(bool end_of_day) {
         for (const Animal* animal : zoo_.getAllAnimals()) {
           species.insert(animal->getSpecies());
         }
-        completed = species.size() >= static_cast<size_t>(mission.int_param);
+        condition_met = species.size() >= static_cast<size_t>(mission.int_param);
         break;
       }
 
       case MissionType::OWN_X_EXHIBITS:
-        completed = zoo_.getExhibitCount() >= static_cast<size_t>(mission.int_param);
+        condition_met = zoo_.getExhibitCount() >= static_cast<size_t>(mission.int_param);
         break;
 
       case MissionType::FEED_X_ANIMALS:
-        completed = (animals_fed_today_.size() == static_cast<size_t>(mission.int_param));
+        condition_met = (animals_fed_today_.size() == static_cast<size_t>(mission.int_param));
         break;
 
       case MissionType::PLAY_WITH_ANIMAL:
-        completed = played_with_animal_today_;
+        condition_met = played_with_animal_today_;
         break;
 
       case MissionType::EXERCISE_ANIMAL:
-        completed = exercised_animal_today_;
+        condition_met = exercised_animal_today_;
         break;
 
       case MissionType::NO_ANIMALS_NEED_ATTENTION:
-        completed = zoo_.getAnimalsNeedingAttention().empty();
+        condition_met = zoo_.getAnimalsNeedingAttention().empty();
         break;
 
       case MissionType::NO_SICK_ANIMALS:
-        completed = true;
+        condition_met = true;
         for (Animal* animal : zoo_.getAllAnimals()) {
           if (animal->getHealthLevel() < 50) {
-            completed = false;
+            condition_met = false;
             break;
           }
         }
         break;
 
       case MissionType::NO_HOMELESS_ANIMALS:
-        completed = true;
+        condition_met = true;
         for (Animal* animal : zoo_.getAllAnimals()) {
           if (zoo_.findAnimalLocation(animal) == nullptr) {
-            completed = false;
+            condition_met = false;
             break;
           }
         }
         break;
 
       case MissionType::PREFERRED_HABITATS:
-        completed = true;
+        condition_met = true;
         for (Animal* animal : zoo_.getAllAnimals()) {
           Exhibit* exhibit = zoo_.findAnimalLocation(animal);
           if (!exhibit || exhibit->getType() != animal->getPreferredHabitat()) {
-            completed = false;
+            condition_met = false;
             break;
           }
         }
         break;
 
       case MissionType::CLEAN_X_EXHIBITS:
-        completed = exhibits_cleaned_today_.size() >= static_cast<size_t>(mission.int_param);
+        condition_met = exhibits_cleaned_today_.size() >= static_cast<size_t>(mission.int_param);
         break;
 
       case MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X:
-        completed = true;
+        condition_met = true;
         for (Exhibit* exhibit : zoo_.getAllExhibits()) {
           if (exhibit->getCleanliness() < mission.int_param) {
-            completed = false;
+            condition_met = false;
             break;
           }
         }
         break;
 
       case MissionType::BALANCE_AT_LEAST:
-        completed = zoo_.getBalance() >= mission.float_param;
+        condition_met = zoo_.getBalance() >= mission.float_param;
         break;
 
       case MissionType::ZOO_RATING_ABOVE:
-        completed = zoo_.calculateZooRating() >= mission.float_param;
+        condition_met = zoo_.calculateZooRating() >= mission.float_param;
         break;
 
       case MissionType::ATTRACT_X_VISITORS:
-        completed = zoo_.calculateVisitorCount() >= mission.int_param;
+        condition_met = zoo_.calculateVisitorCount() >= mission.int_param;
         break;
 
       case MissionType::OWN_ELEPHANT:
         for (const Animal* animal : zoo_.getAllAnimals()) {
           if (animal->getSpecies() == "Elephant") {
-            completed = true;
+            condition_met = true;
             break;
           }
         }
@@ -286,11 +286,14 @@ void Game::checkMissions(bool end_of_day) {
             owns_elephant = true;
           }
         }
-        completed = owns_bear || owns_lion || owns_elephant;
+        condition_met = owns_bear || owns_lion || owns_elephant;
         break;
       }
     }
-    if (completed) {
+    // don't mark end of day missions complete until end of day
+    if (mission.end_of_day) {
+      mission.condition_met = condition_met;
+    } else if (condition_met) {
       completeMission(i);
     }
   }
@@ -347,8 +350,18 @@ void Game::displayMissions(bool show_status) {
 
 bool Game::canAdvanceDay() {
   for (const Mission& mission : missions_) {
-    if (mission.required && !mission.completed) {
-      return false;
+    if (!mission.required) {
+      continue;
+    }
+
+    if (mission.end_of_day) {
+      if (!mission.condition_met) {
+        return false;
+      }
+    } else {
+      if (!mission.completed) {
+        return false;
+      }
     }
   }
   return true;
@@ -1331,7 +1344,6 @@ void Game::endDay() {
   zoo_.updateBalance();
 
   checkMissions(true);
-  displayMissions(true);
 
   if (checkMissionsImpossible()) {
     std::cout << "\nGAME OVER: You failed a required mission!\n";
@@ -1344,6 +1356,16 @@ void Game::endDay() {
     std::cout << "Complete all required missions first.\n";
     return;
   }
+
+  // mark all end of day missions as complete
+  for (size_t i = 0; i < missions_.size(); ++i) {
+    Mission& mission = missions_[i];
+    if (mission.end_of_day && mission.condition_met && !mission.completed) {
+      completeMission(i);
+    }
+  }
+
+  displayMissions(true);
 
   std::cout << "\nEND OF DAY " << zoo_.getDay() << "\n";
   std::cout << "-----------------------------------------\n";
