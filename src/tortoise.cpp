@@ -15,7 +15,7 @@ void Tortoise::makeSound() const {
 
 void Tortoise::updateStatsEndOfDay() {
   updateHunger(9);
-  updateHappiness(-2);
+  updateHappiness(-6);
   updateEnergy(-5);
 }
 

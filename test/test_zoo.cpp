@@ -488,7 +488,7 @@ TEST(ZooTest, UpdateAnimalStats) {
 
   zoo.updateAnimalStats();
   EXPECT_EQ(bear_ptr->getHungerLevel(), 17);
-  EXPECT_EQ(bear_ptr->getHappinessLevel(), 82);
+  EXPECT_EQ(bear_ptr->getHappinessLevel(), 77);
   EXPECT_EQ(bear_ptr->getEnergyLevel(), 94);
 }
 

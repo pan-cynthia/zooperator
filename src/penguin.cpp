@@ -15,7 +15,7 @@ void Penguin::makeSound() const {
 
 void Penguin::updateStatsEndOfDay() {
   updateHunger(12);
-  updateHappiness(-8);
+  updateHappiness(-12);
   updateEnergy(-8);
 }
 

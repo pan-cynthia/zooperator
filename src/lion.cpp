@@ -15,7 +15,7 @@ void Lion::makeSound() const {
 
 void Lion::updateStatsEndOfDay() {
   updateHunger(17);
-  updateHappiness(-5);
+  updateHappiness(-10);
   updateEnergy(-8);
 }
 

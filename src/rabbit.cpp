@@ -15,7 +15,7 @@ void Rabbit::makeSound() const {
 
 void Rabbit::updateStatsEndOfDay() {
   updateHunger(14);
-  updateHappiness(-6);
+  updateHappiness(-10);
   updateEnergy(-9);
 }
 

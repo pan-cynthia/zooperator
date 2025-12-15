@@ -15,7 +15,7 @@ void Elephant::makeSound() const {
 
 void Elephant::updateStatsEndOfDay() {
   updateHunger(15);
-  updateHappiness(-8);
+  updateHappiness(-12);
   updateEnergy(-11);
 }
 

@@ -15,7 +15,7 @@ void Bear::makeSound() const {
 
 void Bear::updateStatsEndOfDay() {
   updateHunger(9);
-  updateHappiness(-3);
+  updateHappiness(-8);
   updateEnergy(-6);
 }
 

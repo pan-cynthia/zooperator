@@ -15,7 +15,7 @@ void Monkey::makeSound() const {
 
 void Monkey::updateStatsEndOfDay() {
   updateHunger(13);
-  updateHappiness(-10);
+  updateHappiness(-15);
   updateEnergy(-11);
 }
 
