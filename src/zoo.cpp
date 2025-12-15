@@ -1,7 +1,6 @@
 #include "zoo.h"
 
 #include <algorithm>
-#include <cmath>
 #include <iostream>
 #include <set>
 
@@ -486,7 +485,6 @@ double Zoo::calculateZooRating() {
   }
 
   double total_rating = happiness_score + health_score + cleanliness_score + financial_score;
-  total_rating = std::round(total_rating * 10.0) / 10.0;
   return std::max(0.0, std::min(5.0, total_rating));
 }
 
