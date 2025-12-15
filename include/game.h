@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <set>
 #include <string>
 
 #include "mission.h"
@@ -21,6 +22,11 @@ class Game {
   int max_action_points_;
   std::vector<std::string> actions_;
 
+  std::set<Animal*> animals_fed_today_;
+  std::set<Exhibit*> exhibits_cleaned_today_;
+  bool played_with_animal_today_ = false;
+  bool exercised_animal_today_ = false;
+
   // mission system
   std::vector<Mission> missions_;
   void setupDailyMissions(int day);
@@ -30,6 +36,7 @@ class Game {
   bool canAdvanceDay();
   bool checkMissionsImpossible();
   std::string getMissionProgress(const Mission& mission);
+  void resetDailyTracking();
 
   // menus
   void displayMainMenu();
