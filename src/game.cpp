@@ -1391,6 +1391,17 @@ void Game::endDay() {
     return;
   }
 
+  // mark all end of day missions as complete
+  for (size_t i = 0; i < missions_.size(); ++i) {
+    Mission& mission = missions_[i];
+    if (mission.end_of_day && mission.condition_met && !mission.completed) {
+      completeMission(i);
+    }
+  }
+
+  zoo_.updateBalance();
+  displayMissions(true);
+
   std::cout << "\nEND OF DAY " << zoo_.getDay() << "\n";
   std::cout << "-----------------------------------------\n";
 
@@ -1405,22 +1416,11 @@ void Game::endDay() {
     }
   }
 
-  // mark all end of day missions as complete
-  for (size_t i = 0; i < missions_.size(); ++i) {
-    Mission& mission = missions_[i];
-    if (mission.end_of_day && mission.condition_met && !mission.completed) {
-      completeMission(i);
-    }
-  }
-
-  displayMissions(true);
-
   resetActionPoints();
   resetDailyTracking();
 
   zoo_.displayEndOfDaySummary();
   zoo_.degradeStats();
-  zoo_.updateBalance();
 
   if (zoo_.getBalance() <= 0) {
     std::cout << "\nGAME OVER: You went bankrupt!\n";
