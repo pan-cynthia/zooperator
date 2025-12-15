@@ -341,7 +341,7 @@ void Zoo::updateAnimalStats() {
   }
 }
 
-int Zoo::calculateVisitorCount() const {
+int Zoo::calculateVisitorCount() {
   int base_visitors = static_cast<int>(getAnimalCount()) * 5;
 
   double rating = calculateZooRating();
@@ -431,7 +431,16 @@ double Zoo::calculateDailyExpenses() const {
   return total;
 }
 
-double Zoo::calculateZooRating() const {
+// get balance after accounting for projected revenue and expenses
+double Zoo::getProjectedBalance() {
+  // don't use calculateVisitorCount here to avoid circular dependency
+  int visitors = static_cast<int>(getAnimalCount() * 5);
+  double revenue = calculateDailyRevenue(visitors);
+  double expenses = calculateDailyExpenses();
+  return balance_ + revenue - expenses;
+}
+
+double Zoo::calculateZooRating() {
   double happiness_score = 0.0;
   double health_score = 0.0;
 
@@ -466,11 +475,12 @@ double Zoo::calculateZooRating() const {
 
   // zoo financial health = 5% weight
   double financial_score = 0.0;
-  if (balance_ > 3000) {
+  double projected_balance = getProjectedBalance();
+  if (projected_balance > 3000) {
     financial_score = 0.25;  // max 0.25 stars
-  } else if (balance_ > 1500) {
+  } else if (projected_balance > 1500) {
     financial_score = 0.15;
-  } else if (balance_ > 500) {
+  } else if (projected_balance > 500) {
     financial_score = 0.05;
   }
 

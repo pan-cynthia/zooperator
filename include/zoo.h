@@ -47,13 +47,14 @@ class Zoo {
 
   // time and simulation
   void advanceDay();
+  double getProjectedBalance();
   void calculateEndOfDayStats();
   void displayEndOfDaySummary();
   void updateAnimalStats();
-  int calculateVisitorCount() const;
+  int calculateVisitorCount();
   double calculateDailyRevenue(int visitor_count) const;
   double calculateDailyExpenses() const;
-  double calculateZooRating() const;
+  double calculateZooRating();
   void viewZooRatingBreakdown();
   std::string getRatingMessage(double rating);
 

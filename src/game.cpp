@@ -253,7 +253,7 @@ void Game::checkMissions(bool end_of_day) {
         break;
 
       case MissionType::BALANCE_AT_LEAST:
-        completed = zoo_.getBalance() >= mission.float_param;
+        completed = zoo_.getProjectedBalance() >= mission.float_param;
         break;
 
       case MissionType::ZOO_RATING_ABOVE:
@@ -1328,8 +1328,6 @@ void Game::updateMaxActionPoints() {
 }
 
 void Game::endDay() {
-  zoo_.calculateEndOfDayStats();
-
   checkMissions(true);
   displayMissions(true);
 
@@ -1362,6 +1360,7 @@ void Game::endDay() {
   resetActionPoints();
   resetDailyTracking();
 
+  zoo_.calculateEndOfDayStats();
   zoo_.displayEndOfDaySummary();
 
   if (zoo_.getBalance() <= 0) {
