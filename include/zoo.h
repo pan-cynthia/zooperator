@@ -48,6 +48,7 @@ class Zoo {
 
   // time and simulation
   void advanceDay();
+  double getProjectedBalance();
   void degradeStats();
   void displayEndOfDaySummary();
   void updateAnimalStats();

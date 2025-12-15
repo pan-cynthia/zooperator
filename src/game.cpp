@@ -253,7 +253,7 @@ void Game::checkMissions(bool end_of_day) {
         break;
 
       case MissionType::BALANCE_AT_LEAST:
-        condition_met = zoo_.getBalance() >= mission.float_param;
+        condition_met = zoo_.getProjectedBalance() >= mission.float_param;
         break;
 
       case MissionType::ZOO_RATING_ABOVE:
@@ -1341,8 +1341,6 @@ void Game::updateMaxActionPoints() {
 }
 
 void Game::endDay() {
-  zoo_.updateBalance();
-
   checkMissions(true);
 
   if (checkMissionsImpossible()) {
@@ -1356,16 +1354,6 @@ void Game::endDay() {
     std::cout << "Complete all required missions first.\n";
     return;
   }
-
-  // mark all end of day missions as complete
-  for (size_t i = 0; i < missions_.size(); ++i) {
-    Mission& mission = missions_[i];
-    if (mission.end_of_day && mission.condition_met && !mission.completed) {
-      completeMission(i);
-    }
-  }
-
-  displayMissions(true);
 
   std::cout << "\nEND OF DAY " << zoo_.getDay() << "\n";
   std::cout << "-----------------------------------------\n";
@@ -1381,11 +1369,22 @@ void Game::endDay() {
     }
   }
 
+  // mark all end of day missions as complete
+  for (size_t i = 0; i < missions_.size(); ++i) {
+    Mission& mission = missions_[i];
+    if (mission.end_of_day && mission.condition_met && !mission.completed) {
+      completeMission(i);
+    }
+  }
+
+  displayMissions(true);
+
   resetActionPoints();
   resetDailyTracking();
 
   zoo_.displayEndOfDaySummary();
   zoo_.degradeStats();
+  zoo_.updateBalance();
 
   if (zoo_.getBalance() <= 0) {
     std::cout << "\nGAME OVER: You went bankrupt!\n";
