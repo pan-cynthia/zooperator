@@ -194,26 +194,27 @@ void Game::checkMissions(bool end_of_day) {
         break;
 
       case MissionType::NO_SICK_ANIMALS:
+        completed = true;
         for (Animal* animal : zoo_.getAllAnimals()) {
           if (animal->getHealthLevel() < 50) {
             completed = false;
             break;
           }
         }
-        completed = true;
         break;
 
       case MissionType::NO_HOMELESS_ANIMALS:
+        completed = true;
         for (Animal* animal : zoo_.getAllAnimals()) {
           if (zoo_.findAnimalLocation(animal) == nullptr) {
             completed = false;
             break;
           }
         }
-        completed = true;
         break;
 
       case MissionType::PREFERRED_HABITATS:
+        completed = true;
         for (Animal* animal : zoo_.getAllAnimals()) {
           Exhibit* exhibit = zoo_.findAnimalLocation(animal);
           if (!exhibit || exhibit->getType() != animal->getPreferredHabitat()) {
@@ -225,13 +226,13 @@ void Game::checkMissions(bool end_of_day) {
         break;
 
       case MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X:
+        completed = true;
         for (Exhibit* exhibit : zoo_.getAllExhibits()) {
           if (exhibit->getCleanliness() < mission.int_param) {
             completed = false;
             break;
           }
         }
-        completed = true;
         break;
 
       case MissionType::BALANCE_AT_LEAST:
