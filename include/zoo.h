@@ -44,11 +44,11 @@ class Zoo {
   // money management
   bool spendMoney(double amount);
   void addMoney(double amount);
+  void updateBalance();
 
   // time and simulation
   void advanceDay();
-  double getProjectedBalance();
-  void calculateEndOfDayStats();
+  void degradeStats();
   void displayEndOfDaySummary();
   void updateAnimalStats();
   int calculateVisitorCount();
