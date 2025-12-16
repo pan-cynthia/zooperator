@@ -807,6 +807,17 @@ void Game::displayAllAnimals() {
   std::cout << "----------------------------------------------------------------------\n";
 }
 
+void Game::displayAnimalStats(Animal* animal) {
+  if (!animal) {
+    return;
+  }
+  std::cout << "\n" << animal->getName() << " the " << animal->getSpecies() << "\n";
+  std::cout << "   Health:     " << animal->getHealthLevel() << "\n";
+  std::cout << "   Hunger:     " << animal->getHungerLevel() << "\n";
+  std::cout << "   Happiness:  " << animal->getHappinessLevel() << "\n";
+  std::cout << "   Energy:     " << animal->getEnergyLevel() << "\n\n";
+}
+
 void Game::displayAnimalsNeedingAttention() {
   std::vector<Animal*> animals = zoo_.getAnimalsNeedingAttention();
   if (animals.empty()) {
@@ -972,6 +983,7 @@ void Game::feedAnimal() {
   }
 
   if (player_.feedAnimal(zoo_, animal)) {
+    displayAnimalStats(animal);
     std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
               << "\n";
     animals_fed_today_.insert(animal);
@@ -990,6 +1002,7 @@ void Game::playWithAnimal() {
   }
 
   if (player_.playWithAnimal(animal)) {
+    displayAnimalStats(animal);
     played_with_animal_today_ = true;
   }
   checkMissions(false);
@@ -1006,6 +1019,7 @@ void Game::exerciseAnimal() {
   }
 
   if (player_.exerciseAnimal(animal)) {
+    displayAnimalStats(animal);
     exercised_animal_today_ = true;
   }
   checkMissions(false);
@@ -1022,6 +1036,7 @@ void Game::treatAnimal() {
   }
 
   if (player_.treatAnimal(zoo_, animal)) {
+    displayAnimalStats(animal);
     std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
               << "\n";
   }

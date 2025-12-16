@@ -50,6 +50,7 @@ class Game {
   // animal actions
   Animal* chooseAnimal();
   void displayAllAnimals();
+  void displayAnimalStats(Animal* animal);
   void displayAnimalsNeedingAttention();
   void renameAnimal();
   void purchaseAnimal();
