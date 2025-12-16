@@ -27,6 +27,9 @@ class Game {
   bool played_with_animal_today_ = false;
   bool exercised_animal_today_ = false;
 
+  std::vector<std::pair<std::string, double>> purchases_;
+  double total_purchase_amount_ = 0.0;
+
   // mission system
   std::vector<Mission> missions_;
   void setupDailyMissions(int day);

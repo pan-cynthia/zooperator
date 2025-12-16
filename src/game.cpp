@@ -325,6 +325,7 @@ void Game::completeMission(size_t mission_index) {
 
   if (mission.reward_amount > 0) {
     zoo_.addMoney(mission.reward_amount);
+    zoo_.earnBonus(mission.reward_amount);
   }
 }
 
@@ -612,6 +613,8 @@ void Game::resetDailyTracking() {
   exhibits_cleaned_today_.clear();
   played_with_animal_today_ = false;
   exercised_animal_today_ = false;
+  purchases_.clear();
+  total_purchase_amount_ = 0.0;
 }
 
 void Game::start() {
@@ -946,8 +949,16 @@ void Game::purchaseAnimal() {
   if (choice == 1) {
     if (zoo_.purchaseAnimal(std::move(animal))) {
       updateMaxActionPoints();
-      std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+      std::cout << "\nNew Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
                 << "\n";
+
+      std::vector<Animal*> animals = zoo_.getAllAnimals();
+      Animal* purchased_animal = animals.back();
+      purchases_.push_back(
+          {"Animal: " + purchased_animal->getName() + " (" + purchased_animal->getSpecies() + ")",
+           purchased_animal->getPurchaseCost()});
+      total_purchase_amount_ += purchased_animal->getPurchaseCost();
+
       checkMissions(false);
     }
   }
@@ -1262,8 +1273,8 @@ void Game::purchaseExhibit() {
     }
   }
 
-  std::cout << "  Purchase Exhibit \"" << exhibit->getName() << "\" for $"
-            << exhibit->getPurchaseCost() << "? (1 - Yes, 2 - No)\n";
+  std::cout << "  Purchase Exhibit " << exhibit->getName() << " (" << exhibit->getType()
+            << ") for $" << exhibit->getPurchaseCost() << "? (1 - Yes, 2 - No)\n";
 
   choice = getPlayerInput(1, 2);
 
@@ -1273,6 +1284,12 @@ void Game::purchaseExhibit() {
       std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
                 << "\n";
 
+      std::vector<Exhibit*> exhibits = zoo_.getAllExhibits();
+      Exhibit* purchased_exhibit = exhibits.back();
+      purchases_.push_back(
+          {"Exhibit: " + purchased_exhibit->getName() + " (" + purchased_exhibit->getType() + ")",
+           purchased_exhibit->getPurchaseCost()});
+      total_purchase_amount_ += purchased_exhibit->getPurchaseCost();
       checkMissions(false);
     }
   }
@@ -1425,6 +1442,17 @@ void Game::endDay() {
               << max_action_points_ << "):\n";
     for (size_t i = 0; i < actions_.size(); ++i) {
       std::cout << "  " << (i + 1) << ". " << actions_[i] << "\n";
+    }
+  }
+
+  // purchase summary
+  if (purchases_.empty()) {
+    std::cout << "\nNo purchases made today.\n";
+  } else {
+    std::cout << "\nPurchases made today (" << purchases_.size() << ")\n";
+    for (size_t i = 0; i < purchases_.size(); ++i) {
+      std::cout << "  " << (i + 1) << ". " << purchases_[i].first << " - $" << std::fixed
+                << std::setprecision(0) << purchases_[i].second << "\n";
     }
   }
 

@@ -42,6 +42,7 @@ class Zoo {
   void removeDeadAnimals();
 
   // money management
+  void earnBonus(double amount);
   bool spendMoney(double amount);
   void addMoney(double amount);
   void updateBalance();
@@ -63,6 +64,7 @@ class Zoo {
   std::string name_;
   int day_;
   double balance_;
+  double bonus_earned_ = 0.0;
   std::vector<std::unique_ptr<Animal>> animals_;
   std::vector<std::unique_ptr<Exhibit>> exhibits_;
 };

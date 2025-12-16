@@ -278,6 +278,10 @@ void Zoo::removeDeadAnimals() {
   }
 }
 
+void Zoo::earnBonus(double amount) {
+  bonus_earned_ += amount;
+}
+
 bool Zoo::spendMoney(double amount) {
   if (balance_ < amount) {
     return false;
@@ -635,6 +639,7 @@ void Zoo::displayEndOfDaySummary() {
   std::cout << "  Revenue : $" << revenue << "\n";
   std::cout << "  Expenses: $" << expenses << "\n";
   std::cout << "  Net     : $" << revenue - expenses << "\n";
+  std::cout << "  Bonus   : $" << bonus_earned_ << "\n";
   std::cout << "  Balance : $" << balance_ << "\n";
 
   double rating = calculateZooRating();
