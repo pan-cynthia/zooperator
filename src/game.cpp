@@ -325,19 +325,25 @@ void Game::completeMission(size_t mission_index) {
 
   if (mission.reward_amount > 0) {
     zoo_.addMoney(mission.reward_amount);
-    std::cout << "Reward: $" << mission.reward_amount << "\n";
   }
 }
 
 void Game::displayMissions(bool show_status) {
   std::cout << "\nDAY " << zoo_.getDay() << " MISSIONS\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 
   std::cout << "Required:\n";
   for (const Mission& mission : missions_) {
     if (mission.required) {
       std::cout << " - " << mission.description << getMissionProgress(mission);
-      std::cout << (mission.completed ? " ⎷\n" : " X\n");
+
+      if (mission.completed) {
+        std::cout << " ✓\n";
+      } else if (mission.end_of_day && !show_status) {
+        std::cout << " ?\n";
+      } else {
+        std::cout << " X\n";
+      }
     }
   }
 
@@ -355,7 +361,7 @@ void Game::displayMissions(bool show_status) {
       if (!mission.required) {
         std::cout << " - " << mission.description << getMissionProgress(mission);
         if (show_status && mission.completed) {
-          std::cout << " ⎷";
+          std::cout << " ✓";
         } else if (show_status && !mission.completed) {
           std::cout << " X";
         }
@@ -363,7 +369,7 @@ void Game::displayMissions(bool show_status) {
       }
     }
   }
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 }
 
 bool Game::canAdvanceDay() {
@@ -520,6 +526,7 @@ std::string Game::getMissionProgress(const Mission& mission) {
       }
       return " [" + std::to_string(animals_fed_today_.size()) + "/" +
              std::to_string(mission.int_param) + " fed]";
+
     case MissionType::NO_ANIMALS_NEED_ATTENTION:
       if (zoo_.getAnimalsNeedingAttention().empty()) {
         return "";
@@ -561,9 +568,6 @@ std::string Game::getMissionProgress(const Mission& mission) {
     }
 
     case MissionType::CLEAN_X_EXHIBITS:
-      if (exhibits_cleaned_today_.size() >= static_cast<size_t>(mission.int_param)) {
-        return "";
-      }
       return " [" + std::to_string(exhibits_cleaned_today_.size()) + "/" +
              std::to_string(mission.int_param) + " cleaned]";
 
@@ -594,7 +598,7 @@ std::string Game::getMissionProgress(const Mission& mission) {
     }
 
     case MissionType::ATTRACT_X_VISITORS:
-      return " [ " + std::to_string(zoo_.calculateVisitorCount()) + "/" +
+      return " [" + std::to_string(zoo_.calculateVisitorCount()) + "/" +
              std::to_string(mission.int_param) + " visitors]";
 
     default:
@@ -617,34 +621,33 @@ void Game::start() {
   std::cout << " - Keep the zoo running for 10 days.\n";
   std::cout << " - Complete all the required missions each day.\n";
   std::cout << " - Keep all animals happy and healthy.\n";
-  std::cout << " - Maintain a zoo rating above 3.0 stars.\n";
 
   std::cout << "\nDAY " << zoo_.getDay() << "\n";
 
   while (running_) {
     displayMainMenu();
-    int choice = getPlayerInput(0, 6);
+    int choice = getPlayerInput(1, 7);
 
     switch (choice) {
-      case 0:
+      case 1:
         displayHelp();
         break;
-      case 1:
+      case 2:
         displayMissions(false);
         break;
-      case 2:
+      case 3:
         manageAnimals();
         break;
-      case 3:
+      case 4:
         manageExhibits();
         break;
-      case 4:
+      case 5:
         manageZoo();
         break;
-      case 5:
+      case 6:
         endDay();
         break;
-      case 6:
+      case 7:
         exitGame();
         break;
     }
@@ -659,7 +662,7 @@ void Game::clearInput() {
 int Game::getPlayerInput(int min, int max) {
   int choice;
   while (true) {
-    std::cout << "Select an option (" << min << "-" << max << "): ";
+    std::cout << "> Select an option (" << min << "-" << max << "): ";
     if (std::cin >> choice && choice >= min && choice <= max) {
       clearInput();
       return choice;
@@ -670,24 +673,24 @@ int Game::getPlayerInput(int min, int max) {
 }
 
 void Game::displayMainMenu() {
-  std::cout << "\nMAIN MENU | Balance: $" << zoo_.getBalance() << " | Actions: " << action_points_
-            << "/" << max_action_points_ << "\n";
-  std::cout << "-----------------------------------------\n";
-  std::cout << "0. Help\n";
-  std::cout << "1. View Missions\n";
-  std::cout << "2. Manage Animals\n";
-  std::cout << "3. Manage Exhibits\n";
-  std::cout << "4. Manage Zoo\n";
-  std::cout << "5. End Day\n";
-  std::cout << "6. Exit Game\n";
-  std::cout << "-----------------------------------------\n\n";
+  std::cout << "\nMAIN MENU | Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+            << " | Actions: " << action_points_ << "/" << max_action_points_ << "\n";
+  std::cout << "----------------------------------------------------------------------\n";
+  std::cout << "1. Help\n";
+  std::cout << "2. View Missions\n";
+  std::cout << "3. Manage Animals\n";
+  std::cout << "4. Manage Exhibits\n";
+  std::cout << "5. Manage Zoo\n";
+  std::cout << "6. End Day\n";
+  std::cout << "7. Exit Game\n";
+  std::cout << "----------------------------------------------------------------------\n\n";
 }
 
 void Game::manageAnimals() {
   while (true) {
     std::cout << "\nANIMAL MANAGEMENT | Actions: " << action_points_ << "/" << max_action_points_
               << "\n";
-    std::cout << "-----------------------------------------\n";
+    std::cout << "----------------------------------------------------------------------\n";
     std::cout << "1. Display All Animals\n";
     std::cout << "2. Display Animals Needing Attention\n";
     std::cout << "3. Rename Animal\n";
@@ -701,7 +704,7 @@ void Game::manageAnimals() {
     std::cout << "11. Remove Animal from Exhibit\n";
     std::cout << "12. Move Animal to Exhibit\n";
     std::cout << "13. Back to Main Menu\n";
-    std::cout << "-----------------------------------------\n\n";
+    std::cout << "----------------------------------------------------------------------\n\n";
 
     int choice = getPlayerInput(1, 13);
     switch (choice) {
@@ -754,13 +757,13 @@ Animal* Game::chooseAnimal() {
     return nullptr;
   }
   std::cout << "\nChoose an animal:\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
   for (size_t i = 0; i < animals.size(); ++i) {
     std::cout << (i + 1) << ". " << animals[i]->getName() << " the " << animals[i]->getSpecies()
               << "\n";
   }
   std::cout << (animals.size() + 1) << ". Cancel\n";
-  std::cout << "-----------------------------------------\n\n";
+  std::cout << "----------------------------------------------------------------------\n\n";
 
   int choice = getPlayerInput(1, static_cast<int>(animals.size() + 1));
   if (choice == static_cast<int>(animals.size() + 1)) {
@@ -777,7 +780,7 @@ void Game::displayAllAnimals() {
   }
 
   std::cout << "\nALL ANIMALS\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
   for (size_t i = 0; i < animals.size(); ++i) {
     Animal* animal = animals[i];
     std::cout << (i + 1) << ". " << animal->getName() << " the " << animal->getSpecies() << "\n";
@@ -798,10 +801,10 @@ void Game::displayAllAnimals() {
     }
 
     if (i < animals.size() - 1) {
-      std::cout << "-----------------------------------------\n";
+      std::cout << "----------------------------------------------------------------------\n";
     }
   }
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 }
 
 void Game::displayAnimalsNeedingAttention() {
@@ -814,7 +817,7 @@ void Game::displayAnimalsNeedingAttention() {
   std::cout << "\nANIMALS NEEDING ATTENTION\n";
   for (size_t i = 0; i < animals.size(); ++i) {
     Animal* animal = animals[i];
-    std::cout << "-----------------------------------------\n";
+    std::cout << "----------------------------------------------------------------------\n";
     std::cout << (i + 1) << ". " << animal->getName() << " the " << animal->getSpecies() << "\n";
     std::cout << "   Health:    " << animal->getHealthLevel() << "\n";
     std::cout << "   Hunger:    " << animal->getHungerLevel() << "\n";
@@ -830,12 +833,12 @@ void Game::renameAnimal() {
   }
 
   std::string old_name = animal->getName();
-  std::cout << "Enter new name: ";
+  std::cout << "> Enter new name: ";
   std::string name;
   std::getline(std::cin, name);
 
-  std::cout << "Rename " << old_name << " the " << animal->getSpecies() << " to " << name << " the "
-            << animal->getSpecies() << "? (1 - Yes, 2 - No)\n";
+  std::cout << "  Rename " << old_name << " the " << animal->getSpecies() << " to " << name
+            << " the " << animal->getSpecies() << "? (1 - Yes, 2 - No)\n";
 
   int choice = getPlayerInput(1, 2);
 
@@ -847,8 +850,9 @@ void Game::renameAnimal() {
 }
 
 void Game::purchaseAnimal() {
-  std::cout << "\nPURCHASE ANIMAL | Balance: $" << zoo_.getBalance() << "\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "\nPURCHASE ANIMAL | Balance: $" << std::fixed << std::setprecision(0)
+            << zoo_.getBalance() << "\n";
+  std::cout << "----------------------------------------------------------------------\n";
   std::cout << "1. Rabbit - $150 [Grassland]\n";
   std::cout << "2. Tortoise - $250 [Grassland]\n";
   std::cout << "3. Penguin - $400 [Arctic]\n";
@@ -857,14 +861,14 @@ void Game::purchaseAnimal() {
   std::cout << "6. Lion - $1000 [Savanna]\n";
   std::cout << "7. Elephant - $1200 [Savanna]\n";
   std::cout << "8. Cancel\n";
-  std::cout << "-----------------------------------------\n\n";
+  std::cout << "----------------------------------------------------------------------\n\n";
 
   int choice = getPlayerInput(1, 8);
   if (choice == 8) {
     return;
   }
 
-  std::cout << "\nName your animal: ";
+  std::cout << "\n> Name your animal: ";
   std::string name;
   std::getline(std::cin, name);
 
@@ -920,33 +924,19 @@ void Game::purchaseAnimal() {
     }
   }
 
-  std::cout << "Purchase " << animal->getName() << " the " << animal->getSpecies() << " for $"
+  std::cout << "  Purchase " << animal->getName() << " the " << animal->getSpecies() << " for $"
             << animal->getPurchaseCost() << "? (1 - Yes, 2 - No)\n";
-  std::cout << " - Daily Cost: $" << (animal->getFeedingCost() + animal->getMaintenanceCost())
+  std::cout << "  - Daily Cost: $" << (animal->getFeedingCost() + animal->getMaintenanceCost())
             << " (Feeding: $" << animal->getFeedingCost() << ", Maintenance: $"
             << animal->getMaintenanceCost() << ")\n";
-  std::cout << " - Preferred Habitat: " << animal->getPreferredHabitat() << "\n";
+  std::cout << "  - Preferred Habitat: " << animal->getPreferredHabitat() << "\n";
   choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
     if (zoo_.purchaseAnimal(std::move(animal))) {
       updateMaxActionPoints();
-      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
-
-      std::vector<Animal*> animals = zoo_.getAllAnimals();
-      Animal* new_animal = animals.back();
-
-      std::cout << "\nAssign " << new_animal->getName()
-                << " to an exhibit now? (1 - Now, 2 - Later)\n";
-      std::cout << "(Animals without exhibits lose health/happiness daily!)\n";
-
-      int assign = getPlayerInput(1, 2);
-      if (assign == 1) {
-        Exhibit* exhibit = chooseExhibit();
-        if (exhibit) {
-          zoo_.addAnimalToExhibit(new_animal, exhibit);
-        }
-      }
+      std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+                << "\n";
       checkMissions(false);
     }
   }
@@ -958,14 +948,15 @@ void Game::sellAnimal() {
     return;
   }
 
-  std::cout << "Sell " << animal->getName() << " the " << animal->getSpecies() << " for $"
+  std::cout << "  Sell " << animal->getName() << " the " << animal->getSpecies() << " for $"
             << (animal->getPurchaseCost() / 2.0) << "? (1 - Yes, 2 - No)\n";
   int choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
     if (zoo_.sellAnimal(animal)) {
       updateMaxActionPoints();
-      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+      std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+                << "\n";
     }
   }
 }
@@ -981,7 +972,8 @@ void Game::feedAnimal() {
   }
 
   if (player_.feedAnimal(zoo_, animal)) {
-    std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+    std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+              << "\n";
     animals_fed_today_.insert(animal);
   }
   checkMissions(false);
@@ -1030,7 +1022,8 @@ void Game::treatAnimal() {
   }
 
   if (player_.treatAnimal(zoo_, animal)) {
-    std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+    std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+              << "\n";
   }
 }
 
@@ -1080,7 +1073,7 @@ void Game::manageExhibits() {
   while (true) {
     std::cout << "\nEXHIBIT MANAGEMENT | Actions: " << action_points_ << "/" << max_action_points_
               << "\n";
-    std::cout << "-----------------------------------------\n";
+    std::cout << "----------------------------------------------------------------------\n";
     std::cout << "1. Display All Exhibits\n";
     std::cout << "2. Display Exhibits Needing Cleaning\n";
     std::cout << "3. Rename Exhibit\n";
@@ -1088,7 +1081,7 @@ void Game::manageExhibits() {
     std::cout << "5. Sell Exhibit\n";
     std::cout << "6. Clean Exhibit (1 AP)\n";
     std::cout << "7. Back to Main Menu\n";
-    std::cout << "-----------------------------------------\n\n";
+    std::cout << "----------------------------------------------------------------------\n\n";
 
     int choice = getPlayerInput(1, 7);
     switch (choice) {
@@ -1124,14 +1117,14 @@ Exhibit* Game::chooseExhibit() {
   }
 
   std::cout << "\nChoose an exhibit:\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
   for (size_t i = 0; i < exhibits.size(); ++i) {
-    std::cout << (i + 1) << ". " << exhibits[i]->getName() << "(" << exhibits[i]->getType()
+    std::cout << (i + 1) << ". " << exhibits[i]->getName() << " (" << exhibits[i]->getType()
               << ")\n";
   }
 
   std::cout << (exhibits.size() + 1) << ". Cancel\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 
   int choice = getPlayerInput(1, static_cast<int>(exhibits.size() + 1));
   if (choice == static_cast<int>(exhibits.size() + 1)) {
@@ -1149,7 +1142,7 @@ void Game::displayAllExhibits() {
   }
 
   std::cout << "\nEXHIBITS\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
   for (size_t i = 0; i < exhibits.size(); ++i) {
     Exhibit* exhibit = exhibits[i];
     std::cout << (i + 1) << ". " << exhibit->getName() << " (" << exhibit->getType() << ")\n";
@@ -1157,10 +1150,10 @@ void Game::displayAllExhibits() {
               << exhibit->getMaxCapacity() << "\n";
     std::cout << "   Cleanliness:  " << exhibit->getCleanliness() << "\n";
     if (i < exhibits.size() - 1) {
-      std::cout << "--------------------------------------------\n";
+      std::cout << "----------------------------------------------------------------------\n";
     }
   }
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 }
 
 void Game::displayExhibitsNeedingCleaning() {
@@ -1182,11 +1175,11 @@ void Game::renameExhibit() {
   }
 
   std::string old_name = exhibit->getName();
-  std::cout << "Enter new name: ";
+  std::cout << "> Enter new name: ";
   std::string name;
   std::getline(std::cin, name);
 
-  std::cout << "Rename Exhibit " << old_name << " to Exhibit " << name << "? (1 - Yes, 2 - No)\n";
+  std::cout << "  Rename Exhibit " << old_name << " to Exhibit " << name << "? (1 - Yes, 2 - No)\n";
   int choice = getPlayerInput(1, 2);
   if (choice == 1) {
     exhibit->setName(name);
@@ -1195,22 +1188,23 @@ void Game::renameExhibit() {
 }
 
 void Game::purchaseExhibit() {
-  std::cout << "\nPURCHASE EXHIBIT | Balance: $" << zoo_.getBalance() << "\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "\nPURCHASE EXHIBIT | Balance: $" << std::fixed << std::setprecision(0)
+            << zoo_.getBalance() << "\n";
+  std::cout << "----------------------------------------------------------------------\n";
   std::cout << "1. Grassland (2-3 capacity) - $300\n";
   std::cout << "2. Forest (3-4 capacity) - $600\n";
   std::cout << "3. Jungle (4-6 capacity) - $800\n";
   std::cout << "4. Savannna (3-5 capacity) - $1000\n";
   std::cout << "5. Arctic (4-5 capacity) - $1200\n";
   std::cout << "6. Cancel\n";
-  std::cout << "-----------------------------------------\n\n";
+  std::cout << "----------------------------------------------------------------------\n\n";
 
   int choice = getPlayerInput(1, 6);
   if (choice == 6) {
     return;
   }
 
-  std::cout << "Name the exhibit: ";
+  std::cout << "> Name the exhibit: ";
   std::string name;
   std::getline(std::cin, name);
 
@@ -1253,15 +1247,16 @@ void Game::purchaseExhibit() {
     }
   }
 
-  std::cout << "Purchase " << exhibit->getName() << " for $" << exhibit->getPurchaseCost()
-            << "? (1 - Yes, 2 - No)\n";
+  std::cout << "  Purchase Exhibit \"" << exhibit->getName() << "\" for $"
+            << exhibit->getPurchaseCost() << "? (1 - Yes, 2 - No)\n";
 
-  choice = getPlayerInput(1, 6);
+  choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
     if (zoo_.purchaseExhibit(std::move(exhibit))) {
       updateMaxActionPoints();
-      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+      std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+                << "\n";
 
       checkMissions(false);
     }
@@ -1273,14 +1268,15 @@ void Game::sellExhibit() {
   if (!exhibit) {
     return;
   }
-  std::cout << "Sell " << exhibit->getName() << " for $" << (exhibit->getPurchaseCost() / 2.0)
+  std::cout << "  Sell " << exhibit->getName() << " for $" << (exhibit->getPurchaseCost() / 2.0)
             << "? (1 - Yes, 2 - No)\n";
   int choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
     if (zoo_.sellExhibit(exhibit)) {
       updateMaxActionPoints();
-      std::cout << "New Balance: $" << zoo_.getBalance() << "\n";
+      std::cout << "New Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+                << "\n";
     }
   }
 }
@@ -1309,11 +1305,11 @@ void Game::cleanExhibit() {
 void Game::manageZoo() {
   while (true) {
     std::cout << "\nZOO MANAGEMENT\n";
-    std::cout << "-----------------------------------------\n";
+    std::cout << "----------------------------------------------------------------------\n";
     std::cout << "1. Check Balance\n";
     std::cout << "2. View Zoo Rating\n";
     std::cout << "3. Back to Main Menu\n";
-    std::cout << "-----------------------------------------\n\n";
+    std::cout << "----------------------------------------------------------------------\n\n";
 
     int choice = getPlayerInput(1, 3);
 
@@ -1331,12 +1327,13 @@ void Game::manageZoo() {
 }
 
 void Game::checkBalance() {
-  std::cout << "\nCurrent Balance: $" << zoo_.getBalance() << "\n";
+  std::cout << "\nCurrent Balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+            << "\n";
 }
 
 void Game::viewZooRating() {
   double rating = zoo_.calculateZooRating();
-  std::cout << "\nZoo Rating: " << rating << "/5.0 ";
+  std::cout << "\nZoo Rating: " << std::fixed << std::setprecision(1) << rating << "/5.0 ";
   std::cout << zoo_.getRatingMessage(rating) << "\n";
   zoo_.viewZooRatingBreakdown();
 }
@@ -1403,7 +1400,7 @@ void Game::endDay() {
   displayMissions(true);
 
   std::cout << "\nEND OF DAY " << zoo_.getDay() << "\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 
   // action summary
   if (actions_.empty()) {
@@ -1456,14 +1453,15 @@ void Game::handleGameCompletion() {
   double rating = zoo_.calculateZooRating();
 
   std::cout << "\nGAME COMPLETE!\n";
-  std::cout << "-----------------------------------------\n";
-  std::cout << "Final balance: $" << zoo_.getBalance() << "\n";
+  std::cout << "----------------------------------------------------------------------\n";
+  std::cout << "Final balance: $" << std::fixed << std::setprecision(0) << zoo_.getBalance()
+            << "\n";
   std::cout << "Animals: " << zoo_.getAnimalCount() << "\n";
-  std::cout << "Zoo rating: " << rating << "/5.0\n";
-  std::cout << "-----------------------------------------\n\n";
+  std::cout << "Zoo rating: " << std::fixed << std::setprecision(1) << rating << "/5.0\n";
+  std::cout << "----------------------------------------------------------------------\n\n";
 
   std::cout << "PERFOMANCE REVIEW\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 
   // calculate overall score
   int score = 0;
@@ -1545,7 +1543,7 @@ void Game::handleGameCompletion() {
 }
 
 void Game::exitGame() {
-  std::cout << "Exit game? (1 - Yes, 2 - No)\n";
+  std::cout << "  Exit game? (1 - Yes, 2 - No)\n";
   int choice = getPlayerInput(1, 2);
 
   if (choice == 1) {
@@ -1557,7 +1555,7 @@ void Game::exitGame() {
 
 void Game::displayHelp() {
   std::cout << "\nHOW TO PLAY\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
   std::cout << "GOAL\n";
   std::cout << " - Survive 10 days and complete all required missions!\n";
   std::cout << " - Achieve the highest zoo rating possible!\n";
@@ -1573,7 +1571,7 @@ void Game::displayHelp() {
   std::cout << " - Each action costs 1 action point (1 AP)\n";
   std::cout << " - Start with 3/day, gain more with each animal/exhibit purchased\n";
   std::cout << " - Action points reset daily\n";
-  std::cout << " - Feed ($): Reduces hunger\n";
+  std::cout << " - Feed ($): Reduces hunger, small happiness and energy boost\n";
   std::cout << " - Play: Increases happiness, costs energy\n";
   std::cout << " - Exercise: Increases health, costs energy\n";
   std::cout << " - Treat ($50): Heals sick animals\n";
@@ -1605,5 +1603,5 @@ void Game::displayHelp() {
   std::cout << "  - Homeless animals lose happiness/health daily\n";
   std::cout << "  - Low rating = less visitors = less revenue\n";
   std::cout << "  - Dirty exhibits drive visitors away\n";
-  std::cout << "-----------------------------------------\n";
+  std::cout << "----------------------------------------------------------------------\n";
 }

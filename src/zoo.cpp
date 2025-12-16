@@ -1,6 +1,7 @@
 #include "zoo.h"
 
 #include <algorithm>
+#include <iomanip>
 #include <iostream>
 #include <set>
 
@@ -495,7 +496,8 @@ void Zoo::viewZooRatingBreakdown() {
     total_happiness += animal->getHappinessLevel();
   }
   double avg_happiness = total_happiness / getAnimalCount();
-  std::cout << "Animal Happiness: " << avg_happiness << "/100\n";
+  std::cout << "Animal Happiness: " << std::fixed << std::setprecision(1) << avg_happiness
+            << "/100\n";
 
   // animal health
   double total_health = 0.0;
@@ -503,7 +505,7 @@ void Zoo::viewZooRatingBreakdown() {
     total_health += animal->getHealthLevel();
   }
   double avg_health = total_health / getAnimalCount();
-  std::cout << "Animal Health: " << avg_health << "/100\n";
+  std::cout << "Animal Health: " << std::fixed << std::setprecision(1) << avg_health << "/100\n";
 
   // exhibit cleanliness
   if (getExhibitCount() > 0) {
@@ -512,7 +514,8 @@ void Zoo::viewZooRatingBreakdown() {
       total_cleanliness += exhibit->getCleanliness();
     }
     double avg_cleanliness = total_cleanliness / getExhibitCount();
-    std::cout << "Exhibit Cleanliness: " << avg_cleanliness << "/100\n";
+    std::cout << "Exhibit Cleanliness: " << std::fixed << std::setprecision(1) << avg_cleanliness
+              << "/100\n";
   }
 
   std::cout << "Financial Stability: ";
@@ -635,6 +638,7 @@ void Zoo::displayEndOfDaySummary() {
   std::cout << "  Balance : $" << balance_ << "\n";
 
   double rating = calculateZooRating();
-  std::cout << "\nZoo Rating: " << rating << "/5.0 " << getRatingMessage(rating) << "\n";
-  std::cout << "--------------------------------------------------\n";
+  std::cout << "\nZoo Rating: " << std::fixed << std::setprecision(1) << rating << "/5.0 "
+            << getRatingMessage(rating) << "\n";
+  std::cout << "----------------------------------------------------------------------\n";
 }
