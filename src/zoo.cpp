@@ -297,7 +297,6 @@ void Zoo::addMoney(double amount) {
 
 void Zoo::updateAnimalStats() {
   for (const auto& animal : animals_) {
-    animal->sleep();                // nightly recovery
     animal->updateStatsEndOfDay();  // daily decay
 
     // apply health penalties for animal neglect
@@ -343,6 +342,8 @@ void Zoo::updateAnimalStats() {
       animal->updateHappiness(-15);
       animal->updateHealth(-5);
     }
+
+    animal->sleep();  // nightly recovery
   }
 }
 

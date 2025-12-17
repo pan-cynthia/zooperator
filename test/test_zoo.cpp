@@ -489,7 +489,7 @@ TEST(ZooTest, UpdateAnimalStats) {
   zoo.updateAnimalStats();
   EXPECT_EQ(bear_ptr->getHungerLevel(), 17);
   EXPECT_EQ(bear_ptr->getHappinessLevel(), 77);
-  EXPECT_EQ(bear_ptr->getEnergyLevel(), 94);
+  EXPECT_EQ(bear_ptr->getEnergyLevel(), 100);
 }
 
 TEST(ZooTest, CalculateVisitorCountHighRating) {
