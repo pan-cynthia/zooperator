@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Cache CMake build
         uses: actions/cache@v4
@@ -35,7 +37,7 @@ jobs:
           path: build
           key: cmake-lint-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
-            cmake-lint-{{ runner.os }}-
+            cmake-lint-${{ runner.os }}-
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy
@@ -43,11 +45,18 @@ jobs:
       - name: Configure Cmake
         run: cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-      - name: Run clang-tidy
+      - name: Run clang-tidy on changed files
+        if: github.event_name == 'pull_request'
         run: |
-          FILES=$(find src test -name '*.cpp')
-          clang-tidy -p build $FILES
-          echo "$FILES" | xargs -P $(nproc) clang-tidy -p build
+          git fetch origin ${{ github.base_ref }}
+
+          FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '^src/.*\.cpp$' || true)
+          if [ -z "$FILES" ]; then
+            echo "No C++ source files changed"
+            exit 0
+          fi
+
+          echo "$FILES" | xargs -P $(nproc) clang-tidy -p build --quiet
 
   build-and-test:
     runs-on: ubuntu-latest

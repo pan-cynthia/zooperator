@@ -20,7 +20,7 @@ Checks: >
   -cppcoreguidelines-non-private-member-variables-in-classes
 
 WarningsAsErrors: ''
-HeaderFilterRegex: ''
+HeaderFilterRegex: '^(src|include)/'
 FormatStyle: file
 CheckOptions:
   - key: readability-identifier-naming.ClassCase
