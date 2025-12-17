@@ -3,8 +3,9 @@
 
 #include <set>
 #include <string>
+#include <vector>
 
-#include "mission.h"
+#include "MissionSystem.h"
 #include "player.h"
 #include "zoo.h"
 
@@ -16,30 +17,15 @@ class Game {
  private:
   Player player_;
   Zoo zoo_;
+  MissionSystem mission_system_;
   bool running_;
 
   int action_points_;
   int max_action_points_;
   std::vector<std::string> actions_;
 
-  std::set<Animal*> animals_fed_today_;
-  std::set<Exhibit*> exhibits_cleaned_today_;
-  bool played_with_animal_today_ = false;
-  bool exercised_animal_today_ = false;
-
   std::vector<std::pair<std::string, double>> purchases_;
   double total_purchase_amount_ = 0.0;
-
-  // mission system
-  std::vector<Mission> missions_;
-  void setupDailyMissions(int day);
-  void checkMissions(bool end_of_day);
-  void displayMissions(bool show_status);
-  void completeMission(size_t mission_index);
-  bool canAdvanceDay();
-  bool checkMissionsImpossible();
-  std::string getMissionProgress(const Mission& mission);
-  void resetDailyTracking();
 
   // menus
   void displayMainMenu();
