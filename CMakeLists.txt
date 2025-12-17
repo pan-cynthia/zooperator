@@ -1,3 +1,4 @@
+option(ENABLE_COVERAGE "Enable code coverage flags" OFF)
 cmake_minimum_required(VERSION 3.23)
 
 project(zooperator LANGUAGES CXX)
@@ -17,3 +18,19 @@ target_link_libraries(zooperator PRIVATE zooperator_lib)
 
 enable_testing()
 add_subdirectory(test)
+
+option(ENABLE_COVERAGE "Enable code coverage flags" OFF)
+if(ENABLE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    message(STATUS "Enabling coverage flags")
+
+    # Flags for compilation (Note the separate quotes for each flag)
+    set(COVERAGE_COMPILE_FLAGS "-O0" "-g" "-fprofile-instr-generate" "-fcoverage-mapping")
+
+    # Flags for linking
+    set(COVERAGE_LINK_FLAGS "-fprofile-instr-generate")
+
+    foreach(tgt zooperator_lib zooperator zooperator_tests)
+        target_compile_options(${tgt} PRIVATE ${COVERAGE_COMPILE_FLAGS})
+        target_link_options(${tgt} PRIVATE ${COVERAGE_LINK_FLAGS})
+    endforeach()
+endif()
