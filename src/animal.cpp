@@ -87,12 +87,6 @@ void Animal::updateEnergy(int delta) {
   energy_ = clamp(energy_ + delta, MIN_STAT, MAX_STAT);
 }
 
-void Animal::updateStatsEndOfDay() {
-  updateHunger(10);
-  updateHappiness(-10);
-  updateEnergy(-10);
-}
-
 void Animal::setName(const std::string& name) {
   name_ = name;
 }

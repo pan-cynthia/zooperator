@@ -18,10 +18,8 @@ class Animal {
   virtual void eat(int amount);
   virtual void sleep();
   virtual void makeSound() const = 0;
-  virtual void updateStatsEndOfDay();
-  virtual std::string getPreferredHabitat() const {
-    return "Any";
-  }
+  virtual void updateStatsEndOfDay() = 0;
+  virtual std::string getPreferredHabitat() const = 0;
   void receivePlay();
   void receiveExercise();
   void receiveTreatment();
