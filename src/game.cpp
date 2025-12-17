@@ -20,12 +20,10 @@
 Game::Game(const Player& player, std::string zoo_name)
     : player_(player),
       zoo_(zoo_name, 2000.0),
+      mission_system_(zoo_),
       running_(true),
       action_points_(3),
-      max_action_points_(3),
-      mission_system_(zoo_) {
-  mission_system_.setupDailyMissions(1);
-}
+      max_action_points_(3) {}
 
 void Game::start() {
   std::cout << "\nWelcome to Zooperator " << player_.getName() << "!\n";

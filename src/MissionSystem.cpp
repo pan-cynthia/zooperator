@@ -4,7 +4,9 @@
 #include <iostream>
 #include <sstream>
 
-MissionSystem::MissionSystem(Zoo& zoo) : zoo_(zoo) {}
+MissionSystem::MissionSystem(Zoo& zoo) : zoo_(zoo) {
+  setupDailyMissions(1);
+}
 
 std::vector<Mission>& MissionSystem::getMissions() {
   return missions_;
