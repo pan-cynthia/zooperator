@@ -155,3 +155,10 @@ TEST(AnimalTest, SleepingIncreasesHunger) {
   penguin.sleep();
   EXPECT_EQ(penguin.getHungerLevel(), 33);
 }
+
+TEST(AnimalTest, RenameAnimal) {
+  Penguin penguin("Pororo", 8);
+  EXPECT_EQ(penguin.getName(), "Pororo");
+  penguin.setName("Piplup");
+  EXPECT_EQ(penguin.getName(), "Piplup");
+}

@@ -198,3 +198,17 @@ TEST(ExhibitTest, CleanExhibit) {
   exhibit.clean();
   EXPECT_EQ(exhibit.getCleanliness(), 100);
 }
+
+TEST(ExhibitTest, ExhibitNeedsCleaning) {
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
+  EXPECT_FALSE(exhibit.needsCleaning());
+  exhibit.updateCleanliness(-60);
+  EXPECT_TRUE(exhibit.needsCleaning());
+}
+
+TEST(ExhibitTest, RenameExhibit) {
+  Exhibit exhibit("Penguin Point", "Arctic", 5, 1500.0, 60.0);
+  EXPECT_EQ(exhibit.getName(), "Penguin Point");
+  exhibit.setName("Penguin Circle");
+  EXPECT_EQ(exhibit.getName(), "Penguin Circle");
+}

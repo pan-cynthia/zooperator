@@ -170,6 +170,11 @@ TEST(ZooTest, RemoveDeadAnimals) {
   zoo.purchaseAnimal(std::move(rabbit));
   EXPECT_EQ(zoo.getAnimalCount(), 1);
 
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
+  Exhibit* exhibit_ptr = exhibit.get();
+  zoo.purchaseExhibit(std::move(exhibit));
+  zoo.addAnimalToExhibit(rabbit_ptr, exhibit_ptr);
+
   rabbit_ptr->updateHealth(-100);
   EXPECT_FALSE(rabbit_ptr->isAlive());
 
@@ -218,6 +223,17 @@ TEST(ZooTest, SellExhibit) {
   EXPECT_EQ(zoo.getBalance(), balance_after_purchase + (exhibit_cost / 2.0));
 }
 
+TEST(ZooTest, SellNullExhibit) {
+  Zoo zoo("San Diego Zoo");
+  EXPECT_FALSE(zoo.sellExhibit(nullptr));
+}
+
+TEST(ZooTest, SellExhibitNotInZoo) {
+  Zoo zoo("San Diego Zoo");
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
+  EXPECT_FALSE(zoo.sellExhibit(exhibit.get()));
+}
+
 TEST(ZooTest, GetExhibit) {
   Zoo zoo("San Diego Zoo");
   auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
@@ -263,19 +279,32 @@ TEST(ZooTest, NoExhibitsNeedCleaning) {
   EXPECT_EQ(zoo.getExhibitsNeedingCleaning().size(), 0);
 }
 
+TEST(ZooTest, FindNullAnimalLocation) {
+  Zoo zoo("SF Zoo");
+  EXPECT_EQ(zoo.findAnimalLocation(nullptr), nullptr);
+}
+
 TEST(ZooTest, AddAnimalToExhibit) {
   Zoo zoo("SF Zoo");
-  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
-  Exhibit* exhibit_ptr = exhibit.get();
-  zoo.purchaseExhibit(std::move(exhibit));
+
+  auto exhibit1 = std::make_unique<Exhibit>("Bear Habitat", "Forest", 3, 800.0, 35.0);
+  Exhibit* exhibit1_ptr = exhibit1.get();
+  zoo.purchaseExhibit(std::move(exhibit1));
+
+  auto exhibit2 = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
+  Exhibit* exhibit2_ptr = exhibit2.get();
+  zoo.purchaseExhibit(std::move(exhibit2));
 
   auto rabbit = std::make_unique<Rabbit>("Miffy", 7);
   Animal* rabbit_ptr = rabbit.get();
   zoo.purchaseAnimal(std::move(rabbit));
 
-  EXPECT_TRUE(zoo.addAnimalToExhibit(rabbit_ptr, exhibit_ptr));
-  EXPECT_EQ(exhibit_ptr->getCapacityUsed(), 1);
-  EXPECT_EQ(zoo.findAnimalLocation(rabbit_ptr), exhibit_ptr);
+  EXPECT_TRUE(zoo.addAnimalToExhibit(rabbit_ptr, exhibit1_ptr));
+  EXPECT_EQ(exhibit1_ptr->getCapacityUsed(), 1);
+  EXPECT_EQ(zoo.findAnimalLocation(rabbit_ptr), exhibit1_ptr);
+
+  EXPECT_TRUE(zoo.addAnimalToExhibit(rabbit_ptr, exhibit2_ptr));
+  EXPECT_EQ(zoo.findAnimalLocation(rabbit_ptr), exhibit2_ptr);
 }
 
 TEST(ZooTest, CannotAddAnimalToFullExhibit) {
@@ -297,6 +326,38 @@ TEST(ZooTest, CannotAddAnimalToFullExhibit) {
   EXPECT_EQ(exhibit_ptr->getCapacityUsed(), 1);
 }
 
+TEST(ZooTest, CannotAddNullAnimalToExhibit) {
+  Zoo zoo("SF Zoo");
+  auto animal = std::make_unique<Rabbit>("Miffy", 7);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
+  EXPECT_FALSE(zoo.addAnimalToExhibit(animal.get(), nullptr));
+  EXPECT_FALSE(zoo.addAnimalToExhibit(nullptr, exhibit.get()));
+}
+
+TEST(ZooTest, CannotAddAnimalNotInZooToExhibit) {
+  Zoo zoo("SF Zoo");
+  auto animal = std::make_unique<Rabbit>("Miffy", 7);
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
+  Exhibit* exhibit_ptr = exhibit.get();
+  zoo.purchaseExhibit(std::move(exhibit));
+  EXPECT_FALSE(zoo.addAnimalToExhibit(animal.get(), exhibit_ptr));
+}
+
+TEST(ZooTest, CannotAddAnimalToItsCurrentExhibit) {
+  Zoo zoo("SF Zoo");
+
+  auto animal = std::make_unique<Rabbit>("Miffy", 7);
+  Animal* animal_ptr = animal.get();
+  zoo.purchaseAnimal(std::move(animal));
+
+  auto exhibit = std::make_unique<Exhibit>("Rabbit Meadow", "Grassland", 2, 300.0, 15.0);
+  Exhibit* exhibit_ptr = exhibit.get();
+  zoo.purchaseExhibit(std::move(exhibit));
+
+  EXPECT_TRUE(zoo.addAnimalToExhibit(animal_ptr, exhibit_ptr));
+  EXPECT_FALSE(zoo.addAnimalToExhibit(animal_ptr, exhibit_ptr));
+}
+
 TEST(ZooTest, RemoveAnimalFromExhibit) {
   Zoo zoo("SF Zoo", 2500.0);
 
@@ -314,6 +375,16 @@ TEST(ZooTest, RemoveAnimalFromExhibit) {
   EXPECT_TRUE(zoo.removeAnimalFromExhibit(penguin_ptr, exhibit_ptr));
   EXPECT_EQ(exhibit_ptr->getCapacityUsed(), 0);
   EXPECT_EQ(zoo.findAnimalLocation(penguin_ptr), nullptr);
+}
+
+TEST(ZooTest, CannotRemoveNullAnimalFromExhibit) {
+  Zoo zoo("SF Zoo", 2500.0);
+
+  auto exhibit = std::make_unique<Exhibit>("Penguin Point", "Arctic", 5, 1500.0, 60.0);
+  Exhibit* exhibit_ptr = exhibit.get();
+  zoo.purchaseExhibit(std::move(exhibit));
+
+  EXPECT_FALSE(zoo.removeAnimalFromExhibit(nullptr, exhibit_ptr));
 }
 
 TEST(ZooTest, CannotRemoveAnimalNotInExhibit) {
@@ -477,6 +548,11 @@ TEST(ZooTest, SpendMoney) {
   zoo.spendMoney(feeding_cost);
 
   EXPECT_EQ(zoo.getBalance(), 3000.0 - purchase_cost - feeding_cost);
+}
+
+TEST(ZooTest, NotEnoughMoney) {
+  Zoo zoo("SF Zoo", 0.0);
+  EXPECT_FALSE(zoo.spendMoney(5.0));
 }
 
 TEST(ZooTest, UpdateAnimalStats) {
