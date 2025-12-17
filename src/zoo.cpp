@@ -236,19 +236,8 @@ bool Zoo::moveAnimalToExhibit(Animal* animal, Exhibit* exhibit) {
     return false;
   }
 
-  // remove animal from old exhibit
-  if (!old_exhibit->removeAnimal(animal)) {
-    std::cout << "Failed to remove animal from its current exhibit!\n";
-    return false;
-  }
-
-  // add animal to new exhibit
-  if (!exhibit->addAnimal(animal)) {
-    std::cout << "Failed to add animal to new exhibit!\n";
-    // add animal back to old exhibit
-    old_exhibit->addAnimal(animal);
-    return false;
-  }
+  old_exhibit->removeAnimal(animal);
+  exhibit->addAnimal(animal);
 
   std::cout << "Moved " << animal->getName() << " to " << exhibit->getName() << ".\n";
   return true;
