@@ -280,17 +280,14 @@ void MissionSystem::checkMissions(bool end_of_day) {
       case MissionType::OWN_SPECIAL_ANIMAL: {
         bool owns_bear = false;
         bool owns_lion = false;
-        bool owns_elephant = false;
         for (const Animal* animal : zoo_.getAllAnimals()) {
           if (animal->getSpecies() == "Bear") {
             owns_bear = true;
           } else if (animal->getSpecies() == "Lion") {
             owns_lion = true;
-          } else if (animal->getSpecies() == "Elephant") {
-            owns_elephant = true;
           }
         }
-        condition_met = owns_bear || owns_lion || owns_elephant;
+        condition_met = owns_bear || owns_lion;
         break;
       }
     }
