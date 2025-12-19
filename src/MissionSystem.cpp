@@ -23,7 +23,7 @@ void MissionSystem::setupDailyMissions(int day) {
           Mission(true, "Purchase your first exhibit", MissionType::OWN_X_EXHIBITS, 1));
       missions_.push_back(
           Mission(true, "Add your animal to the exhibit", MissionType::ADD_ANIMAL_TO_EXHIBIT));
-      missions_.push_back(Mission(false, "End day with balance of $1200+ (+$100)",
+      missions_.push_back(Mission(false, "End day with balance of $1200+",
                                   MissionType::BALANCE_AT_LEAST, 0, 1200.0, 100.0, true));
       break;
 
@@ -32,7 +32,7 @@ void MissionSystem::setupDailyMissions(int day) {
       missions_.push_back(Mission(true, "Feed an animal", MissionType::FEED_X_ANIMALS, 1));
       missions_.push_back(Mission(true, "End day with no homeless animals",
                                   MissionType::NO_HOMELESS_ANIMALS, 0, 0.0, 0.0, true));
-      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+ (+$100)",
+      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+",
                                   MissionType::ZOO_RATING_ABOVE, 0, 4.0, 100.0, true));
 
       break;
@@ -42,7 +42,7 @@ void MissionSystem::setupDailyMissions(int day) {
       missions_.push_back(Mission(true, "Own 2 exhibits", MissionType::OWN_X_EXHIBITS, 2));
       missions_.push_back(Mission(true, "Feed 2 animals", MissionType::FEED_X_ANIMALS, 2));
       missions_.push_back(
-          Mission(false, "Clean an exhibit (+$100)", MissionType::CLEAN_X_EXHIBITS, 1, 0.0, 100.0));
+          Mission(false, "Clean an exhibit", MissionType::CLEAN_X_EXHIBITS, 1, 0.0, 100.0));
 
       break;
 
@@ -55,7 +55,7 @@ void MissionSystem::setupDailyMissions(int day) {
                                   true));
       missions_.push_back(Mission(true, "All animals in preferred habitats",
                                   MissionType::PREFERRED_HABITATS, 0, 0.0, 0.0, true));
-      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+ (+$100)",
+      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+",
                                   MissionType::ZOO_RATING_ABOVE, 0, 4.0, 100.0, true));
       break;
 
@@ -64,9 +64,9 @@ void MissionSystem::setupDailyMissions(int day) {
       missions_.push_back(Mission(true, "Own a penguin or monkey", MissionType::OWN_MEDIUM_ANIMAL));
       missions_.push_back(Mission(true, "No homeless animals", MissionType::NO_HOMELESS_ANIMALS, 0,
                                   0.0, 0.0, true));
-      missions_.push_back(Mission(false, "End day with balance of $800+ (+$100)",
+      missions_.push_back(Mission(false, "End day with balance of $800+",
                                   MissionType::BALANCE_AT_LEAST, 0, 800.0, 100.0, true));
-      missions_.push_back(Mission(false, "End day with 40+ visitors (+$200)",
+      missions_.push_back(Mission(false, "End day with 40+ visitors",
                                   MissionType::ATTRACT_X_VISITORS, 40, 0.0, 200.0, true));
       break;
 
@@ -77,21 +77,21 @@ void MissionSystem::setupDailyMissions(int day) {
       missions_.push_back(Mission(true, "All exhibits at 80+ cleanliness",
                                   MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 0.0,
                                   true));
-      missions_.push_back(Mission(false, "End the day with zoo rating of 4.0+ (+$100)",
+      missions_.push_back(Mission(false, "End the day with zoo rating of 4.0+",
                                   MissionType::ZOO_RATING_ABOVE, 0, 4.0, 100.0, true));
       missions_.push_back(
-          Mission(false, "Own 5 animals (+$100)", MissionType::OWN_X_ANIMALS, 5, 0.0, 100.0));
+          Mission(false, "Own 5 animals", MissionType::OWN_X_ANIMALS, 5, 0.0, 100.0));
       break;
 
     case 7:
       missions_.push_back(Mission(true, "Own 3 exhibits", MissionType::OWN_X_EXHIBITS, 3));
       missions_.push_back(Mission(true, "No animals need attention",
                                   MissionType::NO_ANIMALS_NEED_ATTENTION, 0, 0.0, 0.0, true));
-      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+ (+$200)",
+      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+",
                                   MissionType::ZOO_RATING_ABOVE, 0, 4.0, 200.0, true));
-      missions_.push_back(Mission(false, "End day with balance of $1500+ (+$100)",
+      missions_.push_back(Mission(false, "End day with balance of $1500+",
                                   MissionType::BALANCE_AT_LEAST, 0, 1000.0, 100.0, true));
-      missions_.push_back(Mission(false, "All animals in preferred habitats (+$200)",
+      missions_.push_back(Mission(false, "All animals in preferred habitats",
                                   MissionType::PREFERRED_HABITATS, 0, 0.0, 200.0, true));
       break;
 
@@ -99,12 +99,12 @@ void MissionSystem::setupDailyMissions(int day) {
       missions_.push_back(Mission(true, "Own 5 different species", MissionType::OWN_X_SPECIES, 5));
       missions_.push_back(
           Mission(true, "Feed all animals", MissionType::FEED_X_ANIMALS, zoo_.getAnimalCount()));
-      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+ (+$200)",
+      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+",
                                   MissionType::ZOO_RATING_ABOVE, 0, 4.0, 200.0, true));
-      missions_.push_back(Mission(false, "End day with balance of $1500+ (+$150)",
+      missions_.push_back(Mission(false, "End day with balance of $1500+",
                                   MissionType::BALANCE_AT_LEAST, 0, 1500.0, 150.0, true));
-      missions_.push_back(Mission(false, "Own a lion, or elephant (+$250)",
-                                  MissionType::OWN_SPECIAL_ANIMAL, 0, 0.0, 250.0));
+      missions_.push_back(
+          Mission(false, "Own a bear or lion", MissionType::OWN_SPECIAL_ANIMAL, 0, 0.0, 250.0));
       break;
 
     case 9:
@@ -114,9 +114,9 @@ void MissionSystem::setupDailyMissions(int day) {
       missions_.push_back(Mission(true, "All exhibits at 80+ cleanliness",
                                   MissionType::EXHIBITS_CLEANLINESS_AT_LEAST_X, 80, 0.0, 0.0,
                                   true));
-      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+ (+$200)",
+      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+",
                                   MissionType::ZOO_RATING_ABOVE, 0, 4.0, 200.0, true));
-      missions_.push_back(Mission(false, "End day with 60+ visitors (+$250)",
+      missions_.push_back(Mission(false, "End day with 60+ visitors",
                                   MissionType::ATTRACT_X_VISITORS, 60, 0.0, 250.0, true));
       break;
 
@@ -128,14 +128,14 @@ void MissionSystem::setupDailyMissions(int day) {
           Mission(true, "No sick animals", MissionType::NO_SICK_ANIMALS, 0, 0.0, 0.0, true));
       missions_.push_back(Mission(true, "No animals need attention",
                                   MissionType::NO_ANIMALS_NEED_ATTENTION, 0, 0.0, 0.0, true));
-      missions_.push_back(Mission(false, "Own 7 different species (+$250)",
-                                  MissionType::OWN_X_SPECIES, 7, 0.0, 250.0));
       missions_.push_back(
-          Mission(false, "Own an elephant (+$200)", MissionType::OWN_ELEPHANT, 0, 0.0, 200.0));
-      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+ (+$200)",
+          Mission(false, "Own 7 different species", MissionType::OWN_X_SPECIES, 7, 0.0, 250.0));
+      missions_.push_back(
+          Mission(false, "Own an elephant", MissionType::OWN_ELEPHANT, 0, 0.0, 200.0));
+      missions_.push_back(Mission(false, "End day with zoo rating of 4.0+",
                                   MissionType::ZOO_RATING_ABOVE, 0, 4.0, 200.0, true));
-      missions_.push_back(Mission(false, "Balance above $2000 (+$200)",
-                                  MissionType::BALANCE_AT_LEAST, 0, 2000.0, 200.0, true));
+      missions_.push_back(Mission(false, "Balance above $2000", MissionType::BALANCE_AT_LEAST, 0,
+                                  2000.0, 200.0, true));
       break;
   }
 }
@@ -343,10 +343,12 @@ void MissionSystem::displayMissions(bool show_status) {
   }
 
   if (has_optional) {
-    std::cout << "\nOptional:\n";
+    std::cout << "\nOptional (Complete for bonus rewards, checked at end of day):\n";
     for (const Mission& mission : missions_) {
       if (!mission.required) {
         std::cout << " - " << mission.description << getMissionProgress(mission);
+        std::cout << " -> $" << mission.reward_amount;
+
         if (show_status && mission.completed) {
           std::cout << " ✓";
         } else if (show_status && !mission.completed) {
@@ -591,7 +593,6 @@ std::string MissionSystem::getMissionProgress(const Mission& mission) {
     default:
       return "";
   }
-  return "";
 }
 
 void MissionSystem::trackAnimalFed(Animal* animal) {
