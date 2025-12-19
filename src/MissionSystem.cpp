@@ -12,6 +12,14 @@ std::vector<Mission>& MissionSystem::getMissions() {
   return missions_;
 }
 
+std::set<Animal*> MissionSystem::getAnimalsFedToday() {
+  return animals_fed_today_;
+}
+
+std::set<Exhibit*> MissionSystem::getExhibitsCleanedToday() {
+  return exhibits_cleaned_today_;
+}
+
 void MissionSystem::setupDailyMissions(int day) {
   missions_.clear();
 

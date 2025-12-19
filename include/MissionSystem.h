@@ -16,6 +16,8 @@ class MissionSystem {
   MissionSystem() = delete;
 
   std::vector<Mission>& getMissions();
+  std::set<Animal*> getAnimalsFedToday();
+  std::set<Exhibit*> getExhibitsCleanedToday();
 
   // mission setup
   void setupDailyMissions(int day);
