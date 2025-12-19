@@ -858,7 +858,7 @@ void Game::endDay() {
   if (purchases_.empty()) {
     std::cout << "\nNo purchases made today.\n";
   } else {
-    std::cout << "\nPurchases made today (" << purchases_.size() << ")\n";
+    std::cout << "\nPurchases made today (" << purchases_.size() << "):\n";
     for (size_t i = 0; i < purchases_.size(); ++i) {
       std::cout << "  " << (i + 1) << ". " << purchases_[i].first << " - $" << std::fixed
                 << std::setprecision(0) << purchases_[i].second << "\n";
@@ -1020,6 +1020,11 @@ void Game::displayHelp() {
   std::cout << "- Balance reaches $0\n";
   std::cout << "- All animals die\n";
   std::cout << "- Required mission becomes impossible\n\n";
+
+  std::cout << "MISSIONS\n";
+  std::cout << "- X means incomplete\n";
+  std::cout << "- ✓ means complete\n";
+  std::cout << "- ? means will be checked at end of day\n\n";
 
   std::cout << "ACTIONS\n";
   std::cout << " - Each action costs 1 action point (1 AP)\n";
